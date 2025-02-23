@@ -56,7 +56,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
+           <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <dependency>
@@ -135,7 +135,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.example.homestay.HomestayApplication</mainClass>
+                    <mainClass>com.example.HomestayApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>
