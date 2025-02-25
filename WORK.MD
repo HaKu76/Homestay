@@ -155,3 +155,33 @@ view:功能页面，要在router/index.js进行对应的路由注册
 | scenic_ticket       | 景点门票信息表     |
 | scenic_ticket_order | 景点订票信息       |
 
+### 实体类建设
+
+都在pojo/entity下
+
+民宿实体类Hotel
+
+民宿订单信息实体类HotelOrderInfo
+
+民宿房间实体类HotelRoom
+
+民宿房间床位信息实体类HotelRoomBed
+
+公告信息实体类Notice
+
+景点信息实体类Scenic
+
+景点分类实体类ScenicCategory
+
+景点路线实体类ScenicLine
+
+景点评分实体类ScenicRating
+
+景点攻略实体类ScenicStrategy
+
+景点门票实体类ScenicTicket
+
+景点门票订单实体类ScenicTicketOrder
+
+供应商信息实体类Vendor
+
