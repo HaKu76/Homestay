@@ -185,3 +185,35 @@ view:功能页面，要在router/index.js进行对应的路由注册
 
 供应商信息实体类Vendor
 
+## 景点分类
+
+#### 后端
+
+基础查询类QueryDto
+
+景点分类查询Dto业务ScenicCategoryQueryDto继承基础查询
+
+> **接口（controller）和持久化数据库（mapper）中间包含业务逻辑层（service）**
+>
+> controller ---- service ---- mapper
+
+业务逻辑层service包含接口+实现类impl（Alt+Enter快速实现方法）
+
+持久化层接口mapper->写SQL->回到impl继续更新逻辑->回到接口继续更新
+
+**NEW：安装MyBatisX插件，可用快速定位mapper和SQL**
+
+通用返回封装类ApiResult
+
+#### 前端
+
+**文件前端控制器（头像上传等等）FileController**
+
+路由配置src/router下新增一条景点分类管理scenicCategoryManage
+
+注意path开头小写，组件开头大写
+
+功能页面：views/admin新增ScenicCategoryManage.vue
+
+**分页查询接口注意加Pager注解（对分页参数进行处理）**
+
