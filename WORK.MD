@@ -155,6 +155,10 @@ view:功能页面，要在router/index.js进行对应的路由注册
 | scenic_ticket       | 景点门票信息表   |
 | scenic_ticket_order | 景点订票信息    |
 
+##### 优化
+
+给部分字段加上非null的属性，防止字段为空
+
 ### 实体类建设
 
 都在pojo/entity下
@@ -189,7 +193,7 @@ view:功能页面，要在router/index.js进行对应的路由注册
 
 #### 后端
 
-基础查询类QueryDto
+基础**查询类**QueryDto
 
 > **接口（controller）和持久化数据库（mapper）中间包含业务逻辑层（service）**
 >
@@ -224,3 +228,13 @@ view:功能页面，要在router/index.js进行对应的路由注册
 注意修改映射为VO时牵一发动全身，所有查询相关及映射都需要将实体类改为vo类
 
 ### 景点管理
+
+前端部分要注意拉取列表的命名规则
+
+### 景点路线管理
+
+只有新增和查询
+
+不包含VO
+
+使用子查询语句
