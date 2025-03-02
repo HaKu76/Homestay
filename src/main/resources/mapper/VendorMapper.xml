@@ -3,10 +3,20 @@
 <mapper namespace="com.example.mapper.VendorMapper">
 
     <insert id="save" parameterType="com.example.pojo.entity.Vendor">
-        INSERT INTO vendor (name, contact_person, contact_phone, email, product_type, work_address, user_id,
-                            is_audit, status, create_time)
-        VALUES (#{name}, #{contactPerson}, #{contactPhone}, #{email}, #{productType}, #{workAddress}, #{userId},
-                #{isAudit}, #{status}, #{createTime})
+        INSERT INTO vendor (
+        name, contact_person, contact_phone, email, product_type, work_address, user_id, is_audit, status, create_time
+        ) VALUES (
+        <if test="name != null and name != ''">#{name},</if>
+        <if test="contactPerson != null and contactPerson != ''">#{contactPerson},</if>
+        <if test="contactPhone != null and contactPhone != ''">#{contactPhone},</if>
+        <if test="email != null and email != ''">#{email},</if>
+        <if test="productType != null and productType != ''">#{productType},</if>
+        <if test="workAddress != null and workAddress != ''">#{workAddress},</if>
+        <if test="userId != null">#{userId},</if>
+        <if test="isAudit != null">#{isAudit},</if>
+        <if test="status != null">#{status},</if>
+        <if test="createTime != null">#{createTime}</if>
+        )
     </insert>
 
     <update id="update" parameterType="com.example.pojo.entity.Vendor">

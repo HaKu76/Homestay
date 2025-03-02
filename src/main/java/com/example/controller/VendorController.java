@@ -30,7 +30,6 @@ public class VendorController {
      * @return Result<Void>
      */
     @PostMapping(value = "/save")
-    @ResponseBody
     public Result<Void> save(@RequestBody Vendor vendor) {
         return vendorService.save(vendor);
     }
@@ -42,7 +41,6 @@ public class VendorController {
      * @return Result<Void>
      */
     @PutMapping(value = "/update")
-    @ResponseBody
     public Result<Void> update(@RequestBody Vendor vendor) {
         return vendorService.update(vendor);
     }
@@ -54,8 +52,7 @@ public class VendorController {
      * @return Result<Void>
      */
     @PostMapping(value = "/batchDelete")
-    @ResponseBody
-    public Result<Void> update(@RequestBody List<Integer> ids) {
+    public Result<Void> batchDelete(@RequestBody List<Integer> ids) {
         return vendorService.batchDelete(ids);
     }
 
@@ -66,7 +63,6 @@ public class VendorController {
      */
     @Pager
     @PostMapping(value = "/query")
-    @ResponseBody
     public Result<List<VendorVO>> query(@RequestBody VendorQueryDto dto) {
         return vendorService.query(dto);
     }
