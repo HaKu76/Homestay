@@ -5,25 +5,22 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 供应商查询Dto类
+ * 景点查询Dto类
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class VendorQueryDto extends QueryDto {
+public class ScenicQueryDto extends QueryDto {
     /**
-     * 供应商名称
+     * 景点名称
      */
     private String name;
+
     /**
-     * 用户ID
+     * 景点分类ID
      */
-    private Integer userId;
+    private Integer categoryId;
     /**
-     * 是否已经审核
-     */
-    private Boolean isAudit;
-    /**
-     * 供应商状态
+     * 景点状态
      */
     private Boolean status;
 }

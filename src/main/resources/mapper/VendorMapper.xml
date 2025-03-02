@@ -86,8 +86,20 @@
             <if test="id != null">
                 AND v.id = #{id}
             </if>
+            <if test="userId != null">
+                AND v.user_id = #{userId}
+            </if>
             <if test="name != null and name != ''">
-                AND v.name LIKE contact('%',#{name},'%')
+                AND v.name LIKE concat('%',#{name},'%')
+            </if>
+            <if test="isAudit != null">
+                AND v.is_audit = #{isAudit}
+            </if>
+            <if test="status != null">
+                AND v.status = #{status}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND v.create_time BETWEEN #{startTime} AND #{endTime}
             </if>
         </where>
 
