@@ -26,6 +26,26 @@ public class FileController {
     @Value("${my-server.api-context-path}")
     private String API;
 
+    public static boolean fileName(MultipartFile multipartFile, String fileName) throws IOException {
+        File fileDir = new File(PathUtils.getClassLoadRootPath() + "/assets/picture");
+        if (!fileDir.exists()) {
+            if (!fileDir.mkdirs()) {
+                return false;
+            }
+        }
+        File file = new File(fileDir.getAbsolutePath() + "/" + fileName);
+        if (file.exists()) {
+            if (!file.delete()) {
+                return false;
+            }
+        }
+        if (file.createNewFile()) {
+            multipartFile.transferTo(file);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * 文件上传
      *
@@ -40,7 +60,7 @@ public class FileController {
         try {
             if (uploadFile(multipartFile, fileName)) {
                 rep.put("code", 200);
-                rep.put("data", API+ "/file/getFile?fileName=" + fileName);
+                rep.put("data", API + "/file/getFile?fileName=" + fileName);
                 return rep;
             }
         } catch (IOException e) {
@@ -68,7 +88,7 @@ public class FileController {
         try {
             if (uploadFile(multipartFile, fileName)) {
                 rep.put("code", 200);
-                rep.put("data", API+ "/file/getFile?fileName=" + fileName);
+                rep.put("data", API + "/file/getFile?fileName=" + fileName);
                 return rep;
             }
         } catch (IOException e) {
@@ -91,26 +111,6 @@ public class FileController {
      */
     public boolean uploadFile(MultipartFile multipartFile, String fileName) throws IOException {
         return fileName(multipartFile, fileName);
-    }
-
-    public static boolean fileName(MultipartFile multipartFile, String fileName) throws IOException {
-        File fileDir = new File(PathUtils.getClassLoadRootPath() + "/assets/picture");
-        if (!fileDir.exists()) {
-            if (!fileDir.mkdirs()) {
-                return false;
-            }
-        }
-        File file = new File(fileDir.getAbsolutePath() + "/" + fileName);
-        if (file.exists()) {
-            if (!file.delete()) {
-                return false;
-            }
-        }
-        if (file.createNewFile()) {
-            multipartFile.transferTo(file);
-            return true;
-        }
-        return false;
     }
 
     /**

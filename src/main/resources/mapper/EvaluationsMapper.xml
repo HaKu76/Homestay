@@ -110,10 +110,10 @@
         FROM evaluations e
         <where>
             <if test="contentType != null and contentType != ''">
-                AND e.content_type like concat('%',#{contentType},'%')
+                AND e.content_type like contact('%',#{contentType},'%')
             </if>
             <if test="content != null and content != ''">
-                AND e.content like concat('%',#{content},'%')
+                AND e.content like contact('%',#{content},'%')
             </if>
             <if test="startTime != null and endTime != null">
                 AND e.create_time BETWEEN #{startTime} AND #{endTime}

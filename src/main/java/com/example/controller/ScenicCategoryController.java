@@ -24,45 +24,49 @@ public class ScenicCategoryController {
 
     /**
      * 景点分类新增
+     *
      * @param scenicCategory 景点分类实体
      * @return Result<Void>
      */
     @PostMapping(value = "/save")
     @ResponseBody
-    public Result<Void> save(@RequestBody ScenicCategory scenicCategory){
+    public Result<Void> save(@RequestBody ScenicCategory scenicCategory) {
         return scenicCategoryService.save(scenicCategory);
     }
 
     /**
      * 景点分类修改
+     *
      * @param scenicCategory 景点分类实体
      * @return Result<Void>
      */
     @PutMapping(value = "/update")
     @ResponseBody
-    public Result<Void> update(@RequestBody ScenicCategory scenicCategory){
+    public Result<Void> update(@RequestBody ScenicCategory scenicCategory) {
         return scenicCategoryService.update(scenicCategory);
     }
 
     /**
      * 景点分类批量删除
+     *
      * @param ids 景点分类ID列表
      * @return Result<Void>
      */
     @PostMapping(value = "/batchDelete")
     @ResponseBody
-    public Result<Void> update(@RequestBody List<Integer> ids){
+    public Result<Void> update(@RequestBody List<Integer> ids) {
         return scenicCategoryService.batchDelete(ids);
     }
 
     /**
      * 查询景点分类
+     *
      * @return Result<Void>
      */
     @Pager
     @PostMapping(value = "/query")
     @ResponseBody
-    public Result<List<ScenicCategory>> query(@RequestBody ScenicCategoryQueryDto dto){
+    public Result<List<ScenicCategory>> query(@RequestBody ScenicCategoryQueryDto dto) {
         return scenicCategoryService.query(dto);
     }
 

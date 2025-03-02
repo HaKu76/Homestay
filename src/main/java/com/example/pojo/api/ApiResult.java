@@ -35,6 +35,17 @@ public class ApiResult<T> extends Result<T> {
         this.data = data;
     }
 
+    public ApiResult(T data, Integer total) {
+        this.data = data;
+        this.total = total;
+    }
+
+    public ApiResult(Integer code, String msg, T data, Integer total) {
+        super(code, msg);
+        this.data = data;
+        this.total = total;
+    }
+
     public static <T> Result<T> success() {
         ApiResult<T> result = new ApiResult<>(ResultCode.REQUEST_SUCCESS.getCode());
         result.setData(null);
@@ -71,17 +82,5 @@ public class ApiResult<T> extends Result<T> {
 
     public static <T> Result<T> error(String msg) {
         return new Result<T>(ResultCode.REQUEST_ERROR.getCode(), msg);
-    }
-
-
-    public ApiResult(T data, Integer total) {
-        this.data = data;
-        this.total = total;
-    }
-
-    public ApiResult(Integer code, String msg, T data, Integer total) {
-        super(code, msg);
-        this.data = data;
-        this.total = total;
     }
 }

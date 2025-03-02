@@ -14,7 +14,7 @@ spring:
       max-request-size: 10MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    online-travel请修改为自己的数据库名，并修改数据库账号密码
+    #    online-travel请修改为自己的数据库名，并修改数据库账号密码
     url: jdbc:mysql://localhost:3306/homestay?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     username: root
     password: 123456

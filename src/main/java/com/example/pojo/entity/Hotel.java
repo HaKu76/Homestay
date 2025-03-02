@@ -40,7 +40,7 @@ public class Hotel {
     /**
      * 民宿联系电话
      */
-    private String concatPhone;
+    private String contactPhone;
 
     /**
      * 供应商ID

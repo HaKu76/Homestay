@@ -1,10 +1,10 @@
 package com.example.Interceptor;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.example.context.LocalThreadHolder;
 import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
 import com.example.utils.JwtUtil;
-import com.alibaba.fastjson2.JSONObject;
 import io.jsonwebtoken.Claims;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -17,8 +17,6 @@ import java.io.Writer;
  * 思路：用户登录成功后，会得到后端生成的 token，前端会将token存储于本地
  * 随后的接口请求，都会在协议头带上token
  * 所有请求执行之前，都会被该拦截器拦截：token校验通过则正常放行请求，否则直接返回
- *
- *
  */
 public class JwtInterceptor implements HandlerInterceptor {
 

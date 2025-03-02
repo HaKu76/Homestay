@@ -85,13 +85,13 @@
         FROM user u
         <where>
             <if test="userAccount != null and userAccount != ''">
-                AND u.user_account LIKE concat('%',#{userAccount},'%')
+                AND u.user_account LIKE contact('%',#{userAccount},'%')
             </if>
             <if test="userName != null and userName != ''">
-                AND u.user_name LIKE concat('%',#{userName},'%')
+                AND u.user_name LIKE contact('%',#{userName},'%')
             </if>
             <if test="userEmail != null and userEmail != ''">
-                AND u.user_email LIKE concat('%',#{userEmail},'%')
+                AND u.user_email LIKE contact('%',#{userEmail},'%')
             </if>
             <if test="role != null">
                 AND u.user_role = #{role}
@@ -119,13 +119,13 @@
         FROM user u
         <where>
             <if test="userAccount != null and userAccount != ''">
-                AND u.user_account LIKE concat('%',#{userAccount},'%')
+                AND u.user_account LIKE contact('%',#{userAccount},'%')
             </if>
             <if test="userName != null and userName != ''">
-                AND u.user_name LIKE concat('%',#{userName},'%')
+                AND u.user_name LIKE contact('%',#{userName},'%')
             </if>
             <if test="userEmail != null and userEmail != ''">
-                AND u.user_email LIKE concat('%',#{userEmail},'%')
+                AND u.user_email LIKE contact('%',#{userEmail},'%')
             </if>
             <if test="role != null">
                 AND u.user_role = #{role}

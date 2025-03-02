@@ -15,6 +15,10 @@ public enum ResultCode {
 
     private Integer code;
 
+    ResultCode(Integer code) {
+        this.code = code;
+    }
+
     @Override
     public String toString() {
         return "ResultCode{" +
@@ -27,10 +31,6 @@ public enum ResultCode {
     }
 
     public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    ResultCode(Integer code) {
         this.code = code;
     }
 }

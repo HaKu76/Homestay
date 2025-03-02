@@ -15,6 +15,14 @@ public class Result<T> {
      */
     private String msg;
 
+    public Result() {
+    }
+
+    public Result(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
     @Override
     public String toString() {
         return "Result{" +
@@ -36,14 +44,6 @@ public class Result<T> {
     }
 
     public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Result() {
-    }
-
-    public Result(Integer code, String msg) {
-        this.code = code;
         this.msg = msg;
     }
 }

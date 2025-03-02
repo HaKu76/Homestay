@@ -33,7 +33,7 @@
                 AND sc.id = #{id}
             </if>
             <if test="name != null and name != ''">
-                AND sc.name LIKE concat('%',#{name},'%')
+                AND sc.name LIKE contact('%',#{name},'%')
             </if>
         </where>
         ORDER BY sc.id DESC
@@ -52,7 +52,7 @@
                 AND sc.id = #{id}
             </if>
             <if test="name != null and name != ''">
-                AND sc.name LIKE concat('%',#{name},'%')
+                AND sc.name LIKE contact('%',#{name},'%')
             </if>
         </where>
 

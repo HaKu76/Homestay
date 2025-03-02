@@ -1,7 +1,6 @@
 package com.example.service.impl;
 
 
-
 import com.example.mapper.ScenicCategoryMapper;
 import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
@@ -21,8 +20,10 @@ public class ScenicCategoryServiceImpl implements ScenicCategoryService {
 
     @Resource
     private ScenicCategoryMapper scenicCategoryMapper;
+
     /**
      * 景点分类新增
+     *
      * @param scenicCategory 景点分类实体
      * @return
      */
@@ -31,8 +32,10 @@ public class ScenicCategoryServiceImpl implements ScenicCategoryService {
         scenicCategoryMapper.save(scenicCategory);
         return ApiResult.success();
     }
+
     /**
      * 景点分类修改
+     *
      * @param scenicCategory 景点分类实体
      * @return
      */
@@ -41,8 +44,10 @@ public class ScenicCategoryServiceImpl implements ScenicCategoryService {
         scenicCategoryMapper.update(scenicCategory);
         return ApiResult.success();
     }
+
     /**
      * 景点分类删除
+     *
      * @param ids 景点分类ID列表
      * @return
      */
@@ -51,10 +56,12 @@ public class ScenicCategoryServiceImpl implements ScenicCategoryService {
         scenicCategoryMapper.batchDelete(ids);
         return ApiResult.success();
     }
+
     /**
      * 景点分类查询
+     *
      * @param dto 查询实体
-     * @return Result<List<ScenicCategory>>
+     * @return Result<List < ScenicCategory>>
      */
     @Override
     public Result<List<ScenicCategory>> query(ScenicCategoryQueryDto dto) {

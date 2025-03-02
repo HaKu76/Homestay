@@ -47,7 +47,7 @@ public class DateUtil {
             int count = (int) dates.stream()
                     .filter(dateTime -> dateTime.toLocalDate().equals(currentDate))
                     .count();
-            if (count != 0){
+            if (count != 0) {
                 chartVOS.add(new ChartVO(dateKey, count));
             }
         }

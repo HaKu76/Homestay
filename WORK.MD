@@ -137,23 +137,23 @@ view:功能页面，要在router/index.js进行对应的路由注册
 
 一共15张表
 
-| 表名                | 备注               |
-| ------------------- | ------------------ |
-| user                | 用户信息表         |
-| evaluations         | 评论信息表         |
-| scenic_category     | 景点分类表         |
-| vendor              | 供应商信息表       |
-| scenic              | 景点信息表         |
-| scenic_line         | 景点路线表         |
-| scenic_rating       | 景点评分表         |
-| scenic_strategy     | 景点攻略表         |
-| hotel               | 民宿信息表         |
-| hotel_room          | 民宿房间信息表     |
+| 表名                  | 备注        |
+|---------------------|-----------|
+| user                | 用户信息表     |
+| evaluations         | 评论信息表     |
+| scenic_category     | 景点分类表     |
+| vendor              | 供应商信息表    |
+| scenic              | 景点信息表     |
+| scenic_line         | 景点路线表     |
+| scenic_rating       | 景点评分表     |
+| scenic_strategy     | 景点攻略表     |
+| hotel               | 民宿信息表     |
+| hotel_room          | 民宿房间信息表   |
 | hotel_room_bed      | 民宿房间床位信息表 |
 | hotel_order_info    | 民宿预约订单信息表 |
-| notice              | 公告表             |
-| scenic_ticket       | 景点门票信息表     |
-| scenic_ticket_order | 景点订票信息       |
+| notice              | 公告表       |
+| scenic_ticket       | 景点门票信息表   |
+| scenic_ticket_order | 景点订票信息    |
 
 ### 实体类建设
 
@@ -191,11 +191,11 @@ view:功能页面，要在router/index.js进行对应的路由注册
 
 基础查询类QueryDto
 
-景点分类查询Dto业务ScenicCategoryQueryDto继承基础查询
-
 > **接口（controller）和持久化数据库（mapper）中间包含业务逻辑层（service）**
 >
 > controller ---- service ---- mapper
+
+[pojo/dto/query/extend下]景点分类查询Dto业务ScenicCategoryQueryDto继承基础查询
 
 业务逻辑层service包含接口+实现类impl（Alt+Enter快速实现方法）
 
@@ -216,4 +216,10 @@ view:功能页面，要在router/index.js进行对应的路由注册
 功能页面：views/admin新增ScenicCategoryManage.vue
 
 **分页查询接口注意加Pager注解（对分页参数进行处理）**
+
+### 供应商管理
+
+关联信息时添加VO类
+
+注意修改映射为VO时牵一发动全身，所有查询相关及映射都需要将实体类改为vo类
 
