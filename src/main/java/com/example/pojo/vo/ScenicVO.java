@@ -18,4 +18,8 @@ public class ScenicVO extends Scenic {
      * 供应商名称
      */
     private String vendorName;
+    /**
+     * 评分（平均值）
+     */
+    private Double rating;
 }
