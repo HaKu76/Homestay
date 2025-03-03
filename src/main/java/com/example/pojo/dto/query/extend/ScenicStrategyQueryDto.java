@@ -13,7 +13,7 @@ public class ScenicStrategyQueryDto extends QueryDto {
     /**
      * 用户ID
      */
-    private String userID;
+    private Integer userId;
     /**
      * 景点ID
      */

@@ -15,4 +15,6 @@ public interface ScenicStrategyService {
     Result<Void> batchDelete(List<Integer> ids);
 
     Result<List<ScenicStrategyVO>> query(ScenicStrategyQueryDto dto);
+
+    Result<Void> audit(Integer id);
 }

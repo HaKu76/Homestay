@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import com.example.aop.Pager;
+import com.example.aop.Protector;
+import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.extend.ScenicStrategyQueryDto;
 import com.example.pojo.entity.ScenicStrategy;
@@ -33,6 +35,15 @@ public class ScenicStrategyController {
     @ResponseBody
     public Result<Void> save(@RequestBody ScenicStrategy scenicStrategy) {
         return scenicStrategyService.save(scenicStrategy);
+    }
+    /**
+     * 景点攻略审核
+     */
+    @Protector(role = "管理员")
+    @PostMapping(value = "/audit/{id}")
+    @ResponseBody
+    public Result<Void> audit(@PathVariable Integer id) {
+        return scenicStrategyService.audit(id);
     }
 
     /**
