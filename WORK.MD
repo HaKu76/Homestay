@@ -221,20 +221,51 @@ view:功能页面，要在router/index.js进行对应的路由注册
 
 **分页查询接口注意加Pager注解（对分页参数进行处理）**
 
-### 供应商管理
+## 供应商管理
 
 关联信息时添加VO类
 
 注意修改映射为VO时牵一发动全身，所有查询相关及映射都需要将实体类改为vo类
 
-### 景点管理
+## 景点管理
 
 前端部分要注意拉取列表的命名规则
 
-### 景点路线管理
+## 景点路线管理
+
+
+
+## 景点评分管理
 
 只有新增和查询
 
 不包含VO
 
 使用子查询语句
+
+## 景点攻略管理
+
+
+
+## 民宿管理
+
+**所有的时间查询修复**
+
+问题描述：时间查询和数据库的不匹配，假如我查询起始时间为3月5日，那么他会查询到3月4日开始的信息
+
+问题原因：问题出在 `searchTime` 的时间处理逻辑上。当前代码将 `searchTime` 转换为 ISO 字符串时，直接使用了 `toISOString()`，这会返回 UTC 时间，可能与本地时间存在时区差异，导致查询结果不准确。
+
+解决方法：修改 `fetchFreshData` 方法中的时间处理逻辑
+
+```javascript
+try {
+    let startTime = null;
+    let endTime = null;
+    if (this.searchTime != null && this.searchTime.length === 2) {
+      const [startDate, endDate] = this.searchTime;
+      // 转换为本地时间字符串，格式为 YYYY-MM-DDTHH:mm:ss
+      startTime = `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, '0')}-${String(startDate.getDate()).padStart(2, '0')}T00:00:00`;
+      endTime = `${endDate.getFullYear()}-${String(endDate.getMonth() + 1).padStart(2, '0')}-${String(endDate.getDate()).padStart(2, '0')}T23:59:59`;
+    }
+```
+
