@@ -2,16 +2,15 @@
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
     <el-row style="padding: 10px;margin-left: 10px;">
       <el-row>
-        <el-input v-model="scenicCategoryQueryDto.name" clearable
-                  placeholder="景点分类名" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+        <el-input v-model="scenicCategoryQueryDto.name" clearable placeholder="景点分类名" size="small"
+          style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
         <span style="float: right;">
-                    <el-button class="customer"
-                               size="small"
-                               style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="add()"><i
-                        class="el-icon-plus"></i>新增景点分类</el-button>
-                </span>
+          <el-button class="customer" size="small"
+            style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+            @click="add()"><i class="el-icon-plus"></i>新增景点分类</el-button>
+        </span>
       </el-row>
     </el-row>
     <el-row style="margin: 0 25px;border-top: 1px solid rgb(245,245,245);">
@@ -24,9 +23,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
-                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
-                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
+        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 操作面板 -->
     <el-dialog :show-close="false" :visible.sync="dialogOperaion" width="25%">
@@ -36,21 +35,19 @@
       <div style="padding:0 20px;">
         <el-row style="margin-bottom: 20px;">
           <span class="dialog-hover">景点分类名</span>
-          <input v-model="data.name" class="dialog-input" placeholder="景点分类名"/>
+          <input v-model="data.name" class="dialog-input" placeholder="景点分类名" />
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-                <el-button v-if="!isOperation" class="customer"
-                           size="small"
-                           style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                           type="info" @click="addOperation()">新增</el-button>
-                <el-button v-else class="customer"
-                           size="small"
-                           style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                           type="info" @click="updateOperation()">修改</el-button>
-                <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                           @click="cannel()">取消</el-button>
-            </span>
+        <el-button v-if="!isOperation" class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="addOperation()">新增</el-button>
+        <el-button v-else class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="updateOperation()">修改</el-button>
+        <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
+          @click="cannel()">取消</el-button>
+      </span>
     </el-dialog>
   </el-row>
 </template>
@@ -167,7 +164,7 @@ export default {
           ...this.scenicCategoryQueryDto
         };
         const response = await this.$axios.post('/scenicCategory/query', params);
-        const {data} = response;
+        const { data } = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -197,7 +194,7 @@ export default {
     handleEdit(row) {
       this.dialogOperaion = true;
       this.isOperation = true;
-      this.data = {...row}
+      this.data = { ...row }
     },
     handleDelete(row) {
       this.selectedRows.push(row);

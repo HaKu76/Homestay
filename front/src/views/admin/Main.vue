@@ -1,8 +1,7 @@
 <template>
   <div style="box-sizing: border-box;overflow-y: hidden;overflow-x: hidden;">
     <div style="padding: 5px;box-sizing: border-box;">
-      <LineChart :date="userDates" :values="userValues" height="280px" tag="用户存量数据"
-                 @on-selected="userDatesSelected"/>
+      <LineChart :date="userDates" :values="userValues" height="280px" tag="用户存量数据" @on-selected="userDatesSelected" />
     </div>
   </div>
 </template>
@@ -10,7 +9,7 @@
 import LineChart from "@/components/LineChart"
 
 export default {
-  components: {LineChart},
+  components: { LineChart },
   data() {
     return {
       userValues: [],
@@ -38,7 +37,7 @@ export default {
         size: 2
       }
       this.$axios.post(`/message/query`, messageQueryDto).then(response => {
-        const {data} = response;
+        const { data } = response;
         if (data.code === 200) {
           this.messageList = data.data;
         }
@@ -46,7 +45,7 @@ export default {
     },
     loadPieCharts() {
       this.$axios.get(`/views/staticControls`).then(response => {
-        const {data} = response;
+        const { data } = response;
         if (data.code === 200) {
           this.pieValues = data.data.map(entity => entity.count);
           this.pieTypes = data.data.map(entity => entity.name);
@@ -55,7 +54,7 @@ export default {
     },
     modelDatesSelected(time) {
       this.$axios.get(`/user-health/daysQuery/${time}`).then(response => {
-        const {data} = response;
+        const { data } = response;
         if (data.code === 200) {
           this.modelValues = data.data.map(entity => entity.count);
           this.modelDates = data.data.map(entity => entity.name);
@@ -64,7 +63,7 @@ export default {
     },
     userDatesSelected(time) {
       this.$axios.get(`/user/daysQuery/${time}`).then(response => {
-        const {data} = response;
+        const { data } = response;
         if (data.code === 200) {
           this.userValues = data.data.map(entity => entity.count);
           this.userDates = data.data.map(entity => entity.name);

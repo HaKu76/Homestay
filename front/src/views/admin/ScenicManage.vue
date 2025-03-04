@@ -437,9 +437,10 @@ export default {
         let startTime = null;
         let endTime = null;
         if (this.searchTime != null && this.searchTime.length === 2) {
-          const [startDate, endDate] = await Promise.all(this.searchTime.map(date => date.toISOString()));
-          startTime = `${startDate.split('T')[0]}T00:00:00`;
-          endTime = `${endDate.split('T')[0]}T23:59:59`;
+          const [startDate, endDate] = this.searchTime;
+          // 转换为本地时间字符串，格式为 YYYY-MM-DDTHH:mm:ss
+          startTime = `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, '0')}-${String(startDate.getDate()).padStart(2, '0')}T00:00:00`;
+          endTime = `${endDate.getFullYear()}-${String(endDate.getMonth() + 1).padStart(2, '0')}-${String(endDate.getDate()).padStart(2, '0')}T23:59:59`;
         }
         // 请求参数
         const params = {

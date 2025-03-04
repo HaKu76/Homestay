@@ -2,16 +2,16 @@
   <div class="menu-container">
     <div :class="{ 'menu-side-narrow': flag }" class="menu-side">
       <div style="display: flex;align-items: center;">
-        <Logo :bag="colorLogo" :flag="flag" style="padding: 0 40px;margin: 10px 0;" sysName="旅游后台"/>
+        <Logo :bag="colorLogo" :flag="flag" style="padding: 0 40px;margin: 10px 0;" sysName="旅游后台" />
       </div>
       <div style="margin-top: 12px;">
-        <AdminMenu :bag="bagMenu" :flag="flag" :routes="adminRoutes" @select="handleRouteSelect"/>
+        <AdminMenu :bag="bagMenu" :flag="flag" :routes="adminRoutes" @select="handleRouteSelect" />
       </div>
     </div>
     <div class="main">
       <div class="header-section">
         <LevelHeader :tag="tag" :userInfo="userInfo" @eventListener="eventListener"
-                     @selectOperation="selectOperation"/>
+          @selectOperation="selectOperation" />
       </div>
       <div class="content-section">
         <router-view></router-view>
@@ -28,7 +28,7 @@
             <span class="modelName">*头像</span>
           </p>
           <el-upload :on-success="handleAvatarSuccess" :show-file-list="false"
-                     action="/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
+            action="/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
             <img v-if="userInfo.url" :src="userInfo.url" style="width: 80px;height: 80px;">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
@@ -47,18 +47,18 @@
         </el-row>
       </el-row>
       <span slot="footer" class="dialog-footer">
-                <el-button class="customer" size="small" style="background-color: rgb(241, 241, 241);border: none;"
-                           @click="dialogOperaion = false">取 消</el-button>
-                <el-button class="customer" size="small" style="background-color: #15559a;border: none;" type="info"
-                           @click="updateUserInfo">修改</el-button>
-            </span>
+        <el-button class="customer" size="small" style="background-color: rgb(241, 241, 241);border: none;"
+          @click="dialogOperaion = false">取 消</el-button>
+        <el-button class="customer" size="small" style="background-color: #15559a;border: none;" type="info"
+          @click="updateUserInfo">修改</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
 <script>
 import request from "@/utils/request.js";
 import router from "@/router/index";
-import {clearToken} from "@/utils/storage"
+import { clearToken } from "@/utils/storage"
 import AdminMenu from '@/components/VerticalMenu.vue';
 import Logo from '@/components/Logo.vue';
 import LevelHeader from '@/components/LevelHeader.vue';
@@ -105,7 +105,7 @@ export default {
           userEmail: this.userInfo.email
         }
         const resposne = await this.$axios.put(`/user/update`, userUpdateDTO);
-        const {data} = resposne;
+        const { data } = resposne;
         if (data.code === 200) {
           this.dialogOperaion = false;
           this.tokenCheckLoad();
@@ -192,8 +192,8 @@ export default {
           return;
         }
         // 用户信息赋值
-        const {id, userAvatar: url, userName: name, userRole: role, userEmail: email} = res.data.data;
-        this.userInfo = {id, url, name, role, email};
+        const { id, userAvatar: url, userName: name, userRole: role, userEmail: email } = res.data.data;
+        this.userInfo = { id, url, name, role, email };
         // 根据角色解析路由
         const rolePath = role === 1 ? '/admin' : '/user';
         const targetMenu = router.options.routes.find(route => route.path === rolePath);

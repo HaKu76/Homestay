@@ -3,10 +3,10 @@
     <el-row style="padding: 10px;margin: 0 10px;">
       <el-row>
         <el-date-picker v-model="searchTime" end-placeholder="评论结束" range-separator="至" size="small"
-                        start-placeholder="评论开始" style="width: 220px;" type="daterange">
+          start-placeholder="评论开始" style="width: 220px;" type="daterange">
         </el-date-picker>
-        <el-input v-model="evalustionsQueryDto.content" clearable
-                  placeholder="评论内容" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+        <el-input v-model="evalustionsQueryDto.content" clearable placeholder="评论内容" size="small"
+          style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>
@@ -22,9 +22,9 @@
         </el-table-column>
         <el-table-column label="点赞" prop="upvoteList" width="60">
           <template slot-scope="scope">
-                        <span v-if="scope.row.upvoteList !== null" style="font-size: 16px;font-weight: bolder;">{{
-                            scope.row.upvoteList.split(',').length
-                          }}</span>
+            <span v-if="scope.row.upvoteList !== null" style="font-size: 16px;font-weight: bolder;">{{
+              scope.row.upvoteList.split(',').length
+            }}</span>
             <span v-else style="font-size: 16px;font-weight: bolder;">0</span>
           </template>
         </el-table-column>
@@ -53,7 +53,7 @@
             <i v-if="scope.row.parentId === null" class="el-icon-warning" style="margin-right: 5px;"></i>
             <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
             <span v-if="scope.row.parentId === null"
-                  style="text-decoration: underline;text-decoration-style: dashed;">父级</span>
+              style="text-decoration: underline;text-decoration-style: dashed;">父级</span>
             <span v-else>子级</span>
           </template>
         </el-table-column>
@@ -63,9 +63,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[20, 50]"
-                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin: 10px 0;"
-                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[20, 50]" :total="totalItems"
+        layout="total, sizes, prev, pager, next, jumper" style="margin: 10px 0;" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 举报面板 -->
     <el-dialog :show-close="false" :visible.sync="reportDialog" title="" width="35%">
@@ -74,7 +74,7 @@
       </div>
       <el-row style="padding: 10px 20px 20px 20px;">
         <el-col :span="12">
-          <PieChart :types="types" :values="values"/>
+          <PieChart :types="types" :values="values" />
         </el-col>
         <el-col :span="12">
           <el-row class="main">
@@ -83,9 +83,9 @@
             </div>
             <el-col v-for="(entity, index) in reportsDate" :key="index" :span="6" class="item">
               <div class="count" style="margin-top: 20px;">
-                                <span>
-                                    {{ entity.count }}
-                                </span>
+                <span>
+                  {{ entity.count }}
+                </span>
               </div>
               <div>{{ entity.name }}</div>
             </el-col>
@@ -93,9 +93,9 @@
         </el-col>
       </el-row>
       <span slot="footer" class="dialog-footer">
-                <el-button class="customer" size="small" style="background-color: rgb(241, 241, 241);border: none;"
-                           @click="reportDialog = false">取 消</el-button>
-            </span>
+        <el-button class="customer" size="small" style="background-color: rgb(241, 241, 241);border: none;"
+          @click="reportDialog = false">取 消</el-button>
+      </span>
     </el-dialog>
   </el-row>
 </template>
@@ -111,7 +111,7 @@ export default {
   },
   data() {
     return {
-      data: {cover: ''},
+      data: { cover: '' },
       reportsDate: [],
       filterText: '',
       tableData: [],
@@ -154,7 +154,7 @@ export default {
     },
     async reportList(id) {
       const response = await this.$axios(`/evaluations-reports/reportCount/${id}`);
-      const {data} = response;
+      const { data } = response;
       this.reportsDate = data.data;
       this.types = this.reportsDate.map(entity => entity.name);
       this.values = this.reportsDate.map(entity => entity.count);
@@ -343,7 +343,7 @@ export default {
         };
         // 使用await等待请求完成
         let response = await this.$axios.post('/evaluations/query', params);
-        const {data} = response;
+        const { data } = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {

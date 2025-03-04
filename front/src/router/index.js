@@ -67,14 +67,21 @@ const routes = [
             {
                 path: "/scenicStrategyManage",
                 name: '景点攻略管理',
-                icon: 'el-icon-s-grid',
+                icon: 'el-icon-notebook-2',  // 修改为笔记本图标
                 component: () => import(`@/views/admin/ScenicStrategyManage.vue`),
+                meta: { requireAuth: true },
+            },
+            {
+                path: "/hotelManage",
+                name: '民宿管理',
+                icon: 'el-icon-house',  // 修改为房屋图标
+                component: () => import(`@/views/admin/HotelManage.vue`),
                 meta: { requireAuth: true },
             },
             {
                 path: "/scenicCategoryManage",
                 name: '景点分类管理',
-                icon: 'el-icon-s-grid',
+                icon: 'el-icon-collection-tag',  // 修改为分类标签图标
                 component: () => import(`@/views/admin/ScenicCategoryManage.vue`),
                 meta: { requireAuth: true },
             },

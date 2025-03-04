@@ -7,28 +7,27 @@
           </el-option>
         </el-select>
         <el-select v-model="userQueryDto.isWord" placeholder="禁言状态" size="small" style="margin-left: 5px;"
-                   @change="fetchFreshData">
+          @change="fetchFreshData">
           <el-option v-for="item in wordStatuList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
         <el-select v-model="userQueryDto.role" placeholder="用户角色" size="small" style="margin-left: 5px;"
-                   @change="fetchFreshData">
+          @change="fetchFreshData">
           <el-option v-for="item in rolesList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-date-picker v-model="searchTime" end-placeholder="注册结束" range-separator="至"
-                        size="small" start-placeholder="注册开始" style="width: 220px;margin-left: 5px;" type="daterange">
+        <el-date-picker v-model="searchTime" end-placeholder="注册结束" range-separator="至" size="small"
+          start-placeholder="注册开始" style="width: 220px;margin-left: 5px;" type="daterange">
         </el-date-picker>
-        <el-input v-model="userQueryDto.userName" clearable
-                  placeholder="用户名" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+        <el-input v-model="userQueryDto.userName" clearable placeholder="用户名" size="small"
+          style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
         <span style="float: right;">
-                    <el-button class="customer"
-                               size="small"
-                               style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="add()"><i
-                        class="el-icon-plus"></i>新增用户</el-button>
-                </span>
+          <el-button class="customer" size="small"
+            style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+            @click="add()"><i class="el-icon-plus"></i>新增用户</el-button>
+        </span>
       </el-row>
     </el-row>
     <el-row style="margin: 0 20px;border-top: 1px solid rgb(245,245,245);">
@@ -50,8 +49,8 @@
           <template slot-scope="scope">
             <i v-if="scope.row.isLogin" class="el-icon-warning" style="margin-right: 5px;"></i>
             <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
-            <el-tooltip v-if="scope.row.isLogin" class="item" content="账号一经封号，不可登录系统。经由管理员解禁后，方可登录"
-                        effect="dark" placement="bottom-end">
+            <el-tooltip v-if="scope.row.isLogin" class="item" content="账号一经封号，不可登录系统。经由管理员解禁后，方可登录" effect="dark"
+              placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">已封号</span>
             </el-tooltip>
             <span v-else>正常</span>
@@ -61,8 +60,8 @@
           <template slot-scope="scope">
             <i v-if="scope.row.isWord" class="el-icon-warning" style="margin-right: 5px;"></i>
             <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
-            <el-tooltip v-if="scope.row.isWord" class="item" content="账号一经禁言，不可评论互动。经由管理员解禁后，方可评论"
-                        effect="dark" placement="bottom-end">
+            <el-tooltip v-if="scope.row.isWord" class="item" content="账号一经禁言，不可评论互动。经由管理员解禁后，方可评论" effect="dark"
+              placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">已禁言</span>
             </el-tooltip>
             <span v-else>正常</span>
@@ -77,9 +76,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[5, 7]"
-                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
-                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[5, 7]" :total="totalItems"
+        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 操作面板 -->
     <el-dialog :show-close="false" :visible.sync="dialogUserOperaion" width="25%">
@@ -89,34 +88,32 @@
       <div style="padding:0 20px;">
         <el-row>
           <el-upload :on-success="handleAvatarSuccess" :show-file-list="false"
-                     action="/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
+            action="/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
             <img v-if="userAvatar" :src="userAvatar" class="dialog-avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-row>
         <el-row>
           <span class="dialog-hover">用户名</span>
-          <input v-model="data.userName" class="dialog-input" placeholder="用户名"/>
+          <input v-model="data.userName" class="dialog-input" placeholder="用户名" />
           <span class="dialog-hover">账号</span>
-          <input v-model="data.userAccount" class="dialog-input" placeholder="账号"/>
+          <input v-model="data.userAccount" class="dialog-input" placeholder="账号" />
           <span class="dialog-hover">邮箱</span>
-          <input v-model="data.userEmail" class="dialog-input" placeholder="邮箱"/>
+          <input v-model="data.userEmail" class="dialog-input" placeholder="邮箱" />
           <span class="dialog-hover">密码</span>
-          <input v-model="userPwd" class="dialog-input" placeholder="密码" type="password"/>
+          <input v-model="userPwd" class="dialog-input" placeholder="密码" type="password" />
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-                <el-button v-if="!isOperation" class="customer"
-                           size="small"
-                           style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                           type="info" @click="addOperation()">新增</el-button>
-                <el-button v-else class="customer"
-                           size="small"
-                           style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                           type="info" @click="updateOperation()">修改</el-button>
-                <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                           @click="cannel()">取消</el-button>
-            </span>
+        <el-button v-if="!isOperation" class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="addOperation()">新增</el-button>
+        <el-button v-else class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="updateOperation()">修改</el-button>
+        <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
+          @click="cannel()">取消</el-button>
+      </span>
     </el-dialog>
     <el-dialog :show-close="false" :visible.sync="dialogStatusOperation" width="25%">
       <div slot="title">
@@ -125,21 +122,22 @@
       <div style="padding:0 20px;">
         <el-row>
           <el-switch v-model="data.isLogin" active-color="#13ce66" active-text="封号" inactive-color="#ff4949"
-                     inactive-text="正常状态">
+            inactive-text="正常状态">
           </el-switch>
         </el-row>
         <el-row style="margin: 20px 0;">
           <el-switch v-model="data.isWord" active-color="#13ce66" active-text="禁言" inactive-color="#ff4949"
-                     inactive-text="正常状态">
+            inactive-text="正常状态">
           </el-switch>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-                <el-button class="customer" size="small"
-                           style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="comfirmStatus">确认</el-button>
-                <el-button class="customer" size="small" style="background-color: rgb(241, 241, 241);border: none;"
-                           @click="dialogStatusOperation = false">取消</el-button>
-            </span>
+        <el-button class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="comfirmStatus">确认</el-button>
+        <el-button class="customer" size="small" style="background-color: rgb(241, 241, 241);border: none;"
+          @click="dialogStatusOperation = false">取消</el-button>
+      </span>
     </el-dialog>
   </el-row>
 </template>
@@ -163,9 +161,9 @@ export default {
       selectedRows: [],
       status: null,
       userQueryDto: {}, // 搜索条件
-      loginStatuList: [{value: null, label: '全部'}, {value: 0, label: '正常'}, {value: 1, label: '封号'}],
-      wordStatuList: [{value: null, label: '全部'}, {value: 0, label: '正常'}, {value: 1, label: '禁言'}],
-      rolesList: [{value: null, label: '全部'}, {value: 2, label: '用户'}, {value: 1, label: '管理员'}]
+      loginStatuList: [{ value: null, label: '全部' }, { value: 0, label: '正常' }, { value: 1, label: '封号' }],
+      wordStatuList: [{ value: null, label: '全部' }, { value: 0, label: '正常' }, { value: 1, label: '禁言' }],
+      rolesList: [{ value: null, label: '全部' }, { value: 2, label: '用户' }, { value: 1, label: '管理员' }]
     };
   },
   created() {
@@ -222,7 +220,7 @@ export default {
     },
     async handleSwitchChange(id, status, operation) {
       try {
-        let param = {id: id}
+        let param = { id: id }
         // 登录状态
         if (operation) {
           param.isLogin = status;
@@ -346,9 +344,10 @@ export default {
         let startTime = null;
         let endTime = null;
         if (this.searchTime != null && this.searchTime.length === 2) {
-          const [startDate, endDate] = await Promise.all(this.searchTime.map(date => date.toISOString()));
-          startTime = `${startDate.split('T')[0]}T00:00:00`;
-          endTime = `${endDate.split('T')[0]}T23:59:59`;
+          const [startDate, endDate] = this.searchTime;
+          // 转换为本地时间字符串，格式为 YYYY-MM-DDTHH:mm:ss
+          startTime = `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, '0')}-${String(startDate.getDate()).padStart(2, '0')}T00:00:00`;
+          endTime = `${endDate.getFullYear()}-${String(endDate.getMonth() + 1).padStart(2, '0')}-${String(endDate.getDate()).padStart(2, '0')}T23:59:59`;
         }
         // 请求参数
         const params = {
@@ -360,7 +359,7 @@ export default {
           ...this.userQueryDto
         };
         const response = await this.$axios.post('/user/query', params);
-        const {data} = response;
+        const { data } = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -392,7 +391,7 @@ export default {
       this.isOperation = true;
       row.userPwd = null;
       this.userAvatar = row.userAvatar;
-      this.data = {...row}
+      this.data = { ...row }
     },
     handleDelete(row) {
       this.selectedRows.push(row);
