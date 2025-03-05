@@ -5,18 +5,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 民宿查询Dto类
+ * 民宿房间查询Dto类
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class HotelQueryDto extends QueryDto {
+public class HotelRoomQueryDto extends QueryDto {
     /**
-     * 民宿名称
+     * 民宿房间名称
      */
     private String name;
     /**
-     * 供应商ID
+     * 民宿ID
      */
-    private Integer vendorId;
+    private Integer hotelId;
 
 }

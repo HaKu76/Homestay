@@ -7,26 +7,26 @@
           </el-option>
         </el-select>
         <el-select v-model="userQueryDto.isWord" placeholder="禁言状态" size="small" style="margin-left: 5px;"
-          @change="fetchFreshData">
+                   @change="fetchFreshData">
           <el-option v-for="item in wordStatuList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
         <el-select v-model="userQueryDto.role" placeholder="用户角色" size="small" style="margin-left: 5px;"
-          @change="fetchFreshData">
+                   @change="fetchFreshData">
           <el-option v-for="item in rolesList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
         <el-date-picker v-model="searchTime" end-placeholder="注册结束" range-separator="至" size="small"
-          start-placeholder="注册开始" style="width: 220px;margin-left: 5px;" type="daterange">
+                        start-placeholder="注册开始" style="width: 220px;margin-left: 5px;" type="daterange">
         </el-date-picker>
         <el-input v-model="userQueryDto.userName" clearable placeholder="用户名" size="small"
-          style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+                  style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
         <span style="float: right;">
           <el-button class="customer" size="small"
-            style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-            @click="add()"><i class="el-icon-plus"></i>新增用户</el-button>
+                     style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                     @click="add()"><i class="el-icon-plus"></i>新增用户</el-button>
         </span>
       </el-row>
     </el-row>
@@ -49,8 +49,9 @@
           <template slot-scope="scope">
             <i v-if="scope.row.isLogin" class="el-icon-warning" style="margin-right: 5px;"></i>
             <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
-            <el-tooltip v-if="scope.row.isLogin" class="item" content="账号一经封号，不可登录系统。经由管理员解禁后，方可登录" effect="dark"
-              placement="bottom-end">
+            <el-tooltip v-if="scope.row.isLogin" class="item"
+                        content="账号一经封号，不可登录系统。经由管理员解禁后，方可登录" effect="dark"
+                        placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">已封号</span>
             </el-tooltip>
             <span v-else>正常</span>
@@ -60,8 +61,9 @@
           <template slot-scope="scope">
             <i v-if="scope.row.isWord" class="el-icon-warning" style="margin-right: 5px;"></i>
             <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
-            <el-tooltip v-if="scope.row.isWord" class="item" content="账号一经禁言，不可评论互动。经由管理员解禁后，方可评论" effect="dark"
-              placement="bottom-end">
+            <el-tooltip v-if="scope.row.isWord" class="item"
+                        content="账号一经禁言，不可评论互动。经由管理员解禁后，方可评论" effect="dark"
+                        placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">已禁言</span>
             </el-tooltip>
             <span v-else>正常</span>
@@ -77,42 +79,43 @@
         </el-table-column>
       </el-table>
       <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[5, 7]" :total="totalItems"
-        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"></el-pagination>
+                     layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 操作面板 -->
-    <el-dialog :show-close="false" :visible.sync="dialogUserOperaion" width="25%">
+    <el-dialog :show-close="false" :visible.sync="dialogUserOperation" width="25%">
       <div slot="title">
         <p class="dialog-title">{{ !isOperation ? '新增用户' : '修改用户信息' }}</p>
       </div>
       <div style="padding:0 20px;">
         <el-row>
           <el-upload :on-success="handleAvatarSuccess" :show-file-list="false"
-            action="/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
+                     action="/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
             <img v-if="userAvatar" :src="userAvatar" class="dialog-avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-row>
         <el-row>
           <span class="dialog-hover">用户名</span>
-          <input v-model="data.userName" class="dialog-input" placeholder="用户名" />
+          <input v-model="data.userName" class="dialog-input" placeholder="用户名"/>
           <span class="dialog-hover">账号</span>
-          <input v-model="data.userAccount" class="dialog-input" placeholder="账号" />
+          <input v-model="data.userAccount" class="dialog-input" placeholder="账号"/>
           <span class="dialog-hover">邮箱</span>
-          <input v-model="data.userEmail" class="dialog-input" placeholder="邮箱" />
+          <input v-model="data.userEmail" class="dialog-input" placeholder="邮箱"/>
           <span class="dialog-hover">密码</span>
-          <input v-model="userPwd" class="dialog-input" placeholder="密码" type="password" />
+          <input v-model="userPwd" class="dialog-input" placeholder="密码" type="password"/>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button v-if="!isOperation" class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="addOperation()">新增</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="addOperation()">新增</el-button>
         <el-button v-else class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="updateOperation()">修改</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="updateOperation()">修改</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-          @click="cannel()">取消</el-button>
+                   @click="cannel()">取消</el-button>
       </span>
     </el-dialog>
     <el-dialog :show-close="false" :visible.sync="dialogStatusOperation" width="25%">
@@ -122,21 +125,21 @@
       <div style="padding:0 20px;">
         <el-row>
           <el-switch v-model="data.isLogin" active-color="#13ce66" active-text="封号" inactive-color="#ff4949"
-            inactive-text="正常状态">
+                     inactive-text="正常状态">
           </el-switch>
         </el-row>
         <el-row style="margin: 20px 0;">
           <el-switch v-model="data.isWord" active-color="#13ce66" active-text="禁言" inactive-color="#ff4949"
-            inactive-text="正常状态">
+                     inactive-text="正常状态">
           </el-switch>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="comfirmStatus">确认</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="comfirmStatus">确认</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(241, 241, 241);border: none;"
-          @click="dialogStatusOperation = false">取消</el-button>
+                   @click="dialogStatusOperation = false">取消</el-button>
       </span>
     </el-dialog>
   </el-row>
@@ -154,16 +157,16 @@ export default {
       pageSize: 7,
       totalItems: 0,
       dialogStatusOperation: false,
-      dialogUserOperaion: false, // 开关
+      dialogUserOperation: false, // 开关
       isOperation: false, // 开关-标识新增或修改
       tableData: [],
       searchTime: [],
       selectedRows: [],
       status: null,
       userQueryDto: {}, // 搜索条件
-      loginStatuList: [{ value: null, label: '全部' }, { value: 0, label: '正常' }, { value: 1, label: '封号' }],
-      wordStatuList: [{ value: null, label: '全部' }, { value: 0, label: '正常' }, { value: 1, label: '禁言' }],
-      rolesList: [{ value: null, label: '全部' }, { value: 2, label: '用户' }, { value: 1, label: '管理员' }]
+      loginStatuList: [{value: null, label: '全部'}, {value: 0, label: '正常'}, {value: 1, label: '封号'}],
+      wordStatuList: [{value: null, label: '全部'}, {value: 0, label: '正常'}, {value: 1, label: '禁言'}],
+      rolesList: [{value: null, label: '全部'}, {value: 2, label: '用户'}, {value: 1, label: '管理员'}]
     };
   },
   created() {
@@ -174,7 +177,7 @@ export default {
       this.data = {};
       this.userAvatar = '';
       this.userPwd = '';
-      this.dialogUserOperaion = false;
+      this.dialogUserOperation = false;
       this.dialogStatusOperation = false;
       this.isOperation = false;
     },
@@ -220,7 +223,7 @@ export default {
     },
     async handleSwitchChange(id, status, operation) {
       try {
-        let param = { id: id }
+        let param = {id: id}
         // 登录状态
         if (operation) {
           param.isLogin = status;
@@ -264,7 +267,7 @@ export default {
               timer: 2000,
             });
             this.fetchFreshData();
-            return;
+
           }
         } catch (e) {
           this.$swal.fire({
@@ -333,7 +336,7 @@ export default {
       }
     },
     closeDialog() {
-      this.dialogUserOperaion = false;
+      this.dialogUserOperation = false;
     },
     clearFormData() {
       this.data = {};
@@ -359,7 +362,7 @@ export default {
           ...this.userQueryDto
         };
         const response = await this.$axios.post('/user/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -367,7 +370,7 @@ export default {
       }
     },
     add() {
-      this.dialogUserOperaion = true;
+      this.dialogUserOperation = true;
     },
     handleFilter() {
       this.currentPage = 1;
@@ -387,11 +390,11 @@ export default {
       this.fetchFreshData();
     },
     handleEdit(row) {
-      this.dialogUserOperaion = true;
+      this.dialogUserOperation = true;
       this.isOperation = true;
       row.userPwd = null;
       this.userAvatar = row.userAvatar;
-      this.data = { ...row }
+      this.data = {...row}
     },
     handleDelete(row) {
       this.selectedRows.push(row);

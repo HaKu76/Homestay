@@ -7,8 +7,9 @@
           <el-avatar :src="userData.userAvatar"></el-avatar>
         </el-col>
         <el-col :span="22">
-          <div :style="{ backgroundColor: bgColor, height: isFocused ? '120px' : '70px', borderColor: isFocused ? '#007bff' : 'transparent' }"
-               class="parent-comment">
+          <div
+              :style="{ backgroundColor: bgColor, height: isFocused ? '120px' : '70px', borderColor: isFocused ? '#007bff' : 'transparent' }"
+              class="parent-comment">
                         <textarea v-model="content" class="comment-parent-input" placeholder="请友好交流"
                                   @blur="onBlur"
                                   @focus="onFocus"></textarea>
@@ -111,7 +112,8 @@
               </el-row>
               <el-row style="padding: 10px 0;">
                 <span style="font-size: 14px;color: #8A919F;">{{ commentChild.time }}</span>
-                <el-popconfirm v-if="commentChild.userId == userId" cancel-button-text='不删了' confirm-button-text='好的'
+                <el-popconfirm v-if="commentChild.userId == userId" cancel-button-text='不删了'
+                               confirm-button-text='好的'
                                icon="el-icon-info" icon-color="red" title="删除该条评论？"
                                @confirm="deleteComment(commentChild)">
                                     <span slot="reference"
@@ -224,7 +226,7 @@ export default {
     content() {
       if (this.content === '') {
         this.isFocused = false;
-        return;
+
       }
     },
   },

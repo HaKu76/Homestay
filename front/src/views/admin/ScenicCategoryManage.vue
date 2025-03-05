@@ -3,13 +3,13 @@
     <el-row style="padding: 10px;margin-left: 10px;">
       <el-row>
         <el-input v-model="scenicCategoryQueryDto.name" clearable placeholder="景点分类名" size="small"
-          style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+                  style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
         <span style="float: right;">
           <el-button class="customer" size="small"
-            style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-            @click="add()"><i class="el-icon-plus"></i>新增景点分类</el-button>
+                     style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                     @click="add()"><i class="el-icon-plus"></i>新增景点分类</el-button>
         </span>
       </el-row>
     </el-row>
@@ -24,29 +24,30 @@
         </el-table-column>
       </el-table>
       <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
-        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"></el-pagination>
+                     layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 操作面板 -->
-    <el-dialog :show-close="false" :visible.sync="dialogOperaion" width="25%">
+    <el-dialog :show-close="false" :visible.sync="dialogOperation" width="25%">
       <div slot="title">
         <p class="dialog-title">{{ !isOperation ? '新增景点分类' : '修改景点分类信息' }}</p>
       </div>
       <div style="padding:0 20px;">
         <el-row style="margin-bottom: 20px;">
           <span class="dialog-hover">景点分类名</span>
-          <input v-model="data.name" class="dialog-input" placeholder="景点分类名" />
+          <input v-model="data.name" class="dialog-input" placeholder="景点分类名"/>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button v-if="!isOperation" class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="addOperation()">新增</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="addOperation()">新增</el-button>
         <el-button v-else class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="updateOperation()">修改</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="updateOperation()">修改</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-          @click="cannel()">取消</el-button>
+                   @click="cannel()">取消</el-button>
       </span>
     </el-dialog>
   </el-row>
@@ -61,7 +62,7 @@ export default {
       currentPage: 1,//当前页
       pageSize: 10,//页面大小
       totalItems: 0,//总条数
-      dialogOperaion: false, // 开关
+      dialogOperation: false, // 开关
       isOperation: false, // 开关-标识新增或修改
       tableData: [],//列表数据
       selectedRows: [],
@@ -75,7 +76,7 @@ export default {
     // 置位
     cannel() {
       this.data = {};
-      this.dialogOperaion = false;
+      this.dialogOperation = false;
       this.isOperation = false;
     },
     // 批量删除数据
@@ -102,7 +103,7 @@ export default {
               timer: 2000,
             });
             this.fetchFreshData();
-            return;
+
           }
         } catch (e) {
           this.$swal.fire({
@@ -164,7 +165,7 @@ export default {
           ...this.scenicCategoryQueryDto
         };
         const response = await this.$axios.post('/scenicCategory/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -172,7 +173,7 @@ export default {
       }
     },
     add() {
-      this.dialogOperaion = true;
+      this.dialogOperation = true;
     },
     handleFilter() {
       this.currentPage = 1;
@@ -192,9 +193,9 @@ export default {
       this.fetchFreshData();
     },
     handleEdit(row) {
-      this.dialogOperaion = true;
+      this.dialogOperation = true;
       this.isOperation = true;
-      this.data = { ...row }
+      this.data = {...row}
     },
     handleDelete(row) {
       this.selectedRows.push(row);

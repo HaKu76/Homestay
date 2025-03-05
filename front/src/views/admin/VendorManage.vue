@@ -2,54 +2,55 @@
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
     <el-row style="padding: 10px;margin: 0 5px;">
       <el-row>
-        <el-select @change="fetchFreshData" size="small" v-model="vendorQueryDto.isAudit" placeholder="审核状态">
+        <el-select v-model="vendorQueryDto.isAudit" placeholder="审核状态" size="small" @change="fetchFreshData">
           <el-option v-for="item in isAuditList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-select @change="fetchFreshData" size="small" v-model="vendorQueryDto.status" style="margin-left: 5px;"
-          placeholder="可用状态">
+        <el-select v-model="vendorQueryDto.status" placeholder="可用状态" size="small" style="margin-left: 5px;"
+                   @change="fetchFreshData">
           <el-option v-for="item in statusList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-date-picker size="small" style="width: 220px;margin-left: 5px;" v-model="searchTime" type="daterange"
-          range-separator="至" start-placeholder="申请开始" end-placeholder="申请结束">
+        <el-date-picker v-model="searchTime" end-placeholder="申请结束" range-separator="至" size="small"
+                        start-placeholder="申请开始" style="width: 220px;margin-left: 5px;" type="daterange">
         </el-date-picker>
-        <el-input size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" v-model="vendorQueryDto.name"
-          placeholder="供应商名" clearable @clear="handleFilterClear">
-          <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
+        <el-input v-model="vendorQueryDto.name" clearable placeholder="供应商名"
+                  size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+          <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
         <span style="float: right;">
-          <el-button size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-            class="customer" type="info" @click="add()"><i class="el-icon-plus"></i>新增供应商</el-button>
+          <el-button class="customer" size="small"
+                     style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="add()"><i class="el-icon-plus"></i>新增供应商</el-button>
         </span>
       </el-row>
     </el-row>
     <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="name" label="供应商名"></el-table-column>
-        <el-table-column prop="userId" sortable width="120" label="负责人ID"></el-table-column>
-        <el-table-column prop="userName" width="70" label="负责人"></el-table-column>
-        <el-table-column prop="contactPerson" width="100" label="联系人"></el-table-column>
-        <el-table-column prop="contactPhone" width="130" label="联系电话"></el-table-column>
-        <el-table-column prop="workAddress" width="130" label="工作地点"></el-table-column>
-        <el-table-column prop="createTime" sortable width="168" label="创建时间"></el-table-column>
-        <el-table-column prop="isWord" width="98" label="是否审核">
+        <el-table-column label="供应商名" prop="name"></el-table-column>
+        <el-table-column label="负责人ID" prop="userId" sortable width="120"></el-table-column>
+        <el-table-column label="负责人" prop="userName" width="70"></el-table-column>
+        <el-table-column label="联系人" prop="contactPerson" width="100"></el-table-column>
+        <el-table-column label="联系电话" prop="contactPhone" width="130"></el-table-column>
+        <el-table-column label="工作地点" prop="workAddress" width="130"></el-table-column>
+        <el-table-column label="创建时间" prop="createTime" sortable width="168"></el-table-column>
+        <el-table-column label="是否审核" prop="isWord" width="98">
           <template slot-scope="scope">
-            <i v-if="!scope.row.isAudit" style="margin-right: 5px;" class="el-icon-warning"></i>
-            <i v-else style="margin-right: 5px;color: rgb(253, 199, 50);" class="el-icon-success"></i>
-            <el-tooltip v-if="scope.row.isAudit" class="item" effect="dark" content="审核通过后，供应商才可以发布服务或者商品"
-              placement="bottom-end">
+            <i v-if="!scope.row.isAudit" class="el-icon-warning" style="margin-right: 5px;"></i>
+            <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
+            <el-tooltip v-if="scope.row.isAudit" class="item" content="审核通过后，供应商才可以发布服务或者商品"
+                        effect="dark"
+                        placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">已审核</span>
             </el-tooltip>
             <span v-else>未审核</span>
           </template>
         </el-table-column>
-        <el-table-column prop="isWord" width="108" label="状态">
+        <el-table-column label="状态" prop="isWord" width="108">
           <template slot-scope="scope">
-            <i v-if="!scope.row.status" style="margin-right: 5px;" class="el-icon-warning"></i>
-            <i v-else style="margin-right: 5px;color: rgb(253, 199, 50);" class="el-icon-success"></i>
-            <el-tooltip v-if="scope.row.status" class="item" effect="dark" content="不可用状态，暂停供应商服务"
-              placement="bottom-end">
+            <i v-if="!scope.row.status" class="el-icon-warning" style="margin-right: 5px;"></i>
+            <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
+            <el-tooltip v-if="scope.row.status" class="item" content="不可用状态，暂停供应商服务" effect="dark"
+                        placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">可用</span>
             </el-tooltip>
             <span v-else>不可用</span>
@@ -63,28 +64,29 @@
         </el-table-column>
       </el-table>
       <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
-        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"></el-pagination>
+                     layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 操作面板 -->
-    <el-dialog :show-close="false" :visible.sync="dialogOperaion" width="32%">
+    <el-dialog :show-close="false" :visible.sync="dialogOperation" width="32%">
       <div slot="title">
         <p class="dialog-title">{{ !isOperation ? '新增供应商' : '修改供应商信息' }}</p>
       </div>
       <div style="padding:0 20px;">
         <el-row style="margin-bottom: 20px;">
           <span class="dialog-hover">供应商名称</span>
-          <input v-model="data.name" class="dialog-input" placeholder="请输入" />
+          <input v-model="data.name" class="dialog-input" placeholder="请输入"/>
           <span class="dialog-hover">联系人</span>
-          <input v-model="data.contactPerson" class="dialog-input" placeholder="请输入" />
+          <input v-model="data.contactPerson" class="dialog-input" placeholder="请输入"/>
           <span class="dialog-hover">联系电话</span>
-          <input v-model="data.contactPhone" class="dialog-input" placeholder="请输入" />
+          <input v-model="data.contactPhone" class="dialog-input" placeholder="请输入"/>
           <span class="dialog-hover">电子邮箱</span>
-          <input v-model="data.email" class="dialog-input" placeholder="请输入" />
+          <input v-model="data.email" class="dialog-input" placeholder="请输入"/>
           <span class="dialog-hover">产品类型</span>
-          <input v-model="data.productType" class="dialog-input" placeholder="请输入" />
+          <input v-model="data.productType" class="dialog-input" placeholder="请输入"/>
           <span class="dialog-hover">办公地址</span>
-          <input v-model="data.workAddress" class="dialog-input" placeholder="请输入" />
+          <input v-model="data.workAddress" class="dialog-input" placeholder="请输入"/>
           <div style="margin-block: 10px;">
             <span class="dialog-hover">是否审核</span>
             <el-switch v-model="data.isAudit" active-text="已审核" inactive-text="未审核">
@@ -106,13 +108,13 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button v-if="!isOperation" class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="addOperation()">新增</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="addOperation()">新增</el-button>
         <el-button v-else class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="updateOperation()">修改</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="updateOperation()">修改</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-          @click="cannel()">取消</el-button>
+                   @click="cannel()">取消</el-button>
       </span>
     </el-dialog>
   </el-row>
@@ -127,15 +129,15 @@ export default {
       currentPage: 1,//当前页
       pageSize: 10,//页面大小
       totalItems: 0,//总条数
-      dialogOperaion: false, // 开关
+      dialogOperation: false, // 开关
       isOperation: false, // 开关-标识新增或修改
       tableData: [],//列表数据
       selectedRows: [],
       vendorQueryDto: {}, // 搜索条件
       users: [],
       searchTime: [],
-      isAuditList: [{ value: null, label: '全部' }, { value: 0, label: '未审核' }, { value: 1, label: '已审核' }],
-      statusList: [{ value: null, label: '全部' }, { value: 0, label: '不可用' }, { value: 1, label: '可用' }],
+      isAuditList: [{value: null, label: '全部'}, {value: 0, label: '未审核'}, {value: 1, label: '已审核'}],
+      statusList: [{value: null, label: '全部'}, {value: 0, label: '不可用'}, {value: 1, label: '可用'}],
     };
   },
   created() {
@@ -157,7 +159,7 @@ export default {
     // 置位
     cannel() {
       this.data = {};
-      this.dialogOperaion = false;
+      this.dialogOperation = false;
       this.isOperation = false;
     },
     // 批量删除数据
@@ -184,7 +186,7 @@ export default {
               timer: 2000,
             });
             this.fetchFreshData();
-            return;
+
           }
         } catch (e) {
           this.$swal.fire({
@@ -256,7 +258,7 @@ export default {
           ...this.vendorQueryDto
         };
         const response = await this.$axios.post('/vendor/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -264,7 +266,7 @@ export default {
       }
     },
     add() {
-      this.dialogOperaion = true;
+      this.dialogOperation = true;
     },
     handleFilter() {
       this.currentPage = 1;
@@ -284,9 +286,9 @@ export default {
       this.fetchFreshData();
     },
     handleEdit(row) {
-      this.dialogOperaion = true;
+      this.dialogOperation = true;
       this.isOperation = true;
-      this.data = { ...row }
+      this.data = {...row}
     },
     handleDelete(row) {
       this.selectedRows.push(row);

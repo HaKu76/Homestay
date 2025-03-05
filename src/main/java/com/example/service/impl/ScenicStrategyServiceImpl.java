@@ -1,6 +1,5 @@
 package com.example.service.impl;
 
-import com.example.aop.Protector;
 import com.example.mapper.ScenicStrategyMapper;
 import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
@@ -9,9 +8,6 @@ import com.example.pojo.entity.ScenicStrategy;
 import com.example.pojo.vo.ScenicStrategyVO;
 import com.example.service.ScenicStrategyService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -79,6 +75,7 @@ public class ScenicStrategyServiceImpl implements ScenicStrategyService {
         List<ScenicStrategyVO> result = scenicStrategyMapper.query(dto);
         return ApiResult.success(result, totalCount);
     }
+
     /**
      * 景点攻略审核
      *

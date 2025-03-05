@@ -2,39 +2,39 @@
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
-        <el-select @change="fetchFreshData" size="small" v-model="scenicStrategyQueryDto.isAudit"
-          style="margin-left: 5px;" placeholder="审核状态">
+        <el-select v-model="scenicStrategyQueryDto.isAudit" placeholder="审核状态" size="small"
+                   style="margin-left: 5px;" @change="fetchFreshData">
           <el-option v-for="item in isAuditList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-date-picker size="small" style="width: 220px;margin-left: 5px;" v-model="searchTime" type="daterange"
-          range-separator="至" start-placeholder="创建开始" end-placeholder="创建结束">
+        <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
         </el-date-picker>
-        <el-input size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;"
-          v-model="scenicStrategyQueryDto.title" placeholder="攻略标题" clearable @clear="handleFilterClear">
-          <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
+        <el-input v-model="scenicStrategyQueryDto.title" clearable
+                  placeholder="攻略标题" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+          <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>
     </el-row>
     <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="cover" label="攻略图" width="120px">
+        <el-table-column label="攻略图" prop="cover" width="120px">
           <template slot-scope="scope">
-            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;" />
+            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;"/>
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="攻略标题"></el-table-column>
-        <el-table-column prop="userId" sortable label="发表者ID" width="110px"></el-table-column>
-        <el-table-column prop="userName" label="发表者" width="110px"></el-table-column>
-        <el-table-column prop="scenicId" sortable label="景点ID" width="90px"></el-table-column>
-        <el-table-column prop="scenicName" label="关联景点" width="120px"></el-table-column>
-        <el-table-column prop="createTime" sortable width="168" label="创建时间"></el-table-column>
-        <el-table-column prop="isWord" width="108" label="审核状态">
+        <el-table-column label="攻略标题" prop="title"></el-table-column>
+        <el-table-column label="发表者ID" prop="userId" sortable width="110px"></el-table-column>
+        <el-table-column label="发表者" prop="userName" width="110px"></el-table-column>
+        <el-table-column label="景点ID" prop="scenicId" sortable width="90px"></el-table-column>
+        <el-table-column label="关联景点" prop="scenicName" width="120px"></el-table-column>
+        <el-table-column label="创建时间" prop="createTime" sortable width="168"></el-table-column>
+        <el-table-column label="审核状态" prop="isWord" width="108">
           <template slot-scope="scope">
-            <i v-if="!scope.row.isAudit" style="margin-right: 5px;" class="el-icon-warning"></i>
-            <i v-else style="margin-right: 5px;color: rgb(253, 199, 50);" class="el-icon-success"></i>
-            <el-tooltip v-if="!scope.row.isAudit" class="item" effect="dark" content="如果未审核，不显示于用户端"
-              placement="bottom-end">
+            <i v-if="!scope.row.isAudit" class="el-icon-warning" style="margin-right: 5px;"></i>
+            <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
+            <el-tooltip v-if="!scope.row.isAudit" class="item" content="如果未审核，不显示于用户端" effect="dark"
+                        placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">未审核</span>
             </el-tooltip>
             <span v-else>已审核</span>
@@ -48,11 +48,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination style="margin:10px 0;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="currentPage" :page-sizes="[10, 20]" :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper" :total="totalItems"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
+                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
     </el-row>
-    <el-drawer title="查看内容" width="35%" :visible.sync="drawer" :direction="direction">
+    <el-drawer :direction="direction" :visible.sync="drawer" title="查看内容" width="35%">
       <div style="margin: 20px;" v-html="data.content"></div>
     </el-drawer>
   </el-row>
@@ -74,7 +74,7 @@ export default {
       selectedRows: [],
       scenicStrategyQueryDto: {}, // 搜索条件
       searchTime: [],
-      isAuditList: [{ value: null, label: '全部' }, { value: 0, label: '未审核' }, { value: 1, label: '已审核' }],
+      isAuditList: [{value: null, label: '全部'}, {value: 0, label: '未审核'}, {value: 1, label: '已审核'}],
     };
   },
   created() {
@@ -104,7 +104,7 @@ export default {
               timer: 1000,
             });
             this.fetchFreshData();
-            return;
+
           }
         } catch (e) {
           this.$swal.fire({
@@ -160,7 +160,7 @@ export default {
               timer: 2000,
             });
             this.fetchFreshData();
-            return;
+
           }
         } catch (e) {
           this.$swal.fire({
@@ -194,7 +194,7 @@ export default {
           ...this.scenicStrategyQueryDto
         };
         const response = await this.$axios.post('/scenicStrategy/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -222,7 +222,7 @@ export default {
       this.cover = row.cover;
       this.dialogOperation = true;
       this.isOperation = true;
-      this.data = { ...row }
+      this.data = {...row}
     },
     handleDelete(row) {
       this.selectedRows.push(row);
@@ -231,4 +231,4 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss"></style>
+<style lang="scss" scoped></style>

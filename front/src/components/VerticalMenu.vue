@@ -1,6 +1,7 @@
 <template>
   <el-menu :background-color="bag" :collapse="flag" :collapse-transition="false"
-           :default-active="activeIndex" style="padding: 5px 20px;max-width: 253px;" text-color="#666" @select="handleSelect">
+           :default-active="activeIndex" style="padding: 5px 20px;max-width: 253px;" text-color="#666"
+           @select="handleSelect">
     <el-menu-item v-for="(item, index) in routes" v-if="!item.children || item.children.length === 0" :key="index"
                   :class="{ 'is-active': activeIndex === item.path }" :index="item.path"
                   style="width: 100%;">

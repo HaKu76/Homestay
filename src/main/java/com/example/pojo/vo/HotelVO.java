@@ -1,7 +1,6 @@
 package com.example.pojo.vo;
 
 import com.example.pojo.entity.Hotel;
-import com.example.pojo.entity.Vendor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

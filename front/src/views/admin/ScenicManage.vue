@@ -2,52 +2,52 @@
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
-        <el-select @change="fetchFreshData" size="small" v-model="scenicQueryDto.categoryId" style="margin-left: 5px;"
-          placeholder="所属类别">
+        <el-select v-model="scenicQueryDto.categoryId" placeholder="所属类别" size="small" style="margin-left: 5px;"
+                   @change="fetchFreshData">
           <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id">
           </el-option>
         </el-select>
-        <el-select @change="fetchFreshData" size="small" v-model="scenicQueryDto.status" style="margin-left: 5px;"
-          placeholder="景点状态">
+        <el-select v-model="scenicQueryDto.status" placeholder="景点状态" size="small" style="margin-left: 5px;"
+                   @change="fetchFreshData">
           <el-option v-for="item in statusList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-date-picker size="small" style="width: 220px;margin-left: 5px;" v-model="searchTime" type="daterange"
-          range-separator="至" start-placeholder="创建开始" end-placeholder="创建结束">
+        <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
         </el-date-picker>
-        <el-input size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" v-model="scenicQueryDto.name"
-          placeholder="景点名" clearable @clear="handleFilterClear">
-          <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
+        <el-input v-model="scenicQueryDto.name" clearable placeholder="景点名"
+                  size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+          <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
         <span style="float: right;">
-          <el-button size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-            class="customer" type="info" @click="add()"><i class="el-icon-plus"></i>新增景点</el-button>
+          <el-button class="customer" size="small"
+                     style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="add()"><i class="el-icon-plus"></i>新增景点</el-button>
         </span>
       </el-row>
     </el-row>
     <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="cover" label="景点封面" width="120px">
+        <el-table-column label="景点封面" prop="cover" width="120px">
           <template slot-scope="scope">
-            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;" />
+            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;"/>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="景点名"></el-table-column>
-        <el-table-column prop="address" label="所在地" width="160px"></el-table-column>
-        <el-table-column prop="categoryName" label="所属分类" width="120px"></el-table-column>
-        <el-table-column prop="vendorName" label="供应商" width="120px"></el-table-column>
-        <el-table-column prop="rating" label="评分" width="60px">
+        <el-table-column label="景点名" prop="name"></el-table-column>
+        <el-table-column label="所在地" prop="address" width="160px"></el-table-column>
+        <el-table-column label="所属分类" prop="categoryName" width="120px"></el-table-column>
+        <el-table-column label="供应商" prop="vendorName" width="120px"></el-table-column>
+        <el-table-column label="评分" prop="rating" width="60px">
           <template slot-scope="scope">
             <span>{{ scope.row.rating === null ? 0 : scope.row.rating }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" sortable width="168" label="创建时间"></el-table-column>
-        <el-table-column prop="isWord" width="108" label="状态">
+        <el-table-column label="创建时间" prop="createTime" sortable width="168"></el-table-column>
+        <el-table-column label="状态" prop="isWord" width="108">
           <template slot-scope="scope">
-            <i v-if="!scope.row.status" style="margin-right: 5px;" class="el-icon-warning"></i>
-            <i v-else style="margin-right: 5px;color: rgb(253, 199, 50);" class="el-icon-success"></i>
-            <el-tooltip v-if="scope.row.status" class="item" effect="dark" content="如果是不可用状态，暂停景点服务"
-              placement="bottom-end">
+            <i v-if="!scope.row.status" class="el-icon-warning" style="margin-right: 5px;"></i>
+            <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
+            <el-tooltip v-if="scope.row.status" class="item" content="如果是不可用状态，暂停景点服务" effect="dark"
+                        placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">可用</span>
             </el-tooltip>
             <span v-else>不可用</span>
@@ -61,9 +61,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination style="margin:10px 0;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="currentPage" :page-sizes="[10, 20]" :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper" :total="totalItems"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
+                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 新增、修改操作面板 -->
     <el-dialog :show-close="false" :visible.sync="dialogOperation" width="32%">
@@ -73,17 +73,17 @@
       <div style="padding:0 20px;">
         <el-row>
           <span class="dialog-hover">景点封面</span>
-          <el-upload class="avatar-uploader" action="/api/Homestay-sys/v1.0/file/upload" :show-file-list="false"
-            :on-success="handleCoverSuccess">
+          <el-upload :on-success="handleCoverSuccess" :show-file-list="false" action="/api/Homestay-sys/v1.0/file/upload"
+                     class="avatar-uploader">
             <img v-if="cover" :src="cover" style="width: 250px;height: 150px;">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-row>
         <el-row style="margin-bottom: 20px;">
           <span class="dialog-hover">景点名称</span>
-          <input class="dialog-input" v-model="data.name" placeholder="请输入" />
+          <input v-model="data.name" class="dialog-input" placeholder="请输入"/>
           <span class="dialog-hover">景点所在地址</span>
-          <input class="dialog-input" v-model="data.address" placeholder="请输入" />
+          <input v-model="data.address" class="dialog-input" placeholder="请输入"/>
           <div>
             <span class="dialog-hover">景点状态</span>
             <el-switch v-model="data.status" active-text="可用" inactive-text="不可用">
@@ -93,26 +93,27 @@
             <span class="dialog-hover">景点分类</span>
             <el-select v-model="data.categoryId" placeholder="请选择分类">
               <el-option v-for="category in categoryList" :key="category.id" :label="category.name"
-                :value="category.id"></el-option>
+                         :value="category.id"></el-option>
             </el-select>
           </div>
           <div style="margin: 10px 0;">
             <span class="dialog-hover">供应商</span>
             <el-select v-model="data.vendorId" placeholder="请选择">
               <el-option v-for="vendor in vendorList" :key="vendor.id" :label="vendor.name"
-                :value="vendor.id"></el-option>
+                         :value="vendor.id"></el-option>
             </el-select>
           </div>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" v-if="!isOperation"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" class="customer" type="info"
-          @click="addOperation()">新增</el-button>
-        <el-button size="small" v-else style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-          class="customer" type="info" @click="updateOperation()">修改</el-button>
+        <el-button v-if="!isOperation" class="customer"
+                   size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
+                   type="info"
+                   @click="addOperation()">新增</el-button>
+        <el-button v-else class="customer" size="small"
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="updateOperation()">修改</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-          @click="cannel()">取消</el-button>
+                   @click="cannel()">取消</el-button>
       </span>
     </el-dialog>
     <el-dialog :show-close="false" :visible.sync="dialogLineOperation" width="28%">
@@ -122,8 +123,8 @@
       <div style="padding:0 20px;">
         <el-row>
           <span class="dialog-hover">路线封面</span>
-          <el-upload class="avatar-uploader" action="/api/Homestay-sys/v1.0/file/upload" :show-file-list="false"
-            :on-success="handleCoverSuccess">
+          <el-upload :on-success="handleCoverSuccess" :show-file-list="false" action="/api/Homestay-sys/v1.0/file/upload"
+                     class="avatar-uploader">
             <img v-if="cover" :src="cover" style="width: 250px;height: 150px;">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
@@ -133,7 +134,7 @@
             <span class="dialog-hover">景点简介</span>
           </div>
 
-          <el-input style="width: 100%;" type="textarea" :rows="2" placeholder="请输入内容" v-model="scenicLine.detail">
+          <el-input v-model="scenicLine.detail" :rows="2" placeholder="请输入内容" style="width: 100%;" type="textarea">
           </el-input>
           <div>
             <span class="dialog-hover">优先级</span>
@@ -143,18 +144,19 @@
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" v-if="!isLineOperation"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" class="customer" type="info"
-          @click="addLineOperation()">新增路线</el-button>
-        <el-button size="small" v-else style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-          class="customer" type="info" @click="updateLineOperation()">修改路线</el-button>
+        <el-button v-if="!isLineOperation" class="customer"
+                   size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
+                   type="info"
+                   @click="addLineOperation()">新增路线</el-button>
+        <el-button v-else class="customer" size="small"
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="updateLineOperation()">修改路线</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-          @click="cannelLine()">取消</el-button>
+                   @click="cannelLine()">取消</el-button>
       </span>
     </el-dialog>
-    <el-drawer title="景点路线" width="35%" :visible.sync="drawer" :direction="direction">
+    <el-drawer :direction="direction" :visible.sync="drawer" title="景点路线" width="35%">
       <div class="add-line">
-        <span @click="addLine" style="cursor: pointer;font-size: 14px">
+        <span style="cursor: pointer;font-size: 14px" @click="addLine">
           <i class="el-icon-plus"></i>
           添加路线
         </span>
@@ -166,20 +168,21 @@
         <div>
           <el-timeline>
             <el-timeline-item v-for="(scenicLine, index) in scenicLines" :key="index" :timestamp="scenicLine.createTime"
-              placement="top">
+                              placement="top">
               <el-card>
                 <div>
-                  <img style="width: 100%;height: 200px;border-radius: 5px;" :src="scenicLine.cover" alt="路线封面">
+                  <img :src="scenicLine.cover" alt="路线封面" style="width: 100%;height: 200px;border-radius: 5px;">
                 </div>
                 <p style="margin-bottom: 8px;font-size: 14px;color: rgb(97, 97, 97);">{{
-                  scenicLine.detail }}
+                    scenicLine.detail
+                  }}
                 </p>
                 <div>
-                  <el-tooltip class="item" effect="dark" content="修改景点路线" placement="bottom">
-                    <el-button @click="updateLine(scenicLine)" type="primary" icon="el-icon-edit" circle></el-button>
+                  <el-tooltip class="item" content="修改景点路线" effect="dark" placement="bottom">
+                    <el-button circle icon="el-icon-edit" type="primary" @click="updateLine(scenicLine)"></el-button>
                   </el-tooltip>
-                  <el-tooltip class="item" effect="dark" content="删除景点路线" placement="bottom">
-                    <el-button @click="deleteLine(scenicLine)" type="danger" icon="el-icon-delete" circle></el-button>
+                  <el-tooltip class="item" content="删除景点路线" effect="dark" placement="bottom">
+                    <el-button circle icon="el-icon-delete" type="danger" @click="deleteLine(scenicLine)"></el-button>
                   </el-tooltip>
                 </div>
               </el-card>
@@ -215,8 +218,8 @@ export default {
       scenicLines: [],
       categoryList: [],
       vendorList: [],
-      isAuditList: [{ value: null, label: '全部' }, { value: 0, label: '未审核' }, { value: 1, label: '已审核' }],
-      statusList: [{ value: null, label: '全部' }, { value: 0, label: '不可用' }, { value: 1, label: '可用' }],
+      isAuditList: [{value: null, label: '全部'}, {value: 0, label: '未审核'}, {value: 1, label: '已审核'}],
+      statusList: [{value: null, label: '全部'}, {value: 0, label: '不可用'}, {value: 1, label: '可用'}],
     };
   },
   created() {
@@ -266,7 +269,7 @@ export default {
     },
     // 请求景点路线信息
     fetchScenicLines(scenicId) {
-      const scenicLineQueryDto = { scenicId: scenicId }
+      const scenicLineQueryDto = {scenicId: scenicId}
       this.$axios.post('/scenicLine/query', scenicLineQueryDto).then(res => {
         if (res.data.code === 200) {
           this.scenicLines = res.data.data;
@@ -341,7 +344,7 @@ export default {
               timer: 2000,
             });
             this.fetchFreshData();
-            return;
+
           }
         } catch (e) {
           this.$swal.fire({
@@ -452,7 +455,7 @@ export default {
           ...this.scenicQueryDto
         };
         const response = await this.$axios.post('/scenic/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -483,7 +486,7 @@ export default {
       this.cover = row.cover;
       this.dialogOperation = true;
       this.isOperation = true;
-      this.data = { ...row }
+      this.data = {...row}
     },
     handleDelete(row) {
       this.selectedRows.push(row);
@@ -492,7 +495,7 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .add-line {
   display: flex;
   justify-content: center;

@@ -78,7 +78,7 @@ export default {
       if (this.$route.path !== path) {
         this.$router.push(path);
       }
-      ;
+
     },
     // 退出登录
     async loginOut() {
