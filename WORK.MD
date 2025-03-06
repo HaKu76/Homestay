@@ -274,3 +274,28 @@ try {
 Bug修复：脚手架里的Operaion是打错的单词，全部替换Operation
 
 细节注意：关于图片的上传，要注意在新增、修改、data等相关参数里添加相关的代码。
+
+## 民宿房间床位管理
+
+修正部分：床位状态为非空，而前端如果默认不可用传null会报错，需要传0这个状态值
+
+```javascript
+        addOperation() {
+            const hotelRoomBed = {
+                roomId: this.roomId,
+                ...this.data,
+                status: this.data.status ? 1 : 0, // 将布尔值转换为1或0
+            }
+            //新增status的状态
+            修改同理也新增这一行代码
+```
+
+新增的时候roomId没传到后端
+
+解决方法：在调用 `addOperation` 方法时，将 `this.roomId` 作为参数传递进去。
+
+```javascript
+roomId: this.roomId,
+```
+
+在模板中调用 `addOperation` 方法时，不需要传递参数，直接调用即可
