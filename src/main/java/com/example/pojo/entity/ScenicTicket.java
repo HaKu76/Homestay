@@ -34,6 +34,11 @@ public class ScenicTicket {
     private String detail;
 
     /**
+     * 门票数量
+     */
+    private Integer number;
+
+    /**
      * 价格
      */
     private BigDecimal price;

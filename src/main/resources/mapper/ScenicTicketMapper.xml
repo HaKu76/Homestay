@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ScenicTicketMapper">
+
+    <insert id="save" parameterType="com.example.pojo.entity.ScenicTicket">
+        INSERT INTO scenic_ticket (scenic_id, detail, number, price, discount, use_status, create_time)
+        VALUES (#{scenicId}, #{detail}, #{number}, #{price}, #{discount}, #{useStatus}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.example.pojo.entity.ScenicTicket">
+        UPDATE scenic_ticket
+        <set>
+            <if test="scenicId != null">
+                scenic_id = #{scenicId},
+            </if>
+            <if test="detail != null and detail != ''">
+                detail = #{detail},
+            </if>
+            <if test="number != null">
+                number = #{number},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="discount != null">
+                discount = #{discount},
+            </if>
+            <if test="discount == null">
+                discount = NULL,
+            </if>
+            <if test="useStatus != null">
+                use_status = #{useStatus},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="batchDelete" parameterType="list">
+        DELETE FROM scenic_ticket WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="query" resultMap="BaseResultMap">
+        SELECT st.*, s.name AS scenic_name
+        FROM scenic_ticket st
+        LEFT JOIN scenic s ON st.scenic_id = s.id
+        <where>
+            <if test="id != null">
+                AND st.id = #{id}
+            </if>
+            <if test="scenicId != null">
+                AND st.scenic_id = #{scenicId}
+            </if>
+            <if test="detail != null and detail != ''">
+                AND st.detail LIKE CONCAT('%', #{detail}, '%')
+            </if>
+            <if test="useStatus != null">
+                AND st.use_status = #{useStatus}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND st.create_time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        ORDER BY st.id DESC
+        <if test="current != null and size != null">
+            LIMIT #{current},#{size}
+        </if>
+    </select>
+
+    <!--满足分页条件的数据总项-->
+    <select id="queryCount" resultType="integer">
+
+        SELECT COUNT(*)
+        FROM scenic_ticket st
+        <where>
+            <if test="id != null">
+                AND st.id = #{id}
+            </if>
+            <if test="scenicId != null">
+                AND st.scenic_id = #{scenicId}
+            </if>
+            <if test="detail != null and detail != ''">
+                AND st.detail LIKE CONCAT('%', #{detail}, '%')
+            </if>
+            <if test="useStatus != null">
+                AND st.use_status = #{useStatus}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND st.create_time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.pojo.vo.ScenicTicketVO">
+        <id column="id" property="id"/>
+        <result column="scenic_id" property="scenicId"/>
+        <result column="scenic_name" property="scenicName"/>
+        <result column="detail" property="detail"/>
+        <result column="number" property="number"/>
+        <result column="price" property="price"/>
+        <result column="discount" property="discount"/>
+        <result column="use_status" property="useStatus"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+</mapper>

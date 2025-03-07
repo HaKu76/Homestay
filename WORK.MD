@@ -299,3 +299,11 @@ roomId: this.roomId,
 ```
 
 在模板中调用 `addOperation` 方法时，不需要传递参数，直接调用即可
+
+## 景点门票管理
+
+修复修改时不输入折扣应传值null，后端mapper.xml需要在修改新增一个if，discount为null的情况
+
+还有发现但未修复的问题后续优化：打折边界值输入（case：0折）
+
+注意门票描述的模糊查询`CONCAT('%', #{detail}, '%')`

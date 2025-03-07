@@ -65,6 +65,13 @@ const routes = [
                 meta: {requireAuth: true},
             },
             {
+                path:"/scenicTicketManage",
+                name: '景点门票管理',
+                icon: 'el-icon-s-ticket',
+                component: () => import(`@/views/admin/ScenicTicketManage.vue`),
+                meta: {requireAuth: true},
+            },
+            {
                 path: "/scenicStrategyManage",
                 name: '景点攻略管理',
                 icon: 'el-icon-notebook-2',  // 修改为笔记本图标
