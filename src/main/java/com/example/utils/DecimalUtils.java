@@ -1,6 +1,7 @@
 package com.example.utils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class DecimalUtils {
 
@@ -13,8 +14,8 @@ public class DecimalUtils {
      * @return BigDecimal
      */
     public static BigDecimal calculateTotal(Integer buyNumber,
-                                             BigDecimal price,
-                                             Double discount) {
+                                            BigDecimal price,
+                                            Double discount) {
         // 将 Integer 转换为 BigDecimal
         BigDecimal buyNumberDecimal = BigDecimal.valueOf(buyNumber);
         // 计算总金额
@@ -22,7 +23,7 @@ public class DecimalUtils {
         // 应用折扣
         BigDecimal discountFactor = BigDecimal.valueOf(discount); // 将折扣转换为 BigDecimal
         BigDecimal discountedTotal = total.multiply(discountFactor);
-        return discountedTotal.setScale(2, BigDecimal.ROUND_CEILING); // 保留两位小数并向上取整
+        return discountedTotal.setScale(2, RoundingMode.CEILING); // 保留两位小数并向上取整
     }
 
 }
