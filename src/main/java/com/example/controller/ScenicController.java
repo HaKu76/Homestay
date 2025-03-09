@@ -65,10 +65,21 @@ public class ScenicController {
      * @return Result<Void>
      */
     @Pager
+    @PostMapping(value = "/queryScenicVendor")
+    @ResponseBody
+    public Result<List<ScenicVO>> queryScenicVendor(@RequestBody ScenicQueryDto dto) {
+        return scenicService.queryScenicVendor(dto);
+    }
+
+    /**
+     * 查询景点
+     *
+     * @return Result<Void>
+     */
+    @Pager
     @PostMapping(value = "/query")
     @ResponseBody
     public Result<List<ScenicVO>> query(@RequestBody ScenicQueryDto dto) {
         return scenicService.query(dto);
     }
-
 }

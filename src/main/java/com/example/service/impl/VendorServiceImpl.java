@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 
+import com.example.context.LocalThreadHolder;
 import com.example.mapper.VendorMapper;
 import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
@@ -31,10 +32,21 @@ public class VendorServiceImpl implements VendorService {
      */
     @Override
     public Result<Void> save(Vendor vendor) {
+        // 一个供应商只能有一条申请记录
+        VendorQueryDto queryDto = new VendorQueryDto();
+        queryDto.setUserId(LocalThreadHolder.getUserId());
+        Integer count = vendorMapper.queryCount(queryDto);
+        if (count != 0) {
+            return ApiResult.error("您已经申请过供应商，请勿重复申请");
+        }
         //设置创建时间
         vendor.setCreateTime(LocalDateTime.now());
-        //设置供应商初始状态为已审核
+        //设置供应商初始状态为可用
         vendor.setStatus(true);
+        //设置供应商初始审核状态为未审核
+        vendor.setIsAudit(false);
+        // 设置用户ID
+        vendor.setUserId(LocalThreadHolder.getUserId());
         vendorMapper.save(vendor);
         return ApiResult.success();
     }

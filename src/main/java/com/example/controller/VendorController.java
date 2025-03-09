@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.aop.Pager;
+import com.example.context.LocalThreadHolder;
 import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.extend.VendorQueryDto;
 import com.example.pojo.entity.Vendor;
@@ -56,6 +57,19 @@ public class VendorController {
         return vendorService.batchDelete(ids);
     }
 
+    /**
+     * 查询用户关联的供应商信息
+     *
+     * @return Result<Void>
+     */
+    @Pager
+    @PostMapping(value = "/queryUser")
+    public Result<List<VendorVO>> query() {
+        VendorQueryDto queryDto = new VendorQueryDto();
+        // 设置用户ID
+        queryDto.setUserId(LocalThreadHolder.getUserId());
+        return vendorService.query(queryDto);
+    }
     /**
      * 查询供应商
      *

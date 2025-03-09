@@ -495,15 +495,15 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .add-line {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(64, 158, 255);
-  padding: 10px 20px;
-  margin: 10px 20px;
-  color: rgb(245, 245, 245);
-  border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(64, 158, 255);
+    padding: 10px 20px;
+    margin: 10px 20px;
+    color: rgb(245, 245, 245);
+    border-radius: 5px;
 }
 </style>

@@ -14,7 +14,10 @@ public class ScenicQueryDto extends QueryDto {
      * 景点名称
      */
     private String name;
-
+    /**
+     * 供应商ID
+     */
+    private Integer vendorId;
     /**
      * 景点分类ID
      */

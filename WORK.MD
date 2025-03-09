@@ -327,3 +327,10 @@ roomId: this.roomId,
 > - <div>
 >   <Editor height="300px" :receiveContent="data.content" @on-receive="onReceiveContent" />
 >   </div>
+
+## 供应商申请及个人信息维护
+
+user/Service.vue要在VendorServiceImpl新增添加代码
+
+## 供应商维护景点信息功能
+

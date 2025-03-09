@@ -179,6 +179,18 @@ const routes = [
                 meta: { requireAuth: true },
             },
             {
+                path: "/scenicVendor",
+                name: '供应商景点',
+                component: () => import(`@/views/user/ScenicVendor.vue`),
+                meta: { requireAuth: true },
+            },
+            {
+                path: "/hotelVendor",
+                name: '供应商民宿',
+                component: () => import(`@/views/user/HotelVendor.vue`),
+                meta: { requireAuth: true },
+            },
+            {
                 path: "/self",
                 name: '个人中心',
                 component: () => import(`@/views/user/Self.vue`),
