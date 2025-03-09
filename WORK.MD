@@ -313,3 +313,17 @@ roomId: this.roomId,
 
 
 ## 景点门票订单管理
+
+
+
+## 公告管理
+
+> 调用Editor组件：
+>
+> - 先在script导入`import Editor from "@/components/Editor"`
+>
+> - 声明`components: { Editor },`然后调用↓
+>
+> - <div>
+>   <Editor height="300px" :receiveContent="data.content" @on-receive="onReceiveContent" />
+>   </div>
