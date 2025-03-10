@@ -65,10 +65,10 @@ public class ScenicController {
      * @return Result<Void>
      */
     @Pager
-    @PostMapping(value = "/queryScenicVendor")
+    @PostMapping(value = "/queryVendorScenic")
     @ResponseBody
-    public Result<List<ScenicVO>> queryScenicVendor(@RequestBody ScenicQueryDto dto) {
-        return scenicService.queryScenicVendor(dto);
+    public Result<List<ScenicVO>> queryVendorScenic(@RequestBody ScenicQueryDto dto) {
+        return scenicService.queryVendorScenic(dto);
     }
 
     /**

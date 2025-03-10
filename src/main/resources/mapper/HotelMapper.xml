@@ -42,7 +42,7 @@
                 AND h.id = #{id}
             </if>
             <if test="vendorId != null">
-                AND h.vendor_id = #{scenicId}
+                AND h.vendor_id = #{vendorId}
             </if>
             <if test="name != null and name != ''">
                 AND h.name LIKE concat('%',#{name},'%')
@@ -67,7 +67,7 @@
                 AND h.id = #{id}
             </if>
             <if test="vendorId != null">
-                AND h.vendor_id = #{scenicId}
+                AND h.vendor_id = #{vendorId}
             </if>
             <if test="name != null and name != ''">
                 AND h.name LIKE concat('%',#{name},'%')

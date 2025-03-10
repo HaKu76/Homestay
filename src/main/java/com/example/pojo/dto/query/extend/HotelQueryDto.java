@@ -18,5 +18,4 @@ public class HotelQueryDto extends QueryDto {
      * 供应商ID
      */
     private Integer vendorId;
-
 }

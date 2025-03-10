@@ -60,6 +60,18 @@ public class HotelController {
     }
 
     /**
+     * 查询供应商名下维护的酒店信息
+     *
+     * @return Result<Void>
+     */
+    @Pager
+    @PostMapping(value = "/queryVendorHotel")
+    @ResponseBody
+    public Result<List<HotelVO>> queryVendorHotel(@RequestBody HotelQueryDto dto) {
+        return hotelService.queryVendorHotel(dto);
+    }
+
+    /**
      * 查询民宿
      *
      * @return Result<Void>
@@ -70,5 +82,4 @@ public class HotelController {
     public Result<List<HotelVO>> query(@RequestBody HotelQueryDto dto) {
         return hotelService.query(dto);
     }
-
 }

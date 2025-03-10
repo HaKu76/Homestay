@@ -2,20 +2,20 @@
   <div>
     <div class="top">
       <div class="top-left">
-        <Logo sysName="趣旅"/>
+        <Logo sysName="趣旅" />
       </div>
       <div class="top-right">
         <ul>
           <li @click="route('/scenic')">景点</li>
           <li @click="route('/strategy')">攻略区</li>
-          <li @click="route('/hotel')">酒店</li>
+          <li @click="route('/hotel')">民宿</li>
           <li>
             <el-dropdown :hide-on-click="false" size="mini" type="success">
-                            <span class="el-dropdown-link">
-                                订单详情<i class="el-icon-arrow-down el-icon--right"></i>
-                            </span>
+              <span class="el-dropdown-link">
+                订单详情<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="route('/hotelOrder')">酒店订单</el-dropdown-item>
+                <el-dropdown-item @click.native="route('/hotelOrder')">民宿订单</el-dropdown-item>
                 <el-dropdown-item @click.native="route('/ticketOrder')">门票预约</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -23,9 +23,9 @@
           <li @click="route('/notice')">公告通知</li>
         </ul>
         <el-dropdown :hide-on-click="false" size="mini" type="success">
-                    <span class="el-dropdown-link" style="cursor: pointer;">
-                        内容中心<i class="el-icon-arrow-down el-icon--right"></i>
-                    </span>
+          <span class="el-dropdown-link" style="cursor: pointer;">
+            内容中心<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="route('/publishStrategy')">发布攻略</el-dropdown-item>
             <el-dropdown-item @click.native="route('/contentCenter')">内容中心</el-dropdown-item>
@@ -34,11 +34,11 @@
         </el-dropdown>
         <el-button round size="mini" type="primary" @click="route('/service')">服务中心</el-button>
         <el-dropdown class="user-dropdown" size="mini" type="success">
-                    <span class="el-dropdown-link" style="display: flex; align-items: center;cursor: pointer;">
-                        <el-avatar :size="30" :src="userInfo.userAvatar" style="margin-top: 0;"></el-avatar>
-                        <span class="user-name" style="margin-left: 5px;font-size: 14px;">{{ userInfo.userName }}</span>
-                        <i class="el-icon-arrow-down el-icon--right" style="margin-left: 5px;"></i>
-                    </span>
+          <span class="el-dropdown-link" style="display: flex; align-items: center;cursor: pointer;">
+            <el-avatar :size="30" :src="userInfo.userAvatar" style="margin-top: 0;"></el-avatar>
+            <span class="user-name" style="margin-left: 5px;font-size: 14px;">{{ userInfo.userName }}</span>
+            <i class="el-icon-arrow-down el-icon--right" style="margin-left: 5px;"></i>
+          </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="route('/self')">个人资料</el-dropdown-item>
             <el-dropdown-item @click.native="route('/resetPwd')">修改密码</el-dropdown-item>
@@ -58,7 +58,7 @@
 import Logo from "@/components/Logo"
 
 export default {
-  components: {Logo},
+  components: { Logo },
   name: "User",
   data() {
     return {
@@ -94,7 +94,7 @@ export default {
     },
     // Token 检验
     async auth() {
-      const {data} = await this.$axios.get('/user/auth');
+      const { data } = await this.$axios.get('/user/auth');
       if (data.code !== 200) { // Token校验异常
         this.$router.push('/');
       } else {
@@ -157,8 +157,8 @@ export default {
   min-height: calc(100vh - 66px);
 
   .item {
-    width: 60%;
-    margin: 0 auto;
+    padding: 0 50px;
+    box-sizing: border-box;
   }
 }
 </style>

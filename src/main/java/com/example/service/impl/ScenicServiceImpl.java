@@ -98,7 +98,7 @@ public class ScenicServiceImpl implements ScenicService {
      * @return Result<List < ScenicVO>>
      */
     @Override
-    public Result<List<ScenicVO>> queryScenicVendor(ScenicQueryDto dto) {
+    public Result<List<ScenicVO>> queryVendorScenic(ScenicQueryDto dto) {
         VendorQueryDto vendorQueryDto = new VendorQueryDto();
         vendorQueryDto.setUserId(LocalThreadHolder.getUserId());
         List<VendorVO> vendorVOS = vendorMapper.query(vendorQueryDto);

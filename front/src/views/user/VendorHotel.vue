@@ -6,25 +6,25 @@
                     type="daterange" range-separator="至" start-placeholder="创建开始" end-placeholder="创建结束">
                 </el-date-picker>
                 <el-input size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;"
-                    v-model="hotelQueryDto.name" placeholder="酒店名称" clearable @clear="handleFilterClear">
+                    v-model="hotelQueryDto.name" placeholder="民宿名称" clearable @clear="handleFilterClear">
                     <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
                 </el-input>
                 <span style="float: right;">
                     <el-button size="small"
                         style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                        class="customer" type="info" @click="add()"><i class="el-icon-plus"></i>新增酒店</el-button>
+                        class="customer" type="info" @click="add()"><i class="el-icon-plus"></i>新增民宿</el-button>
                 </span>
             </el-row>
         </el-row>
         <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="cover" label="酒店图" width="120px">
+                <el-table-column prop="cover" label="民宿图" width="120px">
                     <template slot-scope="scope">
                         <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;" />
                     </template>
                 </el-table-column>
-                <el-table-column prop="name" label="酒店名"></el-table-column>
-                <el-table-column prop="address" label="酒店所在地" width="200px"></el-table-column>
+                <el-table-column prop="name" label="民宿名"></el-table-column>
+                <el-table-column prop="address" label="民宿所在地" width="200px"></el-table-column>
                 <el-table-column prop="concatPhone" label="联系电话" width="150px"></el-table-column>
                 <el-table-column prop="vendorId" sortable label="供应商ID" width="120px"></el-table-column>
                 <el-table-column prop="vendorName" label="供应商名称" width="150px"></el-table-column>
@@ -43,12 +43,12 @@
         <!-- 操作面板 -->
         <el-dialog :show-close="false" :visible.sync="dialogOperation" width="25%">
             <div slot="title">
-                <p class="dialog-title">{{ !isOperation ? '新增酒店' : '修改酒店信息' }}</p>
+                <p class="dialog-title">{{ !isOperation ? '新增民宿' : '修改民宿信息' }}</p>
             </div>
             <div style="padding:0 20px;">
                 <el-row>
                     <div>
-                        <span class="dialog-hover">酒店封面图</span>
+                        <span class="dialog-hover">民宿封面图</span>
                     </div>
                     <el-upload class="avatar-uploader" action="/api/Homestay-sys/v1.0/file/upload"
                         :show-file-list="false" :on-success="handleCoverSuccess">
@@ -57,8 +57,8 @@
                     </el-upload>
                 </el-row>
                 <el-row>
-                    <span class="dialog-hover">酒店名</span>
-                    <input style="line-height: 45px;" class="dialog-input" v-model="data.name" placeholder="酒店名" />
+                    <span class="dialog-hover">民宿名</span>
+                    <input style="line-height: 45px;" class="dialog-input" v-model="data.name" placeholder="民宿名" />
                     <span class="dialog-hover">地址</span>
                     <input style="line-height: 45px;" class="dialog-input" v-model="data.address" placeholder="请输入" />
                     <span class="dialog-hover">联系电话</span>
@@ -95,7 +95,7 @@ export default {
             selectedRows: [],
             hotelQueryDto: {}, // 搜索条件
             searchTime: [],
-            dialogOperation: false, // 控制弹窗酒店的开关
+            dialogOperation: false, // 控制弹窗民宿的开关
             isOperation: false
         };
     },
@@ -115,7 +115,7 @@ export default {
                 this.cover = res.data;
             }
         },
-        // 新增酒店信息
+        // 新增民宿信息
         async addOperation() {
             this.data.cover = this.cover;
             const { data } = await this.$axios.post('/hotel/save', this.data);
@@ -123,7 +123,7 @@ export default {
                 // 通知结果
                 this.$notify({
                     duration: 1500,
-                    title: '酒店新增',
+                    title: '民宿新增',
                     message: '新增成功',
                     type: 'success'
                 });
@@ -137,7 +137,7 @@ export default {
             this.data = {};
             this.cover = '';
         },
-        // 修改酒店信息
+        // 修改民宿信息
         async updateOperation() {
             this.data.cover = this.cover;
             const { data } = await this.$axios.put('/hotel/update', this.data);
@@ -145,7 +145,7 @@ export default {
                 // 通知结果
                 this.$notify({
                     duration: 1500,
-                    title: '酒店修改',
+                    title: '民宿修改',
                     message: '修改成功',
                     type: 'success'
                 });
@@ -163,7 +163,7 @@ export default {
                 return;
             }
             const confirmed = await this.$swalConfirm({
-                title: '删除酒店数据',
+                title: '删除民宿数据',
                 text: `删除后不可恢复，是否继续？`,
                 icon: 'warning',
             });
@@ -190,7 +190,7 @@ export default {
                         showConfirmButton: false,
                         timer: 2000,
                     });
-                    console.error(`酒店信息删除异常：`, e);
+                    console.error(`民宿信息删除异常：`, e);
                 }
             }
         },
@@ -213,12 +213,12 @@ export default {
                     endTime: endTime,
                     ...this.hotelQueryDto
                 };
-                const response = await this.$axios.post('/hotel/queryHotelVendor', params);
+                const response = await this.$axios.post('/hotel/queryVendorHotel', params);
                 const { data } = response;
                 this.tableData = data.data;
                 this.totalItems = data.total;
             } catch (error) {
-                console.error('查询酒店信息异常:', error);
+                console.error('查询民宿信息异常:', error);
             }
         },
         handleFilter() {

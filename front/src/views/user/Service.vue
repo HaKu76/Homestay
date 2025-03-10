@@ -60,13 +60,13 @@
         <h3>信息发布</h3>
         <div class="content-publish">
           <div class="left">
-            <span @click="route('/scenicVendor')">
+            <span @click="route('/vendorScenic')">
               <i style="margin-right: 5px;" class="el-icon-s-finance"></i>景区信息
             </span>
           </div>
           <div class="right">
-            <span @click="route('/hotelVendor')">
-              <i style="margin-right: 5px;" class="el-icon-school"></i>酒店信息
+            <span @click="route('/vendorHotel')">
+              <i style="margin-right: 5px;" class="el-icon-school"></i>民宿信息
             </span>
           </div>
         </div>
@@ -78,7 +78,7 @@
           </div>
           <div class="right">
             <span @click="route('/hotelRoom')">
-              <i style="margin-right: 5px;" class="el-icon-s-marketing"></i>酒店房间
+              <i style="margin-right: 5px;" class="el-icon-s-marketing"></i>民宿房间
             </span>
           </div>
         </div>

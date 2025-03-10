@@ -456,7 +456,7 @@ export default {
                     endTime: endTime,
                     ...this.scenicQueryDto
                 };
-                const response = await this.$axios.post('/scenic/queryScenicVendor', params);
+                const response = await this.$axios.post('/scenic/queryVendorScenic', params);
                 const { data } = response;
                 this.tableData = data.data;
                 this.totalItems = data.total;

@@ -2,7 +2,7 @@
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
     <el-row style="padding: 10px;margin: 0 5px;">
       <el-row>
-        <el-select @change="fetchFreshData" size="small" v-model="hotelRoomQueryDto.hotelId" placeholder="从属酒店">
+        <el-select @change="fetchFreshData" size="small" v-model="hotelRoomQueryDto.hotelId" placeholder="从属民宿">
           <el-option v-for="item in hotels" :key="item.id" :label="item.name" :value="item.id">
           </el-option>
         </el-select>
@@ -10,12 +10,12 @@
           range-separator="至" start-placeholder="创建开始" end-placeholder="创建结束">
         </el-date-picker>
         <el-input size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" v-model="hotelRoomQueryDto.name"
-          placeholder="酒店房间名" clearable @clear="handleFilterClear">
+          placeholder="民宿房间名" clearable @clear="handleFilterClear">
           <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
         </el-input>
         <span style="float: right;">
           <el-button size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-            class="customer" type="info" @click="add()"><i class="el-icon-plus"></i>新增酒店房间</el-button>
+            class="customer" type="info" @click="add()"><i class="el-icon-plus"></i>新增民宿房间</el-button>
         </span>
       </el-row>
     </el-row>
@@ -27,8 +27,8 @@
           </template>
         </el-table-column>
         <el-table-column prop="name" label="房间名"></el-table-column>
-        <el-table-column prop="hotelId" sortable label="酒店ID" width="120px"></el-table-column>
-        <el-table-column prop="hotelName" sortable label="酒店名称" width="120px"></el-table-column>
+        <el-table-column prop="hotelId" sortable label="民宿ID" width="120px"></el-table-column>
+        <el-table-column prop="hotelName" sortable label="民宿名称" width="120px"></el-table-column>
         <el-table-column prop="price" sortable label="价格" width="80px"></el-table-column>
         <el-table-column prop="discount" sortable label="折扣" width="120px"></el-table-column>
         <el-table-column prop="createTime" sortable width="168" label="创建时间"></el-table-column>
@@ -47,10 +47,10 @@
     <!-- 操作面板 -->
     <el-dialog :show-close="false" :visible.sync="dialogOperation" width="28%">
       <div slot="title">
-        <p class="dialog-title">{{ !isOperation ? '新增酒店房间' : '修改酒店房间信息' }}</p>
+        <p class="dialog-title">{{ !isOperation ? '新增民宿房间' : '修改民宿房间信息' }}</p>
       </div>
       <div style="padding:0 20px;">
-        <span class="dialog-hover">酒店房间封面</span>
+        <span class="dialog-hover">民宿房间封面</span>
         <el-row>
           <el-upload class="avatar-uploader" action="/api/Homestay-sys/v1.0/file/upload" :show-file-list="false"
             :on-success="handleCoverSuccess">
@@ -59,7 +59,7 @@
           </el-upload>
         </el-row>
         <el-row style="margin-bottom: 20px;">
-          <span class="dialog-hover">酒店房间名称</span>
+          <span class="dialog-hover">民宿房间名称</span>
           <input class="dialog-input" v-model="data.name" placeholder="请输入" />
           <div>
             <div>
@@ -83,7 +83,7 @@
 
           <div style="margin: 10px 0;">
             <div>
-              <span class="dialog-hover">酒店列表</span>
+              <span class="dialog-hover">民宿列表</span>
             </div>
             <el-select v-model="data.hotelId" placeholder="请选择">
               <el-option v-for="hotel in hotels" :key="hotel.id" :label="hotel.name" :value="hotel.id">

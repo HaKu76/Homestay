@@ -150,13 +150,13 @@ const routes = [
             },
             {
                 path: "/hotel",
-                name: '酒店',
+                name: '民宿',
                 component: () => import(`@/views/user/Hotel.vue`),
                 meta: { requireAuth: true },
             },
             {
                 path: "/hotelOrder",
-                name: '酒店订单',
+                name: '民宿订单',
                 component: () => import(`@/views/user/HotelOrder.vue`),
                 meta: { requireAuth: true },
             },
@@ -179,15 +179,15 @@ const routes = [
                 meta: { requireAuth: true },
             },
             {
-                path: "/scenicVendor",
+                path: "/vendorScenic",
                 name: '供应商景点',
-                component: () => import(`@/views/user/ScenicVendor.vue`),
+                component: () => import(`@/views/user/VendorScenic.vue`),
                 meta: { requireAuth: true },
             },
             {
-                path: "/hotelVendor",
+                path: "/vendorHotel",
                 name: '供应商民宿',
-                component: () => import(`@/views/user/HotelVendor.vue`),
+                component: () => import(`@/views/user/VendorHotel.vue`),
                 meta: { requireAuth: true },
             },
             {

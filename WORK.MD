@@ -334,3 +334,8 @@ user/Service.vue要在VendorServiceImpl新增添加代码
 
 ## 供应商维护景点信息功能
 
+页面布局问题：脚手架的css样式有点问题，问题是出在了user/Main.vue这个文件，修改一下就好了
+
+## 供应商维护民宿信息功能
+
+之前遗漏了一个BUG：在HotelMapper.xml里面查询vendorId写错了后面写成了scenicId，害我找了半天的问题，前后端代码删删改改搞了半天。

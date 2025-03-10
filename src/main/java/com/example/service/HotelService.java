@@ -15,4 +15,6 @@ public interface HotelService {
     Result<Void> batchDelete(List<Integer> ids);
 
     Result<List<HotelVO>> query(HotelQueryDto dto);
+
+    Result<List<HotelVO>> queryVendorHotel(HotelQueryDto dto);
 }

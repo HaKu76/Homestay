@@ -16,5 +16,5 @@ public interface ScenicService {
 
     Result<List<ScenicVO>> query(ScenicQueryDto dto);
 
-    Result<List<ScenicVO>> queryScenicVendor(ScenicQueryDto dto);
+    Result<List<ScenicVO>> queryVendorScenic(ScenicQueryDto dto);
 }

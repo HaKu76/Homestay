@@ -1,6 +1,6 @@
 <template>
   <div class="text">
-    酒店页面
+    民宿页面
   </div>
 </template>
 <script>
