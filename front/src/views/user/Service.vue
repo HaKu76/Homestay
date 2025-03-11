@@ -59,25 +59,25 @@
       <div style="margin: 20px 0;" v-if="vendors[0].isAudit && vendors[0].status">
         <h3>信息发布</h3>
         <div class="content-publish">
-          <div class="left">
-            <span @click="route('/vendorScenic')">
+          <div class="left" @click="route('/vendorScenic')">
+            <span>
               <i style="margin-right: 5px;" class="el-icon-s-finance"></i>景区信息
             </span>
           </div>
-          <div class="right">
-            <span @click="route('/vendorHotel')">
+          <div class="right" @click="route('/vendorHotel')">
+            <span>
               <i style="margin-right: 5px;" class="el-icon-school"></i>民宿信息
             </span>
           </div>
         </div>
         <div class="content-publish">
-          <div class="left">
-            <span @click="route('/ticket')">
+          <div class="left" @click="route('/vendorTicket')">
+            <span>
               <i style="margin-right: 5px;" class="el-icon-document"></i>门票管理
             </span>
           </div>
-          <div class="right">
-            <span @click="route('/hotelRoom')">
+          <div class="right" @click="route('/hotelRoom')">
+            <span>
               <i style="margin-right: 5px;" class="el-icon-s-marketing"></i>民宿房间
             </span>
           </div>
@@ -173,7 +173,9 @@ export default {
   methods: {
     // 路由跳转
     route(path) {
-      this.$router.push(path);
+      if (this.$route.path !== path) {
+        this.$router.push(path);
+      }
     },
     // 供应商信息修改
     async comfirmStatus() {
@@ -200,7 +202,7 @@ export default {
       });
       console.log(data.data);
       if (data.code === 200) {
-        
+
         await this.auth(); // 重新获取数据
       }
     },

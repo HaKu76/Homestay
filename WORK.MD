@@ -339,3 +339,7 @@ user/Service.vue要在VendorServiceImpl新增添加代码
 ## 供应商维护民宿信息功能
 
 之前遗漏了一个BUG：在HotelMapper.xml里面查询vendorId写错了后面写成了scenicId，害我找了半天的问题，前后端代码删删改改搞了半天。
+
+## 供应商维护门票信息功能
+
+优化了服务中心的路由点击，之前是在span标签下，我点了好几次才能跳转，优化到div标签下就舒服多了。

@@ -60,6 +60,17 @@ public class ScenicTicketController {
     }
 
     /**
+     * 查询供应商管理的景点门票信息
+     *
+     * @return Result<Void>
+     */
+    @PostMapping(value = "/queryVendorTicket")
+    @ResponseBody
+    public Result<List<ScenicTicketVO>> queryVendorTicket() {
+        return scenicTicketService.queryVendorTicket();
+    }
+
+    /**
      * 查询景点门票
      *
      * @return Result<Void>
@@ -70,5 +81,4 @@ public class ScenicTicketController {
     public Result<List<ScenicTicketVO>> query(@RequestBody ScenicTicketQueryDto dto) {
         return scenicTicketService.query(dto);
     }
-
 }

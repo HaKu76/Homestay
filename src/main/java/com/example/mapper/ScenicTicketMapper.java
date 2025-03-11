@@ -24,4 +24,6 @@ public interface ScenicTicketMapper {
 
     // 分页页数
     Integer queryCount(ScenicTicketQueryDto dto);
+
+    List<ScenicTicketVO> queryByScenicIds(@Param(value = "ids")  List<Integer> ids);
 }

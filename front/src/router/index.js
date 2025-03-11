@@ -191,6 +191,12 @@ const routes = [
                 meta: { requireAuth: true },
             },
             {
+                path: "/vendorTicket",
+                name: '供应商门票',
+                component: () => import(`@/views/user/VendorTicket.vue`),
+                meta: { requireAuth: true },
+            },
+            {
                 path: "/self",
                 name: '个人中心',
                 component: () => import(`@/views/user/Self.vue`),
