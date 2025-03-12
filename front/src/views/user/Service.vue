@@ -76,7 +76,7 @@
               <i style="margin-right: 5px;" class="el-icon-document"></i>门票管理
             </span>
           </div>
-          <div class="right" @click="route('/hotelRoom')">
+          <div class="right" @click="route('/vendorHotelRoom')">
             <span>
               <i style="margin-right: 5px;" class="el-icon-s-marketing"></i>民宿房间
             </span>

@@ -197,6 +197,12 @@ const routes = [
                 meta: { requireAuth: true },
             },
             {
+                path:"/vendorHotelRoom",
+                name: '供应商民宿房间',
+                component: () => import(`@/views/user/VendorHotelRoom.vue`),
+                meta: { requireAuth: true },
+            },
+            {
                 path: "/self",
                 name: '个人中心',
                 component: () => import(`@/views/user/Self.vue`),
