@@ -60,6 +60,18 @@ public class ScenicTicketOrderController {
     }
 
     /**
+     * 查询供应商管理的全部景点门票订单
+     *
+     * @return Result<Void>
+     */
+    @Pager
+    @PostMapping(value = "/queryScenicTicketOrder")
+    @ResponseBody
+    public Result<List<ScenicTicketOrderVO>> queryScenicTicketOrder(@RequestBody ScenicTicketOrderQueryDto dto) {
+        return scenicTicketOrderService.queryScenicTicketOrder(dto);
+    }
+
+    /**
      * 查询景点门票订单
      *
      * @return Result<Void>
@@ -70,5 +82,4 @@ public class ScenicTicketOrderController {
     public Result<List<ScenicTicketOrderVO>> query(@RequestBody ScenicTicketOrderQueryDto dto) {
         return scenicTicketOrderService.query(dto);
     }
-
 }

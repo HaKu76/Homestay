@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import com.example.pojo.dto.query.extend.ScenicTicketOrderQueryDto;
+import com.example.pojo.dto.query.extend.ScenicTicketQueryParamDto;
 import com.example.pojo.entity.ScenicTicketOrder;
 import com.example.pojo.vo.ScenicTicketOrderVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +24,8 @@ public interface ScenicTicketOrderMapper {
 
     // 分页页数
     Integer queryCount(ScenicTicketOrderQueryDto dto);
+
+    List<ScenicTicketOrderVO> queryByScenicIds(ScenicTicketQueryParamDto paramDto);
+
+    Integer queryCountByScenicIds(ScenicTicketQueryParamDto paramDto);
 }

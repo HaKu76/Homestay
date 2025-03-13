@@ -12,7 +12,6 @@ import com.example.pojo.entity.Scenic;
 import com.example.pojo.vo.ScenicVO;
 import com.example.pojo.vo.VendorVO;
 import com.example.service.ScenicService;
-import com.example.service.VendorService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

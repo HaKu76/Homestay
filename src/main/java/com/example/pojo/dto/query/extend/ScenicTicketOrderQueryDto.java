@@ -15,10 +15,6 @@ public class ScenicTicketOrderQueryDto extends QueryDto {
      */
     private Integer userId;
     /**
-     * 房间ID
-     */
-    private Integer roomId;
-    /**
      * 订单ID
      */
     private Integer ticketId;

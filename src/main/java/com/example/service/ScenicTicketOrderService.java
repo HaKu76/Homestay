@@ -15,4 +15,6 @@ public interface ScenicTicketOrderService {
     Result<Void> batchDelete(List<Integer> ids);
 
     Result<List<ScenicTicketOrderVO>> query(ScenicTicketOrderQueryDto dto);
+
+    Result<List<ScenicTicketOrderVO>> queryScenicTicketOrder(ScenicTicketOrderQueryDto dto);
 }

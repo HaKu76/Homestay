@@ -347,3 +347,7 @@ user/Service.vue要在VendorServiceImpl新增添加代码
 ## 供应商维护民宿房间信息功能
 
 只改动前端代码，进行后端接口的复用
+
+## 供应商维护门票订单信息功能
+
+新增一个供应商查询门票订单Dto类ScenicTicketQueryParamDto

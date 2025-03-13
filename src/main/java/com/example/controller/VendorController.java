@@ -70,6 +70,7 @@ public class VendorController {
         queryDto.setUserId(LocalThreadHolder.getUserId());
         return vendorService.query(queryDto);
     }
+
     /**
      * 查询供应商
      *
