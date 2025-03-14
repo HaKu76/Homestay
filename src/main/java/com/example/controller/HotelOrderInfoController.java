@@ -71,4 +71,17 @@ public class HotelOrderInfoController {
         return hotelOrderInfoService.query(dto);
     }
 
+    /**
+     * 查询供应商名下的民宿订单
+     *
+     * @return Result<HotelOrderInfoVO>
+     */
+    @Pager
+    @PostMapping(value = "/queryVendorHotelOrder")
+    @ResponseBody
+    public Result<List<HotelOrderInfoVO>> queryVendorHotelOrder(@RequestBody HotelOrderInfoQueryDto dto) {
+        return hotelOrderInfoService.queryVendorHotelOrder(dto);
+    }
+
+
 }

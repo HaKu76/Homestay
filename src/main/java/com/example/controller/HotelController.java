@@ -60,7 +60,7 @@ public class HotelController {
     }
 
     /**
-     * 查询供应商名下维护的酒店信息
+     * 查询供应商名下维护的民宿信息
      *
      * @return Result<Void>
      */

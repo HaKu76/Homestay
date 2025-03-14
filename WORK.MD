@@ -357,3 +357,6 @@ user/Service.vue要在VendorServiceImpl新增添加代码
 新增一个金额Dto关联类MoneyDto，一个金额工具类MoneyUtils
 
 前端折线图组件LineChart.vue
+
+## 供应商维护民宿订单信息功能
+

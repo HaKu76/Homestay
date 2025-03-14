@@ -83,6 +83,15 @@
             </if>
         </where>
     </select>
+    <select id="queryByHotelIds" resultMap="BaseResultMap">
+        SELECT hr.*,h.name AS hotel_name
+        FROM hotel_room hr
+        LEFT JOIN hotel h ON hr.hotel_id = h.id
+        WHERE hr.hotel_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.pojo.vo.HotelRoomVO">

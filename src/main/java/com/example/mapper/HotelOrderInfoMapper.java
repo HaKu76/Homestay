@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import com.example.pojo.dto.query.extend.HotelOrderInfoQueryDto;
+import com.example.pojo.dto.query.extend.HotelOrderInfoQueryParamDto;
 import com.example.pojo.entity.HotelOrderInfo;
 import com.example.pojo.vo.HotelOrderInfoVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +24,8 @@ public interface HotelOrderInfoMapper {
 
     // 分页页数
     Integer queryCount(HotelOrderInfoQueryDto dto);
+
+    List<HotelOrderInfoVO> queryByHotelRoomIds(HotelOrderInfoQueryParamDto paramDto);
+
+    Integer queryCountByHotelRoomIds(HotelOrderInfoQueryParamDto paramDto);
 }

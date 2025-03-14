@@ -1,15 +1,18 @@
 package com.example.service.impl;
 
 import com.example.context.LocalThreadHolder;
+import com.example.mapper.HotelMapper;
 import com.example.mapper.HotelOrderInfoMapper;
 import com.example.mapper.HotelRoomMapper;
+import com.example.mapper.VendorMapper;
 import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
-import com.example.pojo.dto.query.extend.HotelOrderInfoQueryDto;
-import com.example.pojo.dto.query.extend.HotelRoomQueryDto;
+import com.example.pojo.dto.query.extend.*;
 import com.example.pojo.entity.HotelOrderInfo;
 import com.example.pojo.vo.HotelOrderInfoVO;
 import com.example.pojo.vo.HotelRoomVO;
+import com.example.pojo.vo.HotelVO;
+import com.example.pojo.vo.VendorVO;
 import com.example.service.HotelOrderInfoService;
 import com.example.utils.DecimalUtils;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 民宿订单的业务逻辑实现类
@@ -27,6 +31,10 @@ public class HotelOrderInfoServiceImpl implements HotelOrderInfoService {
 
     @Resource
     private HotelOrderInfoMapper hotelOrderInfoMapper;
+    @Resource
+    private VendorMapper vendorMapper;
+    @Resource
+    private HotelMapper hotelMapper;
     @Resource
     private HotelRoomMapper hotelRoomMapper;
 
@@ -99,4 +107,59 @@ public class HotelOrderInfoServiceImpl implements HotelOrderInfoService {
         List<HotelOrderInfoVO> result = hotelOrderInfoMapper.query(dto);
         return ApiResult.success(result, totalCount);
     }
+
+    /**
+     * 查询供应商名下的民宿订单
+     *
+     * @return Result<HotelOrderInfoVO>
+     */
+    @Override
+    public Result<List<HotelOrderInfoVO>> queryVendorHotelOrder(HotelOrderInfoQueryDto dto) {
+        // 链路： 用户ID  --- 供应商  --- 名下管理的民宿 --- 房间 --- 订单（用户下单）
+        // 当前操作者的用户ID
+        Integer userId = LocalThreadHolder.getUserId();
+        VendorQueryDto vendorQueryDto = new VendorQueryDto();
+        vendorQueryDto.setUserId(userId);
+        // 名下管理的供应商信息
+        List<VendorVO> vendorVOS = vendorMapper.query(vendorQueryDto);
+        // 这是没有的判断，反之，过了if，一定存在并且只有一项
+        if (vendorVOS.isEmpty()) {
+            return ApiResult.error("供应商信息异常");
+        }
+        VendorVO vendorVO = vendorVOS.get(0);
+        // 只有当供应商已经审核并且状态是正常的，才有资格查
+        if (!vendorVO.getStatus() || !vendorVO.getIsAudit()) {
+            return ApiResult.error("供应商状态异常或无查看权限");
+        }
+        // 查询名下的民宿信息
+        HotelQueryDto hotelQueryDto = new HotelQueryDto();
+        hotelQueryDto.setVendorId(vendorVO.getId());
+        List<HotelVO> hotelVOS = hotelMapper.query(hotelQueryDto);
+        if (hotelVOS.isEmpty()) {
+            return ApiResult.error("名下无管理民宿");
+        }
+        // 过滤取得民宿的Id集合列表
+        List<Integer> hotelIds = hotelVOS.stream()
+                .map(HotelVO::getId)
+                .collect(Collectors.toList());
+        // 通过民宿的的这一批ID，去获取他们名下的房间信息
+        List<HotelRoomVO> hotelRoomVOS = hotelRoomMapper.queryByHotelIds(hotelIds);
+        // 过滤获取房间的ID集合列表
+        List<Integer> hotelRoomIds = hotelRoomVOS.stream()
+                .map(HotelRoomVO::getId)
+                .collect(Collectors.toList());
+        // 构造查询条件
+        HotelOrderInfoQueryParamDto paramDto = new HotelOrderInfoQueryParamDto(
+                hotelRoomIds,
+                dto
+        );
+        // 查询指定房间下的所有符合条件订单
+        List<HotelOrderInfoVO> orderInfoVOList
+                = hotelOrderInfoMapper.queryByHotelRoomIds(paramDto);
+        Integer totalCount
+                = hotelOrderInfoMapper.queryCountByHotelRoomIds(paramDto);
+        return ApiResult.success(orderInfoVOList, totalCount);
+    }
+
+
 }

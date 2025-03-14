@@ -65,9 +65,15 @@ export default {
         },
     },
     watch: {
-        roomId(v1, v2) {
-            this.fetchBeds(v1);
-        },
+        roomId:{
+            handler(v1, v2) {
+                this.fetchBeds(v1);
+            },
+            // 深度监听
+            deep: true,
+            // 需要在初始化时也触发监听则设置true
+            immediate: true
+        }
     },
     data() {
         return {

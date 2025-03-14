@@ -29,7 +29,7 @@ public class HotelServiceImpl implements HotelService {
     private VendorMapper vendorMapper;
 
     /**
-     * 酒店新增
+     * 民宿新增
      *
      * @param hotel 实体
      * @return Result<Void>
@@ -44,7 +44,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     /**
-     * 酒店修改
+     * 民宿修改
      *
      * @param hotel 实体
      * @return Result<Void>
@@ -56,9 +56,9 @@ public class HotelServiceImpl implements HotelService {
     }
 
     /**
-     * 酒店删除
+     * 民宿删除
      *
-     * @param ids 酒店ID列表
+     * @param ids 民宿ID列表
      * @return Result<Void>
      */
     @Override
@@ -68,7 +68,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     /**
-     * 酒店查询
+     * 民宿查询
      *
      * @param dto 查询实体
      * @return Result<HotelVO>
@@ -81,7 +81,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     /**
-     * 查询供应商名下维护的酒店信息
+     * 查询供应商名下维护的民宿信息
      *
      * @return Result<Void>
      */

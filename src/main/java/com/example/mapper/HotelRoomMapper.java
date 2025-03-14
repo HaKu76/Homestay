@@ -24,4 +24,6 @@ public interface HotelRoomMapper {
 
     // 分页页数
     Integer queryCount(HotelRoomQueryDto dto);
+
+    List<HotelRoomVO> queryByHotelIds(@Param(value = "ids") List<Integer> ids);
 }
