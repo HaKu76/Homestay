@@ -83,6 +83,7 @@ public class ScenicTicketOrderController {
     public Result<List<ScenicTicketOrderVO>> query(@RequestBody ScenicTicketOrderQueryDto dto) {
         return scenicTicketOrderService.query(dto);
     }
+
     /**
      * 统计成交金额
      *

@@ -6,7 +6,6 @@ import com.example.pojo.vo.ChartVO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 货币工具类
@@ -27,7 +26,7 @@ public class MoneyUtils {
             LocalDate currentDate = startDate.plusDays(offset);
             String dateKey = String.format("%02d-%02d", currentDate.getMonthValue(), currentDate.getDayOfMonth());
             double totalAmount = moneyDtoList.stream()
-                    .filter(order->order.getPayTime() != null)
+                    .filter(order -> order.getPayTime() != null)
                     .filter(order -> order.getPayTime().toLocalDate().equals(currentDate))
                     .mapToDouble(order -> order.getAmount().doubleValue())
                     .sum();

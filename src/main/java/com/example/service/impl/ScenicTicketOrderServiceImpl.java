@@ -10,7 +10,6 @@ import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.base.QueryDto;
 import com.example.pojo.dto.query.extend.*;
 import com.example.pojo.entity.ScenicTicketOrder;
-import com.example.pojo.entity.User;
 import com.example.pojo.vo.*;
 import com.example.service.ScenicTicketOrderService;
 import com.example.utils.DateUtil;
