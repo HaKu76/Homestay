@@ -69,7 +69,7 @@ export default {
         },
         tooltip: {
           trigger: 'axis',
-          formatter: '{b}{c}',
+          formatter: '{b}号，共成交{c}元',
         },
         legend: {
           data: ['']

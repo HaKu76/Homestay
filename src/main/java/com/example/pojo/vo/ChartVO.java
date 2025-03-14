@@ -16,5 +16,5 @@ public class ChartVO {
     /**
      * 数据总数
      */
-    private Integer count;
+    private Object count;
 }

@@ -7,16 +7,14 @@ import com.example.mapper.ScenicTicketOrderMapper;
 import com.example.mapper.VendorMapper;
 import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
-import com.example.pojo.dto.query.extend.ScenicQueryDto;
-import com.example.pojo.dto.query.extend.ScenicTicketOrderQueryDto;
-import com.example.pojo.dto.query.extend.ScenicTicketQueryParamDto;
-import com.example.pojo.dto.query.extend.VendorQueryDto;
+import com.example.pojo.dto.query.base.QueryDto;
+import com.example.pojo.dto.query.extend.*;
 import com.example.pojo.entity.ScenicTicketOrder;
-import com.example.pojo.vo.ScenicTicketOrderVO;
-import com.example.pojo.vo.ScenicTicketVO;
-import com.example.pojo.vo.ScenicVO;
-import com.example.pojo.vo.VendorVO;
+import com.example.pojo.entity.User;
+import com.example.pojo.vo.*;
 import com.example.service.ScenicTicketOrderService;
+import com.example.utils.DateUtil;
+import com.example.utils.MoneyUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -123,6 +121,31 @@ public class ScenicTicketOrderServiceImpl implements ScenicTicketOrderService {
         Integer totalCount =
                 scenicTicketOrderMapper.queryCountByScenicIds(orderQueryParam);
         return ApiResult.success(scenicTicketOrderVOS, totalCount);
+    }
+
+    /**
+     * 统计近期成交的金额
+     *
+     * @param day 往前面查的天数
+     * @return Result<List < ChartVO>>
+     */
+    @Override
+    public Result<List<ChartVO>> daysQuery(Integer day) {
+        // 获取时间范围
+        QueryDto queryDto = DateUtil.startAndEndTime(day);
+        ScenicTicketOrderQueryDto dto = new ScenicTicketOrderQueryDto();
+        dto.setStartTime(queryDto.getStartTime());
+        dto.setEndTime(queryDto.getEndTime());
+        Result<List<ScenicTicketOrderVO>> scenicTicketOrder
+                = queryScenicTicketOrder(dto);
+        ApiResult<List<ScenicTicketOrderVO>> response = (ApiResult) scenicTicketOrder;
+        List<ScenicTicketOrderVO> data = response.getData();
+        List<MoneyDto> moneyDtoList = data.stream().map(scenicTicketOrderVO -> new MoneyDto(
+                scenicTicketOrderVO.getAmount(),
+                scenicTicketOrderVO.getPayTime()
+        )).collect(Collectors.toList());
+        List<ChartVO> chartVOS = MoneyUtils.countMoney(day, moneyDtoList);
+        return ApiResult.success(chartVOS);
     }
 
     /**

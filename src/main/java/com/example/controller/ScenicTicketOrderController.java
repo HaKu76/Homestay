@@ -4,6 +4,7 @@ import com.example.aop.Pager;
 import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.extend.ScenicTicketOrderQueryDto;
 import com.example.pojo.entity.ScenicTicketOrder;
+import com.example.pojo.vo.ChartVO;
 import com.example.pojo.vo.ScenicTicketOrderVO;
 import com.example.service.ScenicTicketOrderService;
 import org.springframework.web.bind.annotation.*;
@@ -82,4 +83,15 @@ public class ScenicTicketOrderController {
     public Result<List<ScenicTicketOrderVO>> query(@RequestBody ScenicTicketOrderQueryDto dto) {
         return scenicTicketOrderService.query(dto);
     }
+    /**
+     * 统计成交金额
+     *
+     * @return Result<List < ChartVO>> 响应结果
+     */
+    @GetMapping(value = "/daysQuery/{day}")
+    @ResponseBody
+    public Result<List<ChartVO>> query(@PathVariable Integer day) {
+        return scenicTicketOrderService.daysQuery(day);
+    }
+
 }
