@@ -173,6 +173,12 @@ const routes = [
                 meta: { requireAuth: true },
             },
             {
+                path: "/noticeDetail",
+                name: '公告详情',
+                component: () => import(`@/views/user/NoticeDetail.vue`),
+                meta: { requireAuth: true },
+            },
+            {
                 path: "/service",
                 name: '服务中心',
                 component: () => import(`@/views/user/Service.vue`),
