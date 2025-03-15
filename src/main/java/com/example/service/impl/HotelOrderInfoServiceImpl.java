@@ -7,14 +7,14 @@ import com.example.mapper.HotelRoomMapper;
 import com.example.mapper.VendorMapper;
 import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
+import com.example.pojo.dto.query.base.QueryDto;
 import com.example.pojo.dto.query.extend.*;
 import com.example.pojo.entity.HotelOrderInfo;
-import com.example.pojo.vo.HotelOrderInfoVO;
-import com.example.pojo.vo.HotelRoomVO;
-import com.example.pojo.vo.HotelVO;
-import com.example.pojo.vo.VendorVO;
+import com.example.pojo.vo.*;
 import com.example.service.HotelOrderInfoService;
+import com.example.utils.DateUtil;
 import com.example.utils.DecimalUtils;
+import com.example.utils.MoneyUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -161,5 +161,28 @@ public class HotelOrderInfoServiceImpl implements HotelOrderInfoService {
         return ApiResult.success(orderInfoVOList, totalCount);
     }
 
+    /**
+     * 统计成交金额
+     *
+     * @return Result<List < ChartVO>> 响应结果
+     */
+    @Override
+    public Result<List<ChartVO>> daysQuery(Integer day) {
+        // 获取时间范围
+        QueryDto queryDto = DateUtil.startAndEndTime(day);
+        HotelOrderInfoQueryDto dto = new HotelOrderInfoQueryDto();
+        dto.setStartTime(queryDto.getStartTime());
+        dto.setEndTime(queryDto.getEndTime());
+        Result<List<HotelOrderInfoVO>> hotelOrderVendor
+                = queryVendorHotelOrder(dto);
+        ApiResult<List<HotelOrderInfoVO>> response = (ApiResult) hotelOrderVendor;
+        List<HotelOrderInfoVO> data = response.getData();
+        List<MoneyDto> moneyDtoList = data.stream().map(hotelOrderInfoVO -> new MoneyDto(
+                hotelOrderInfoVO.getAmount(),
+                hotelOrderInfoVO.getPayTime()
+        )).collect(Collectors.toList());
+        List<ChartVO> chartVOS = MoneyUtils.countMoney(day, moneyDtoList);
+        return ApiResult.success(chartVOS);
+    }
 
 }

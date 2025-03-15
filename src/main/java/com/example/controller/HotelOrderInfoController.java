@@ -4,6 +4,7 @@ import com.example.aop.Pager;
 import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.extend.HotelOrderInfoQueryDto;
 import com.example.pojo.entity.HotelOrderInfo;
+import com.example.pojo.vo.ChartVO;
 import com.example.pojo.vo.HotelOrderInfoVO;
 import com.example.service.HotelOrderInfoService;
 import org.springframework.web.bind.annotation.*;
@@ -81,6 +82,17 @@ public class HotelOrderInfoController {
     @ResponseBody
     public Result<List<HotelOrderInfoVO>> queryVendorHotelOrder(@RequestBody HotelOrderInfoQueryDto dto) {
         return hotelOrderInfoService.queryVendorHotelOrder(dto);
+    }
+
+    /**
+     * 统计成交金额
+     *
+     * @return Result<List < ChartVO>> 响应结果
+     */
+    @GetMapping(value = "/daysQuery/{day}")
+    @ResponseBody
+    public Result<List<ChartVO>> query(@PathVariable Integer day) {
+        return hotelOrderInfoService.daysQuery(day);
     }
 
 

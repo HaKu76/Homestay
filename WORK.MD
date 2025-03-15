@@ -360,3 +360,9 @@ user/Service.vue要在VendorServiceImpl新增添加代码
 
 ## 供应商维护民宿订单信息功能
 
+
+
+## 供应商查看民宿订单销售额折线图功能
+
+修复民宿房间新增无效的问题：在HotelRoomBedManage.vue组件中，监听roomId改为深度监听。
+
