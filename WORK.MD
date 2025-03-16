@@ -366,3 +366,9 @@ user/Service.vue要在VendorServiceImpl新增添加代码
 
 修复民宿房间新增无效的问题：在HotelRoomBedManage.vue组件中，监听roomId改为深度监听。
 
+## 供应商查看公告列表及详情功能
+
+
+
+## 内容中心发布景点攻略功能
+

@@ -11,6 +11,7 @@ import com.example.pojo.dto.query.extend.VendorQueryDto;
 import com.example.pojo.em.RoleEnum;
 import com.example.pojo.entity.Scenic;
 import com.example.pojo.vo.ScenicVO;
+import com.example.pojo.vo.SelectedVO;
 import com.example.pojo.vo.VendorVO;
 import com.example.service.ScenicService;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 景点的业务逻辑实现类
@@ -115,5 +117,25 @@ public class ScenicServiceImpl implements ScenicService {
         }
         dto.setVendorId(vendorVOS.get(0).getId());
         return query(dto);
+    }
+
+    /**
+     * 关联景点下拉选择器
+     *
+     * @return Result<List < SelectedVO>>
+     */
+    @Override
+    public Result<List<SelectedVO>> querySelectedScenic() {
+        ScenicQueryDto scenicQueryDto = new ScenicQueryDto();
+        // 只能查可用状态的景点信息
+        scenicQueryDto.setStatus(true);
+        List<ScenicVO> scenicVOS = scenicMapper.query(scenicQueryDto);
+        // 再次封装
+        List<SelectedVO> selectedScenicList = scenicVOS.stream()
+                .map(scenicVO -> new SelectedVO(
+                        scenicVO.getId(),
+                        scenicVO.getName()
+                )).collect(Collectors.toList());
+        return ApiResult.success(selectedScenicList);
     }
 }

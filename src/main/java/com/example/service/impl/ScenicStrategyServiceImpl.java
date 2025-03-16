@@ -1,5 +1,6 @@
 package com.example.service.impl;
 
+import com.example.context.LocalThreadHolder;
 import com.example.mapper.ScenicStrategyMapper;
 import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
@@ -32,6 +33,8 @@ public class ScenicStrategyServiceImpl implements ScenicStrategyService {
     public Result<Void> save(ScenicStrategy scenicStrategy) {
         //设置创建时间
         scenicStrategy.setCreateTime(LocalDateTime.now());
+        // 设置上发布者的用户ID
+        scenicStrategy.setUserId(LocalThreadHolder.getUserId());
         // 设置初始审核状态，默认为未审核
         scenicStrategy.setIsAudit(false);
         scenicStrategyMapper.save(scenicStrategy);

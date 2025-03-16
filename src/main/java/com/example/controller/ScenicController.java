@@ -5,6 +5,7 @@ import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.extend.ScenicQueryDto;
 import com.example.pojo.entity.Scenic;
 import com.example.pojo.vo.ScenicVO;
+import com.example.pojo.vo.SelectedVO;
 import com.example.service.ScenicService;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,7 +61,7 @@ public class ScenicController {
     }
 
     /**
-     * 查询景点
+     * 查询供应商景点
      *
      * @return Result<Void>
      */
@@ -69,6 +70,17 @@ public class ScenicController {
     @ResponseBody
     public Result<List<ScenicVO>> queryVendorScenic(@RequestBody ScenicQueryDto dto) {
         return scenicService.queryVendorScenic(dto);
+    }
+
+    /**
+     * 关联景点下拉选择器
+     *
+     * @return Result<List < SelectedVO>>
+     */
+    @GetMapping(value = "/querySelectedScenic")
+    @ResponseBody
+    public Result<List<SelectedVO>> querySelectedScenic() {
+        return scenicService.querySelectedScenic();
     }
 
     /**
