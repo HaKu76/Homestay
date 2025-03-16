@@ -149,11 +149,23 @@ const routes = [
                 meta: { requireAuth: true },
             },
             {
+                path: "/scenicDetail",
+                name: '景点详情',
+                component: () => import(`@/views/user/ScenicDetail.vue`),
+                meta: { requireAuth: true },
+              },
+            {
                 path: "/strategy",
                 name: '攻略',
                 component: () => import(`@/views/user/Strategy.vue`),
                 meta: { requireAuth: true },
             },
+            {
+                path: "/strategyDetail",
+                name: '攻略详情',
+                component: () => import(`@/views/user/StrategyDetail.vue`),
+                meta: { requireAuth: true },
+              },
             {
                 path: "/hotel",
                 name: '民宿',

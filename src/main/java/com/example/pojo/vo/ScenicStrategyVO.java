@@ -15,6 +15,10 @@ public class ScenicStrategyVO extends ScenicStrategy {
      */
     private String userName;
     /**
+     * 用户头像
+     */
+    private String userAvatar;
+    /**
      * 景点名称
      */
     private String scenicName;

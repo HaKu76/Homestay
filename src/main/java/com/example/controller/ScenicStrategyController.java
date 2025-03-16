@@ -6,6 +6,7 @@ import com.example.context.LocalThreadHolder;
 import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.extend.ScenicStrategyQueryDto;
 import com.example.pojo.entity.ScenicStrategy;
+import com.example.pojo.vo.ScenicStrategyListVO;
 import com.example.pojo.vo.ScenicStrategyVO;
 import com.example.service.ScenicStrategyService;
 import org.springframework.web.bind.annotation.*;
@@ -69,6 +70,18 @@ public class ScenicStrategyController {
     @ResponseBody
     public Result<Void> update(@RequestBody List<Integer> ids) {
         return scenicStrategyService.batchDelete(ids);
+    }
+
+    /**
+     * 查询攻略列表
+     *
+     * @return Result<List < ScenicStrategyListVO>>
+     */
+    @Pager
+    @PostMapping(value = "/queryList")
+    @ResponseBody
+    public Result<List<ScenicStrategyListVO>> queryList(@RequestBody ScenicStrategyQueryDto dto) {
+        return scenicStrategyService.queryList(dto);
     }
 
     /**

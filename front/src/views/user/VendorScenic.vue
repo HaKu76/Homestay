@@ -299,7 +299,11 @@ export default {
         fetchCategories() {
             this.$axios.post('/scenicCategory/query', {}).then(res => {
                 if (res.data.code === 200) {
-                    this.categories = res.data.data;
+                    // 插入“全部”选项
+                    this.categories = [
+                        { id: '', name: '全部' }, // id 设置为空字符串，表示不限制分类
+                        ...res.data.data // 原有的分类数据
+                    ];
                 }
             }).catch(error => {
                 console.error("查询景点分类信息异常：", error);
@@ -456,6 +460,10 @@ export default {
                     endTime: endTime,
                     ...this.scenicQueryDto
                 };
+                // 选择全部时，清除 categoryId
+                if (params.categoryId === '') {
+                    delete params.categoryId; // 清除 categoryId
+                }
                 const response = await this.$axios.post('/scenic/queryVendorScenic', params);
                 const { data } = response;
                 this.tableData = data.data;

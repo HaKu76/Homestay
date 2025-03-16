@@ -80,7 +80,6 @@ export default {
       if (this.$route.path !== path) {
         this.$router.push(path);
       }
-
     },
     // 退出登录
     async loginOut() {
@@ -100,6 +99,7 @@ export default {
       if (data.code !== 200) { // Token校验异常
         this.$router.push('/');
       } else {
+        sessionStorage.setItem('userInfo',JSON.stringify(data.data));
         this.userInfo = data.data;
       }
     },

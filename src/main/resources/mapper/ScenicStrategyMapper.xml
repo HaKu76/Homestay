@@ -37,7 +37,7 @@
     </delete>
 
     <select id="query" resultMap="BaseResultMap">
-        SELECT ss.*,u.user_name,s.name AS scenic_name
+        SELECT ss.*,u.user_name,u.user_avatar,s.name AS scenic_name
         FROM scenic_strategy ss
         LEFT JOIN scenic s ON ss.scenic_id = s.id
         LEFT JOIN user u ON ss.user_id = u.id
@@ -99,6 +99,7 @@
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="user_name" property="userName"/>
+        <result column="user_avatar" property="userAvatar"/>
         <result column="scenic_id" property="scenicId"/>
         <result column="scenic_name" property="scenicName"/>
         <result column="cover" property="cover"/>

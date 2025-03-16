@@ -6,12 +6,16 @@ import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.extend.ScenicStrategyQueryDto;
 import com.example.pojo.entity.ScenicStrategy;
+import com.example.pojo.vo.ScenicStrategyListVO;
 import com.example.pojo.vo.ScenicStrategyVO;
 import com.example.service.ScenicStrategyService;
+import com.example.utils.TextUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,5 +96,29 @@ public class ScenicStrategyServiceImpl implements ScenicStrategyService {
         scenicStrategy.setIsAudit(true);
         scenicStrategyMapper.update(scenicStrategy);
         return ApiResult.success("景点攻略审核成功");
+    }
+
+    /**
+     * 查询攻略列表
+     *
+     * @param dto 查询参数
+     * @return Result<List < ScenicStrategyListVO>>
+     */
+    @Override
+    public Result<List<ScenicStrategyListVO>> queryList(ScenicStrategyQueryDto dto) {
+        // 只能查已经审核通过的内容
+        dto.setIsAudit(true);
+        Integer totalCount = scenicStrategyMapper.queryCount(dto);
+        List<ScenicStrategyVO> scenicStrategyVOS = scenicStrategyMapper.query(dto);
+        List<ScenicStrategyListVO> scenicStrategyListVOS = new ArrayList<>();
+        for (ScenicStrategyVO scenicStrategyVO : scenicStrategyVOS) {
+            ScenicStrategyListVO scenicStrategyListVO = new ScenicStrategyListVO();
+            BeanUtils.copyProperties(scenicStrategyVO, scenicStrategyListVO);
+            // 处理简要 --- 现在是富文本类型 --- 需要处理
+            String detail = TextUtils.extractText(scenicStrategyVO.getContent(), 200);
+            scenicStrategyListVO.setDetail(detail);
+            scenicStrategyListVOS.add(scenicStrategyListVO);
+        }
+        return ApiResult.success(scenicStrategyListVOS, totalCount);
     }
 }

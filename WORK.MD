@@ -389,3 +389,35 @@ user/Service.vue要在VendorServiceImpl新增添加代码
 ```
 
 并且在确认编辑的方法这边修改路由的push改为`this.$router.push('/contentCenter');`
+
+## 攻略区展示及评论功能
+
+新增Text工具类TextUtils，新增项目依赖jsoup
+
+Main.vue新增用户信息`sessionStorage.setItem('userInfo',JSON.stringify(data.data));`
+
+## 景点信息列表
+
+给景点分类查询新增了一个全部的选项，在前端添加代码
+
+fetchFreshData函数添加代码
+
+```javascript
+        // 选择全部时，清除 categoryId
+        if (params.categoryId === '') {
+          delete params.categoryId; // 清除 categoryId
+        }
+```
+
+fetchCategories获取景点分类的方法修改代码
+
+```javascript
+        if (res.data.code === 200) {
+          // 插入“全部”选项
+          this.categories = [
+            { id: '', name: '全部' }, // id 设置为空字符串，表示不限制分类
+            ...res.data.data // 原有的分类数据
+          ];
+        }
+```
+
