@@ -372,3 +372,20 @@ user/Service.vue要在VendorServiceImpl新增添加代码
 
 ## 内容中心发布景点攻略功能
 
+
+
+## 内容中心展示及景点攻略编辑功能
+
+修复了确认编辑后的路由跳转到scenic的逻辑问题：在Main.vue修改生命周期函数改为
+
+```javascript
+  created() {
+    this.auth();
+    // 仅在特定条件下默认跳转到默认路径 /scenic
+    if (this.$route.path === '/') {
+      this.route(this.defaultPath);
+    }
+  },
+```
+
+并且在确认编辑的方法这边修改路由的push改为`this.$router.push('/contentCenter');`

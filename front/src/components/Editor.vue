@@ -73,7 +73,6 @@ export default Vue.extend({
   watch: {
     receiveContent: {
       handler(v1, v2) {
-        console.log("接收内容：", v1);
         this.content = v1;
       },
       deep: true, // 启用深度监听

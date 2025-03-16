@@ -30,6 +30,12 @@ const routes = [
         meta: { requireAuth: true },
     },
     {
+        path:"/editStrategy",
+        name: '编辑攻略',
+        component: () => import(`@/views/user/EditStrategy.vue`),
+        meta: { requireAuth: true },
+    },
+    {
         path: "/admin",
         component: () => import(`@/views/admin/Home.vue`),
         meta: {

@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.aop.Pager;
 import com.example.aop.Protector;
+import com.example.context.LocalThreadHolder;
 import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.extend.ScenicStrategyQueryDto;
 import com.example.pojo.entity.ScenicStrategy;
@@ -68,6 +69,20 @@ public class ScenicStrategyController {
     @ResponseBody
     public Result<Void> update(@RequestBody List<Integer> ids) {
         return scenicStrategyService.batchDelete(ids);
+    }
+
+    /**
+     * 查询用户发表的景点攻略
+     *
+     * @return Result<Void>
+     */
+    @Pager
+    @PostMapping(value = "/queryUser")
+    @ResponseBody
+    public Result<List<ScenicStrategyVO>> queryUser(@RequestBody ScenicStrategyQueryDto dto) {
+        // 设置上用户ID，数据隔离
+        dto.setUserId(LocalThreadHolder.getUserId());
+        return scenicStrategyService.query(dto);
     }
 
     /**

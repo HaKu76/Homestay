@@ -69,8 +69,10 @@ export default {
   },
   created() {
     this.auth();
-    // 默认加载景点页
-    this.route(this.defaultPath);
+    // 仅在特定条件下默认跳转到默认路径 /scenic
+    if (this.$route.path === '/') {
+      this.route(this.defaultPath);
+    }
   },
   methods: {
     // 路由跳转

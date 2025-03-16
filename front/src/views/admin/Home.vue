@@ -150,7 +150,7 @@ export default {
     async loginOut() {
       const confirmed = await this.$swalConfirm({
         title: '退出登录？',
-        text: `推出后需重新登录？`,
+        text: `退出后需重新登录？`,
         icon: 'warning',
       });
       if (confirmed) {
