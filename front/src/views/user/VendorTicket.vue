@@ -5,14 +5,14 @@
                 <span>
                     <el-button size="small"
                         style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                        class="customer" type="info" @click="add()"><i class="el-icon-plus"></i>新增景区门票</el-button>
+                        class="customer" type="info" @click="add()"><i class="el-icon-plus"></i>新增景点门票</el-button>
                 </span>
             </el-row>
         </el-row>
         <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="scenicId" sortable width="120" label="景区ID"></el-table-column>
-                <el-table-column prop="scenicName" label="关联景区"></el-table-column>
+                <el-table-column prop="scenicId" sortable width="120" label="景点ID"></el-table-column>
+                <el-table-column prop="scenicName" label="关联景点"></el-table-column>
                 <el-table-column prop="detail" width="200" label="门票介绍"></el-table-column>
                 <el-table-column prop="number" width="100" label="数量"></el-table-column>
                 <el-table-column prop="price" width="100" label="价格"></el-table-column>
@@ -44,7 +44,7 @@
         <!-- 操作面板 -->
         <el-dialog :show-close="false" :visible.sync="dialogOperation" width="32%">
             <div slot="title">
-                <p class="dialog-title">{{ !isOperation ? '新增景区门票' : '修改景区门票信息' }}</p>
+                <p class="dialog-title">{{ !isOperation ? '新增景点门票' : '修改景点门票信息' }}</p>
             </div>
             <div style="padding:0 20px;">
                 <el-row style="margin-bottom: 20px;">
@@ -136,7 +136,7 @@ export default {
                 return;
             }
             const confirmed = await this.$swalConfirm({
-                title: '删除景区门票数据',
+                title: '删除景点门票数据',
                 text: `删除后不可恢复，是否继续？`,
                 icon: 'warning',
             });
@@ -163,7 +163,7 @@ export default {
                         showConfirmButton: false,
                         timer: 2000,
                     });
-                    console.error(`景区门票信息删除异常：`, e);
+                    console.error(`景点门票信息删除异常：`, e);
                 }
             }
         },
@@ -173,7 +173,7 @@ export default {
                 const response = await this.$axios.put('/scenicTicket/update', this.data);
                 this.clearFormData();
                 this.$swal.fire({
-                    title: '景区门票信息修改',
+                    title: '景点门票信息修改',
                     text: response.data.msg,
                     icon: response.data.code === 200 ? 'success' : 'error',
                     showConfirmButton: false,
@@ -211,7 +211,7 @@ export default {
                 const { data } = response;
                 this.tableData = data.data;
             } catch (error) {
-                console.error('查询景区门票信息异常:', error);
+                console.error('查询景点门票信息异常:', error);
             }
         },
         add() {

@@ -36,6 +36,10 @@ public class Scenic {
      * 景点封面
      */
     private String cover;
+    /**
+     * 景点详情
+     */
+    private String detail;
 
     /**
      * 供应商ID

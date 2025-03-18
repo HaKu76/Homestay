@@ -28,7 +28,7 @@
         </el-row>
         <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="cover" label="景区封面" width="120px">
+                <el-table-column prop="cover" label="景点封面" width="120px">
                     <template slot-scope="scope">
                         <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;" />
                     </template>
@@ -89,7 +89,7 @@
                         <div>
                             <span class="dialog-hover">景点详情</span>
                         </div>
-                        <Editor height="300px" :reveiveContent="data.detail" @on-receive="onReceive" />
+                        <Editor height="300px" :receiveContent="data.detail" @on-receive="onReceive" />
                     </div>
                     <div style="margin: 10px 0;">
                         <span class="dialog-hover">景点分类</span>
@@ -239,7 +239,7 @@ export default {
         },
         // 删除景点信息
         deleteLine(scenicLine) {
-            this.$confirm('此操作将删除该景区路线, 是否继续?', '操作提示', {
+            this.$confirm('此操作将删除该景点路线, 是否继续?', '操作提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'

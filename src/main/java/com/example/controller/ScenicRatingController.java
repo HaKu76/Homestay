@@ -1,9 +1,11 @@
 package com.example.controller;
 
 import com.example.aop.Pager;
+import com.example.context.LocalThreadHolder;
 import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.extend.ScenicRatingQueryDto;
 import com.example.pojo.entity.ScenicRating;
+import com.example.pojo.vo.ScenicRatingVO;
 import com.example.service.ScenicRatingService;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +44,20 @@ public class ScenicRatingController {
     @Pager
     @PostMapping(value = "/query")
     @ResponseBody
-    public Result<List<ScenicRating>> query(@RequestBody ScenicRatingQueryDto dto) {
+    public Result<List<ScenicRatingVO>> query(@RequestBody ScenicRatingQueryDto dto) {
+        return scenicRatingService.query(dto);
+    }
+
+    /**
+     * 查询用户对于景点的评分
+     *
+     * @return Result<List < ScenicRatingVO>>
+     */
+    @Pager
+    @PostMapping(value = "/queryUser")
+    @ResponseBody
+    public Result<List<ScenicRatingVO>> queryUser(@RequestBody ScenicRatingQueryDto dto) {
+        dto.setUserId(LocalThreadHolder.getUserId());
         return scenicRatingService.query(dto);
     }
 }

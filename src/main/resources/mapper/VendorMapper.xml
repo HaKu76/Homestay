@@ -3,9 +3,10 @@
 <mapper namespace="com.example.mapper.VendorMapper">
 
     <insert id="save" parameterType="com.example.pojo.entity.Vendor">
-        INSERT INTO vendor (
-        name, contact_person, contact_phone, email, product_type, work_address, user_id, is_audit, status, create_time
-        ) VALUES (#{name}, #{contactPerson}, #{contactPhone}, #{email}, #{productType}, #{workAddress}, #{userId}, #{isAudit}, #{status}, #{createTime})
+        INSERT INTO vendor (name, contact_person, contact_phone, email, product_type, work_address, user_id, is_audit,
+                            status, create_time)
+        VALUES (#{name}, #{contactPerson}, #{contactPhone}, #{email}, #{productType}, #{workAddress}, #{userId},
+                #{isAudit}, #{status}, #{createTime})
     </insert>
 
     <update id="update" parameterType="com.example.pojo.entity.Vendor">

@@ -35,7 +35,7 @@
                 <el-tab-pane label="评论" name="second">
                     <Evaluations contentType="SCENIC" :contentId="scenic.id" />
                 </el-tab-pane>
-                <el-tab-pane label="景区评分" name="third">
+                <el-tab-pane label="景点评分" name="third">
                     <div>
                         <div class="rating-info">
                             <div class="total-value">
@@ -123,11 +123,11 @@
                     <div>
                         <div>
                             <span class="dialog-hover">联系人</span>
-                            <input class="dialog-input" v-model="data.concatPerson" placeholder="输入" />
+                            <input class="dialog-input" v-model="data.contactPerson" placeholder="输入" />
                         </div>
                         <div>
                             <span class="dialog-hover">联系电话</span>
-                            <input class="dialog-input" v-model="data.concatPhone" placeholder="输入" />
+                            <input class="dialog-input" v-model="data.contactPhone" placeholder="输入" />
                         </div>
                         <div>
                             <p>*购票数量</p>
@@ -266,7 +266,7 @@ export default {
                 this.fetchScenicTicket(this.scenic.id);
             }
         },
-        // 记载景区下面的门票信息
+        // 记载景点下面的门票信息
         fetchScenicTicket(scenicId) {
             this.$axios.post('/scenicTicket/query', { scenicId: scenicId }).then(res => {
                 if (res.data.code === 200) {

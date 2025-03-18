@@ -238,7 +238,7 @@ export default {
     },
     // 删除景点信息
     deleteLine(scenicLine) {
-      this.$confirm('此操作将删除该景区路线, 是否继续?', '操作提示', {
+      this.$confirm('此操作将删除该景点路线, 是否继续?', '操作提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

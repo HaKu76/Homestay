@@ -25,7 +25,7 @@
                 </el-table-column>
                 <el-table-column prop="name" label="民宿名"></el-table-column>
                 <el-table-column prop="address" label="民宿所在地" width="200px"></el-table-column>
-                <el-table-column prop="concatPhone" label="联系电话" width="150px"></el-table-column>
+                <el-table-column prop="contactPhone" label="联系电话" width="150px"></el-table-column>
                 <el-table-column prop="vendorId" sortable label="供应商ID" width="120px"></el-table-column>
                 <el-table-column prop="vendorName" label="供应商名称" width="150px"></el-table-column>
                 <el-table-column prop="createTime" sortable width="168" label="创建时间"></el-table-column>
@@ -62,7 +62,7 @@
                     <span class="dialog-hover">地址</span>
                     <input style="line-height: 45px;" class="dialog-input" v-model="data.address" placeholder="请输入" />
                     <span class="dialog-hover">联系电话</span>
-                    <input style="line-height: 45px;" class="dialog-input" v-model="data.concatPhone"
+                    <input style="line-height: 45px;" class="dialog-input" v-model="data.contactPhone"
                         placeholder="请输入" />
                 </el-row>
             </div>

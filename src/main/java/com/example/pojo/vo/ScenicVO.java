@@ -21,5 +21,5 @@ public class ScenicVO extends Scenic {
     /**
      * 评分（平均值）
      */
-    private Double rating;
+    private Double ratingScore;
 }

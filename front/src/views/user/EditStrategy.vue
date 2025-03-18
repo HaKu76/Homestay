@@ -55,7 +55,6 @@ export default {
             this.data = JSON.parse(jsonStrategyInfo);
             this.receiveContent = this.data.content;
             this.cover = this.data.cover;
-
         },
         // 攻略修改
         async updateInfo() {

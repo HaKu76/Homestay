@@ -9,7 +9,10 @@
 
     <select id="query" resultMap="BaseResultMap">
         SELECT sr.*,
+        u.user_name,
+        u.user_avatar
         FROM scenic_rating sr
+        LEFT JOIN user u ON sr.user_id = u.id
         <where>
             <if test="id != null">
                 AND sr.id = #{id}
@@ -39,8 +42,11 @@
             <if test="id != null">
                 AND sr.id = #{id}
             </if>
-            <if test="name != null and name != ''">
-                AND s.name LIKE concat('%',#{name},'%')
+            <if test="scenicId != null">
+                AND sr.scenic_id = #{scenicId}
+            </if>
+            <if test="userId != null">
+                AND sr.user_id = #{userId}
             </if>
             <if test="startTime != null and endTime != null">
                 AND sr.create_time BETWEEN #{startTime} AND #{endTime}
@@ -49,10 +55,13 @@
     </select>
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.example.pojo.entity.ScenicRating">
+    <resultMap id="BaseResultMap" type="com.example.pojo.vo.ScenicRatingVO">
         <id column="id" property="id"/>
         <result column="scenic_id" property="scenicId"/>
         <result column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_avatar" property="userAvatar"/>
+        <result column="score" property="score"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
 

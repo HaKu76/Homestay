@@ -1,11 +1,13 @@
 package com.example.service.impl;
 
 
+import com.example.context.LocalThreadHolder;
 import com.example.mapper.ScenicRatingMapper;
 import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.extend.ScenicRatingQueryDto;
 import com.example.pojo.entity.ScenicRating;
+import com.example.pojo.vo.ScenicRatingVO;
 import com.example.service.ScenicRatingService;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +32,18 @@ public class ScenicRatingServiceImpl implements ScenicRatingService {
      */
     @Override
     public Result<Void> save(ScenicRating scenicRating) {
-        //设置评分时间
+        ScenicRatingQueryDto scenicRatingQueryDto = new ScenicRatingQueryDto();
+        scenicRatingQueryDto.setScenicId(scenicRating.getScenicId());
+        scenicRatingQueryDto.setUserId(LocalThreadHolder.getUserId());
+        Integer queryCount = scenicRatingMapper.queryCount(scenicRatingQueryDto);
+        if (queryCount != 0) {
+            return ApiResult.error("已经评分过了");
+        }
+        // 设置评分时间
+        scenicRating.setUserId(LocalThreadHolder.getUserId());
         scenicRating.setCreateTime(LocalDateTime.now());
         scenicRatingMapper.save(scenicRating);
-        return ApiResult.success();
+        return ApiResult.success("评分成功");
     }
 
     /**
@@ -43,9 +53,9 @@ public class ScenicRatingServiceImpl implements ScenicRatingService {
      * @return Result<List < Scenic>>
      */
     @Override
-    public Result<List<ScenicRating>> query(ScenicRatingQueryDto dto) {
+    public Result<List<ScenicRatingVO>> query(ScenicRatingQueryDto dto) {
         Integer totalCount = scenicRatingMapper.queryCount(dto);
-        List<ScenicRating> result = scenicRatingMapper.query(dto);
+        List<ScenicRatingVO> result = scenicRatingMapper.query(dto);
         return ApiResult.success(result, totalCount);
     }
 }

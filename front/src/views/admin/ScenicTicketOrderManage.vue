@@ -83,7 +83,7 @@ export default {
                 return;
             }
             const confirmed = await this.$swalConfirm({
-                title: '删除景区门票订单数据',
+                title: '删除景点门票订单数据',
                 text: `删除后不可恢复，是否继续？`,
                 icon: 'warning',
             });
@@ -110,7 +110,7 @@ export default {
                         showConfirmButton: false,
                         timer: 2000,
                     });
-                    console.error(`景区门票订单信息删除异常：`, e);
+                    console.error(`景点门票订单信息删除异常：`, e);
                 }
             }
         },
@@ -120,7 +120,7 @@ export default {
                 const response = await this.$axios.put('/scenicTicketOrder/update', this.data);
                 this.clearFormData();
                 this.$swal.fire({
-                    title: '景区门票订单信息修改',
+                    title: '景点门票订单信息修改',
                     text: response.data.msg,
                     icon: response.data.code === 200 ? 'success' : 'error',
                     showConfirmButton: false,
@@ -177,7 +177,7 @@ export default {
                 this.tableData = data.data;
                 this.totalItems = data.total;
             } catch (error) {
-                console.error('查询景区门票订单信息异常:', error);
+                console.error('查询景点门票订单信息异常:', error);
             }
         },
         add() {

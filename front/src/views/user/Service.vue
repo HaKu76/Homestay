@@ -61,7 +61,7 @@
         <div class="content-publish">
           <div class="left" @click="route('/vendorScenic')">
             <span>
-              <i style="margin-right: 5px;" class="el-icon-s-finance"></i>景区信息
+              <i style="margin-right: 5px;" class="el-icon-s-finance"></i>景点信息
             </span>
           </div>
           <div class="right" @click="route('/vendorHotel')">
