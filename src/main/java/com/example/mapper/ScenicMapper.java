@@ -23,4 +23,6 @@ public interface ScenicMapper {
 
     // 分页页数
     Integer queryCount(ScenicQueryDto dto);
+
+    void updateSaveIds(Scenic scenic);
 }

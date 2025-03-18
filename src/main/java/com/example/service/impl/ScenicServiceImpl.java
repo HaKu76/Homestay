@@ -14,6 +14,7 @@ import com.example.pojo.vo.ScenicVO;
 import com.example.pojo.vo.SelectedVO;
 import com.example.pojo.vo.VendorVO;
 import com.example.service.ScenicService;
+import com.example.utils.TextUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -137,5 +138,109 @@ public class ScenicServiceImpl implements ScenicService {
                         scenicVO.getName()
                 )).collect(Collectors.toList());
         return ApiResult.success(selectedScenicList);
+    }
+
+    /**
+     * 浏览操作
+     *
+     * @param scenicId 景点ID
+     * @return Result<Void>
+     */
+    @Override
+    public Result<Void> viewOperation(Integer scenicId) {
+        // 第一步，根据景点ID，查询回来景点的信息
+        ScenicQueryDto scenicQueryDto = new ScenicQueryDto();
+        scenicQueryDto.setId(scenicId);
+        List<ScenicVO> scenicVOS = scenicMapper.query(scenicQueryDto);
+        if (scenicVOS.isEmpty()) {
+            return ApiResult.success();
+        }
+        ScenicVO scenicVO = scenicVOS.get(0);
+        String viewIds = scenicVO.getViewIds();
+        // 已经存在，不需要处理了
+        if (TextUtils.exitId(viewIds, LocalThreadHolder.getUserId())) {
+            return ApiResult.success();
+        }
+        String newViewIds = TextUtils.join(viewIds, LocalThreadHolder.getUserId());
+        // 填充新的信息
+        Scenic scenic = new Scenic();
+        scenic.setId(scenicId);
+        scenic.setViewIds(newViewIds);
+        // 修改
+        scenicMapper.update(scenic);
+        return ApiResult.success();
+    }
+
+    /**
+     * 收藏操作 --- 收藏跟取消收藏是对立的
+     *
+     * @param scenicId 景点ID
+     * @return Result<Void>
+     */
+    @Override
+    public Result<Void> saveOperation(Integer scenicId) {
+        // 第一步，根据景点ID，查询回来景点的信息
+        ScenicQueryDto scenicQueryDto = new ScenicQueryDto();
+        scenicQueryDto.setId(scenicId);
+        List<ScenicVO> scenicVOS = scenicMapper.query(scenicQueryDto);
+        if (scenicVOS.isEmpty()) {
+            return ApiResult.success();
+        }
+        ScenicVO scenicVO = scenicVOS.get(0);
+        String saveIds = scenicVO.getSaveIds();
+        Scenic scenic = new Scenic();
+        scenic.setId(scenicVO.getId());
+        Integer userId = LocalThreadHolder.getUserId();
+        // 最后都是更新，只是对于收藏用户ID列表（saveIds）字段的处理不一样
+        // 实现方式1
+        scenic.setSaveIds(
+                TextUtils.exitId(saveIds, userId) ?
+                        TextUtils.split(saveIds, userId) :
+                        TextUtils.join(saveIds, userId)
+        );
+        // 实现方式2
+        // 取消收藏操作
+        //        if (TextUtils.exitId(saveIds, LocalThreadHolder.getUserId())) {
+        //            scenic.setSaveIds(TextUtils.split(saveIds, userId));
+        //        } else { // 收藏操作
+        //            scenic.setSaveIds(TextUtils.join(saveIds, userId));
+        //        }
+        // 更新字段
+        scenicMapper.updateSaveIds(scenic);
+        return ApiResult.success(TextUtils.exitId(saveIds, userId) ? "取消收藏成功" : "收藏成功");
+    }
+
+    /**
+     * 查询用户的收藏景点状况
+     *
+     * @return Result<Void>
+     */
+    @Override
+    public Result<Boolean> saveStatus(Integer scenicId) {
+        // 第一步，根据景点ID，查询回来景点的信息
+        ScenicQueryDto scenicQueryDto = new ScenicQueryDto();
+        scenicQueryDto.setId(scenicId);
+        List<ScenicVO> scenicVOS = scenicMapper.query(scenicQueryDto);
+        if (scenicVOS.isEmpty()) {
+            return ApiResult.success();
+        }
+        ScenicVO scenicVO = scenicVOS.get(0);
+        String saveIds = scenicVO.getSaveIds();
+        return ApiResult.success(TextUtils.exitId(saveIds, LocalThreadHolder.getUserId()));
+    }
+
+    /**
+     * 查询用户收藏的景点信息
+     *
+     * @return Result<List < ScenicVO>>
+     */
+    @Override
+    public Result<List<ScenicVO>> querySave() {
+        ScenicQueryDto scenicQueryDto = new ScenicQueryDto();
+        // 设置用户ID
+        Integer userId = LocalThreadHolder.getUserId();
+        scenicQueryDto.setSaveIds(String.valueOf(userId));
+        List<ScenicVO> scenicVOS = scenicMapper.query(scenicQueryDto);
+        return ApiResult.success(scenicVOS);
     }
 }

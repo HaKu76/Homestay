@@ -43,6 +43,12 @@
         WHERE id = #{id}
     </update>
 
+    <update id="updateSaveIds">
+        UPDATE scenic
+        SET save_ids = #{saveIds}
+        WHERE id = #{id}
+    </update>
+
     <delete id="batchDelete" parameterType="list">
         DELETE FROM scenic WHERE id IN
         <foreach collection="ids" item="id" open="(" separator="," close=")">

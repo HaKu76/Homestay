@@ -26,4 +26,8 @@ public class ScenicQueryDto extends QueryDto {
      * 景点状态
      */
     private Boolean status;
+    /**
+     * 收藏者用户ID列表
+     */
+    private String saveIds;
 }

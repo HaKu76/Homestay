@@ -20,4 +20,12 @@ public interface ScenicService {
     Result<List<ScenicVO>> queryVendorScenic(ScenicQueryDto dto);
 
     Result<List<SelectedVO>> querySelectedScenic();
+
+    Result<Void> viewOperation(Integer scenicId);
+
+    Result<Boolean> saveStatus(Integer scenicId);
+
+    Result<Void> saveOperation(Integer scenicId);
+
+    Result<List<ScenicVO>> querySave();
 }

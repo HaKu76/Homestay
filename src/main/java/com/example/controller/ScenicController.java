@@ -84,6 +84,54 @@ public class ScenicController {
     }
 
     /**
+     * 浏览操作
+     *
+     * @return Result<Void>
+     */
+    @Pager
+    @PostMapping(value = "/viewOperation/{scenicId}")
+    @ResponseBody
+    public Result<Void> viewOperation(@PathVariable Integer scenicId) {
+        return scenicService.viewOperation(scenicId);
+    }
+
+    /**
+     * 收藏操作
+     *
+     * @return Result<Void>
+     */
+    @Pager
+    @PostMapping(value = "/saveOperation/{scenicId}")
+    @ResponseBody
+    public Result<Void> saveOperation(@PathVariable Integer scenicId) {
+        return scenicService.saveOperation(scenicId);
+    }
+
+    /**
+     * 查询用户的收藏景点状况
+     *
+     * @return Result<Void>
+     */
+    @Pager
+    @PostMapping(value = "/saveStatus/{scenicId}")
+    @ResponseBody
+    public Result<Boolean> saveStatus(@PathVariable Integer scenicId) {
+        return scenicService.saveStatus(scenicId);
+    }
+
+    /**
+     * 查询用户收藏的景点信息
+     *
+     * @return List<ScenicVO>
+     */
+    @Pager
+    @GetMapping(value = "/querySave")
+    @ResponseBody
+    public Result<List<ScenicVO>> querySave() {
+        return scenicService.querySave();
+    }
+
+    /**
      * 查询景点
      *
      * @return Result<Void>
