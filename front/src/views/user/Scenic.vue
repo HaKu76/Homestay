@@ -4,17 +4,17 @@
       <el-row>
         <span style="display: inline-block;font-size: 26px;font-weight: 800;padding-left: 15px;">景点信息</span>
         <span style="float: right;">
-          <el-select @change="fetchFreshData" size="small" v-model="scenicQueryDto.categoryId" style="margin-left: 5px;"
-            placeholder="所属类别">
+          <el-select v-model="scenicQueryDto.categoryId" placeholder="所属类别" size="small" style="margin-left: 5px;"
+                     @change="fetchFreshData">
             <el-option v-for="item in categories" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
-          <el-date-picker size="small" style="width: 220px;margin-left: 5px;" v-model="searchTime" type="daterange"
-            range-separator="至" start-placeholder="创建开始" end-placeholder="创建结束">
+          <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
+                          start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
           </el-date-picker>
-          <el-input size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" v-model="scenicQueryDto.name"
-            placeholder="景点名" clearable @clear="handleFilterClear">
-            <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
+          <el-input v-model="scenicQueryDto.name" clearable placeholder="景点名"
+                    size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+            <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
           </el-input>
         </span>
       </el-row>
@@ -24,7 +24,7 @@
         <el-empty description="暂无景点信息"></el-empty>
       </el-row>
       <el-row v-else class="scenic-item">
-        <el-col :span="6" @click.native="scenicClick(scenic)" v-for="(scenic, index) in tableData" :key="index">
+        <el-col v-for="(scenic, index) in tableData" :key="index" :span="6" @click.native="scenicClick(scenic)">
           <div class="item" style="box-sizing: border-box;">
             <img :src="scenic.cover" alt="" srcset="">
             <div class="name">{{ scenic.name }}</div>
@@ -46,15 +46,16 @@
           </div>
         </el-col>
       </el-row>
-      <el-pagination style="margin:10px 0;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="currentPage" :page-sizes="[8]" :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper" :total="totalItems"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[8]"
+                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
     </el-row>
   </el-row>
 </template>
 
 <script>
-import { timeAgo } from "@/utils/data"
+import {timeAgo} from "@/utils/data"
+
 export default {
   data() {
     return {
@@ -96,7 +97,7 @@ export default {
         if (res.data.code === 200) {
           // 插入“全部”选项
           this.categories = [
-            { id: '', name: '全部' }, // id 设置为空字符串，表示不限制分类
+            {id: '', name: '全部'}, // id 设置为空字符串，表示不限制分类
             ...res.data.data // 原有的分类数据
           ];
         }
@@ -128,7 +129,7 @@ export default {
           delete params.categoryId; // 清除 categoryId
         }
         const response = await this.$axios.post('/scenic/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -155,7 +156,7 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .scenic-item {
   .item:hover {
     background-color: rgb(248, 248, 248);

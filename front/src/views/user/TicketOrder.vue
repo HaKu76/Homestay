@@ -2,37 +2,37 @@
   <el-row style="background-color: #FFFFFF;padding: 5px 30px;border-radius: 5px;">
     <el-row style="padding: 10px;margin: 0 5px;">
       <el-row>
-        <el-select @change="fetchFreshData" size="small" v-model="scenicTicketOrderQueryDto.payStatus"
-          style="margin-left: 5px;" placeholder="支付状态">
+        <el-select v-model="scenicTicketOrderQueryDto.payStatus" placeholder="支付状态" size="small"
+                   style="margin-left: 5px;" @change="fetchFreshData">
           <el-option v-for="item in statusList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-date-picker size="small" style="width: 220px;margin-left: 5px;" v-model="searchTime" type="daterange"
-          range-separator="至" start-placeholder="创建开始" end-placeholder="创建结束">
+        <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
         </el-date-picker>
-        <el-input size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;"
-          v-model="scenicTicketOrderQueryDto.userId" placeholder="用户ID" clearable @clear="handleFilterClear">
-          <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
+        <el-input v-model="scenicTicketOrderQueryDto.userId" clearable
+                  placeholder="用户ID" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+          <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>
     </el-row>
     <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="scenicId" sortable width="120" label="景点ID"></el-table-column>
-        <el-table-column prop="scenicName" label="景点名称"></el-table-column>
-        <el-table-column prop="userId" width="120" label="用户ID"></el-table-column>
-        <el-table-column prop="userName" width="120" label="用户名"></el-table-column>
-        <el-table-column prop="contactPerson" width="120" label="联系人"></el-table-column>
-        <el-table-column prop="contactPhone" width="120" label="联系电话"></el-table-column>
-        <el-table-column prop="amount" sortable width="120" label="金额"></el-table-column>
-        <el-table-column prop="payTime" sortable width="168" label="支付时间"></el-table-column>
-        <el-table-column prop="createTime" sortable width="168" label="创建时间"></el-table-column>
-        <el-table-column prop="useStatus" width="98" label="支付状态">
+        <el-table-column label="景点ID" prop="scenicId" sortable width="120"></el-table-column>
+        <el-table-column label="景点名称" prop="scenicName"></el-table-column>
+        <el-table-column label="用户ID" prop="userId" width="120"></el-table-column>
+        <el-table-column label="用户名" prop="userName" width="120"></el-table-column>
+        <el-table-column label="联系人" prop="contactPerson" width="120"></el-table-column>
+        <el-table-column label="联系电话" prop="contactPhone" width="120"></el-table-column>
+        <el-table-column label="金额" prop="amount" sortable width="120"></el-table-column>
+        <el-table-column label="支付时间" prop="payTime" sortable width="168"></el-table-column>
+        <el-table-column label="创建时间" prop="createTime" sortable width="168"></el-table-column>
+        <el-table-column label="支付状态" prop="useStatus" width="98">
           <template slot-scope="scope">
-            <i v-if="!scope.row.payStatus" style="margin-right: 5px;" class="el-icon-warning"></i>
-            <i v-else style="margin-right: 5px;color: rgb(253, 199, 50);" class="el-icon-success"></i>
-            <el-tooltip v-if="!scope.row.payStatus" class="item" effect="dark" content="未支付，不能重新下单"
-              placement="bottom-end">
+            <i v-if="!scope.row.payStatus" class="el-icon-warning" style="margin-right: 5px;"></i>
+            <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
+            <el-tooltip v-if="!scope.row.payStatus" class="item" content="未支付，不能重新下单" effect="dark"
+                        placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">未支付</span>
             </el-tooltip>
             <span v-else>已支付</span>
@@ -44,20 +44,21 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination style="margin:10px 0;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="currentPage" :page-sizes="[10, 20]" :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper" :total="totalItems"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
+                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <el-row>
-      <LineChart height="480px" tag="门票销售额（元）" @on-selected="selected" :values="values" :date="dates" />
+      <LineChart :date="dates" :values="values" height="480px" tag="门票销售额（元）" @on-selected="selected"/>
     </el-row>
   </el-row>
 </template>
 
 <script>
 import LineChart from "@/components/LineChart"
+
 export default {
-  components: { LineChart },
+  components: {LineChart},
   data() {
     return {
       filterText: '',
@@ -71,7 +72,7 @@ export default {
       searchTime: [],
       values: [],
       dates: [],
-      statusList: [{ value: null, label: '全部' }, { value: 0, label: '未支付' }, { value: 1, label: '已支付' }],
+      statusList: [{value: null, label: '全部'}, {value: 0, label: '未支付'}, {value: 1, label: '已支付'}],
     };
   },
   created() {
@@ -83,7 +84,7 @@ export default {
     // 请求后端的金额成交数据
     selected(time) {
       this.$axios.get(`/scenicTicketOrder/daysQuery/${time}`).then(response => {
-        const { data } = response;
+        const {data} = response;
         if (data.code === 200) {
           this.values = data.data.map(entity => entity.count);
           this.dates = data.data.map(entity => entity.name);
@@ -120,7 +121,7 @@ export default {
               timer: 2000,
             });
             this.fetchFreshData();
-            return;
+
           }
         } catch (e) {
           this.$swal.fire({
@@ -192,7 +193,7 @@ export default {
           ...this.scenicTicketOrderQueryDto
         };
         const response = await this.$axios.post('/scenicTicketOrder/queryScenicTicketOrder', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -222,7 +223,7 @@ export default {
     handleEdit(row) {
       this.dialogOperation = true;
       this.isOperation = true;
-      this.data = { ...row }
+      this.data = {...row}
     },
     handleDelete(row) {
       this.selectedRows.push(row);
@@ -231,4 +232,4 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss"></style>
+<style lang="scss" scoped></style>

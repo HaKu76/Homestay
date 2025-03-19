@@ -11,7 +11,8 @@
                         start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
         </el-date-picker>
         <el-input v-model="scenicStrategyQueryDto.title" clearable
-                  placeholder="攻略标题" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+                  placeholder="攻略标题" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;"
+                  @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>

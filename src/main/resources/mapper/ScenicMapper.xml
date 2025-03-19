@@ -74,6 +74,9 @@
             <if test="name != null and name != ''">
                 AND s.name LIKE concat('%',#{name},'%')
             </if>
+            <if test="saveIds != null and saveIds != ''">
+                AND s.save_ids LIKE concat('%',#{saveIds},'%')
+            </if>
             <if test="status !=null">
                 AND s.status = #{status}
             </if>
@@ -104,6 +107,9 @@
             </if>
             <if test="name != null and name != ''">
                 AND s.name LIKE concat('%',#{name},'%')
+            </if>
+            <if test="saveIds != null and saveIds != ''">
+                AND s.save_ids LIKE concat('%',#{saveIds},'%')
             </if>
             <if test="status !=null">
                 AND s.status = #{status}

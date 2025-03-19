@@ -4,9 +4,9 @@
       <el-row>
         <span style="display: inline-block;font-size: 26px;font-weight: 800;padding-left: 15px;">攻略大全</span>
         <span style="float: right;">
-          <el-input size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;"
-            v-model="scenicStrategyQueryDto.title" placeholder="攻略标题" clearable @clear="handleFilterClear">
-            <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
+          <el-input v-model="scenicStrategyQueryDto.title" clearable
+                    placeholder="攻略标题" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+            <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
           </el-input>
         </span>
       </el-row>
@@ -14,9 +14,9 @@
     <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
 
       <div>
-        <div class="strategy-item" v-for="(strategy, index) in tableData" :key="index" @click="readStrategy(strategy)">
+        <div v-for="(strategy, index) in tableData" :key="index" class="strategy-item" @click="readStrategy(strategy)">
           <div class="left">
-            <img :src="strategy.cover" :alt="strategy.title" srcset="">
+            <img :alt="strategy.title" :src="strategy.cover" srcset="">
           </div>
           <div class="right">
             <div class="user">
@@ -33,11 +33,11 @@
         </div>
       </div>
 
-      <el-pagination style="margin:10px 0;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="currentPage" :page-sizes="[10, 20]" :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper" :total="totalItems"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
+                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
     </el-row>
-    <el-drawer title="查看内容" width="35%" :visible.sync="drawer" :direction="direction">
+    <el-drawer :direction="direction" :visible.sync="drawer" title="查看内容" width="35%">
       <div style="margin: 20px;" v-html="data.content"></div>
     </el-drawer>
   </el-row>
@@ -59,7 +59,7 @@ export default {
       selectedRows: [],
       scenicStrategyQueryDto: {}, // 搜索条件
       searchTime: [],
-      isAuditList: [{ value: null, label: '全部' }, { value: 0, label: '未审核' }, { value: 1, label: '已审核' }],
+      isAuditList: [{value: null, label: '全部'}, {value: 0, label: '未审核'}, {value: 1, label: '已审核'}],
     };
   },
   created() {
@@ -116,7 +116,7 @@ export default {
               timer: 2000,
             });
             this.fetchFreshData();
-            return;
+
           }
         } catch (e) {
           this.$swal.fire({
@@ -150,7 +150,7 @@ export default {
           ...this.scenicStrategyQueryDto
         };
         const response = await this.$axios.post('/scenicStrategy/queryList', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -186,7 +186,7 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .strategy-item {
   display: flex;
   justify-content: left;

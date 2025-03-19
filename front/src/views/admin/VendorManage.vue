@@ -20,7 +20,8 @@
         </el-input>
         <span style="float: right;">
           <el-button class="customer" size="small"
-                     style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="add()"><i class="el-icon-plus"></i>新增供应商</el-button>
+                     style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                     @click="add()"><i class="el-icon-plus"></i>新增供应商</el-button>
         </span>
       </el-row>
     </el-row>

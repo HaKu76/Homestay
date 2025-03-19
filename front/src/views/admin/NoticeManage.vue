@@ -2,23 +2,23 @@
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
     <el-row style="padding: 10px;margin: 0 5px;">
       <el-row>
-        <el-date-picker size="small" style="width: 220px;margin-left: 5px;" v-model="searchTime" type="daterange"
-          range-separator="至" start-placeholder="创建开始" end-placeholder="创建结束">
+        <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
         </el-date-picker>
-        <el-input size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" v-model="noticeQueryDto.title"
-          placeholder="标题" clearable @clear="handleFilterClear">
-          <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
+        <el-input v-model="noticeQueryDto.title" clearable placeholder="标题"
+                  size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+          <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
         <span style="float: right;">
-          <el-button size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-            class="customer" type="info" @click="add()"><i class="el-icon-plus"></i>新增公告</el-button>
+          <el-button class="customer" size="small"
+                     style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="add()"><i class="el-icon-plus"></i>新增公告</el-button>
         </span>
       </el-row>
     </el-row>
     <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="title" label="公告标题"></el-table-column>
-        <el-table-column prop="createTime" width="168" label="发布时间"></el-table-column>
+        <el-table-column label="公告标题" prop="title"></el-table-column>
+        <el-table-column label="发布时间" prop="createTime" width="168"></el-table-column>
         <el-table-column label="操作" width="110">
           <template slot-scope="scope">
             <span class="text-button" @click="handleEdit(scope.row)">编辑</span>
@@ -26,9 +26,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination style="margin:10px 0;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="currentPage" :page-sizes="[10, 20]" :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper" :total="totalItems"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
+                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 操作面板 -->
     <el-dialog :show-close="false" :visible.sync="dialogOperation" width="32%">
@@ -38,20 +38,21 @@
       <div style="padding:0 20px;">
         <el-row style="margin-bottom: 20px;">
           <span class="dialog-hover">标题</span>
-          <input class="dialog-input" v-model="data.title" placeholder="请输入" />
+          <input v-model="data.title" class="dialog-input" placeholder="请输入"/>
           <div>
-            <Editor height="300px" :receiveContent="data.content" @on-receive="onReceiveContent" />
+            <Editor :receiveContent="data.content" height="300px" @on-receive="onReceiveContent"/>
           </div>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" v-if="!isOperation"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" class="customer" type="info"
-          @click="addOperation()">新增</el-button>
-        <el-button size="small" v-else style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-          class="customer" type="info" @click="updateOperation()">修改</el-button>
+        <el-button v-if="!isOperation" class="customer"
+                   size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
+                   type="info"
+                   @click="addOperation()">新增</el-button>
+        <el-button v-else class="customer" size="small"
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="updateOperation()">修改</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-          @click="cannel()">取消</el-button>
+                   @click="cannel()">取消</el-button>
       </span>
     </el-dialog>
   </el-row>
@@ -59,8 +60,9 @@
 
 <script>
 import Editor from "@/components/Editor"
+
 export default {
-  components: { Editor },
+  components: {Editor},
   data() {
     return {
       data: {},
@@ -75,8 +77,8 @@ export default {
       noticeQueryDto: {}, // 搜索条件
       users: [],
       searchTime: [],
-      isAuditList: [{ value: null, label: '全部' }, { value: 0, label: '未审核' }, { value: 1, label: '已审核' }],
-      statusList: [{ value: null, label: '全部' }, { value: 0, label: '不可用' }, { value: 1, label: '可用' }],
+      isAuditList: [{value: null, label: '全部'}, {value: 0, label: '未审核'}, {value: 1, label: '已审核'}],
+      statusList: [{value: null, label: '全部'}, {value: 0, label: '不可用'}, {value: 1, label: '可用'}],
     };
   },
   created() {
@@ -188,7 +190,7 @@ export default {
           ...this.noticeQueryDto
         };
         const response = await this.$axios.post('/notice/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -218,7 +220,7 @@ export default {
     handleEdit(row) {
       this.dialogOperation = true;
       this.isOperation = true;
-      this.data = { ...row }
+      this.data = {...row}
     },
     handleDelete(row) {
       this.selectedRows.push(row);

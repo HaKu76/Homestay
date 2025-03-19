@@ -2,7 +2,7 @@
   <div>
     <div class="top">
       <div class="top-left">
-        <Logo sysName="趣旅" />
+        <Logo sysName="趣旅"/>
       </div>
       <div class="top-right">
         <ul>
@@ -58,7 +58,7 @@
 import Logo from "@/components/Logo"
 
 export default {
-  components: { Logo },
+  components: {Logo},
   name: "User",
   data() {
     return {
@@ -95,11 +95,11 @@ export default {
     },
     // Token 检验
     async auth() {
-      const { data } = await this.$axios.get('/user/auth');
+      const {data} = await this.$axios.get('/user/auth');
       if (data.code !== 200) { // Token校验异常
         this.$router.push('/');
       } else {
-        sessionStorage.setItem('userInfo',JSON.stringify(data.data));
+        sessionStorage.setItem('userInfo', JSON.stringify(data.data));
         this.userInfo = data.data;
       }
     },

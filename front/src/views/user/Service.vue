@@ -1,9 +1,9 @@
 <template>
   <div style="width: 800px;margin: 0 auto;">
     <div v-if="vendors.length !== 0">
-      <el-descriptions class="margin-top" title="申请信息" :column="3" border>
+      <el-descriptions :column="3" border class="margin-top" title="申请信息">
         <template slot="extra">
-          <el-button class="customer" type="warning" size="mini" @click="updateInfo">修改</el-button>
+          <el-button class="customer" size="mini" type="warning" @click="updateInfo">修改</el-button>
         </template>
         <el-descriptions-item>
           <template slot="label">
@@ -56,29 +56,29 @@
           <el-tag size="small">{{ vendors[0].status ? '正常' : '异常' }}</el-tag>
         </el-descriptions-item>
       </el-descriptions>
-      <div style="margin: 20px 0;" v-if="vendors[0].isAudit && vendors[0].status">
+      <div v-if="vendors[0].isAudit && vendors[0].status" style="margin: 20px 0;">
         <h3>信息发布</h3>
         <div class="content-publish">
           <div class="left" @click="route('/vendorScenic')">
             <span>
-              <i style="margin-right: 5px;" class="el-icon-s-finance"></i>景点信息
+              <i class="el-icon-s-finance" style="margin-right: 5px;"></i>景点信息
             </span>
           </div>
           <div class="right" @click="route('/vendorHotel')">
             <span>
-              <i style="margin-right: 5px;" class="el-icon-school"></i>民宿信息
+              <i class="el-icon-school" style="margin-right: 5px;"></i>民宿信息
             </span>
           </div>
         </div>
         <div class="content-publish">
           <div class="left" @click="route('/vendorTicket')">
             <span>
-              <i style="margin-right: 5px;" class="el-icon-document"></i>门票管理
+              <i class="el-icon-document" style="margin-right: 5px;"></i>门票管理
             </span>
           </div>
           <div class="right" @click="route('/vendorHotelRoom')">
             <span>
-              <i style="margin-right: 5px;" class="el-icon-s-marketing"></i>民宿房间
+              <i class="el-icon-s-marketing" style="margin-right: 5px;"></i>民宿房间
             </span>
           </div>
         </div>
@@ -90,30 +90,30 @@
       </div>
       <div>
         <p>*供应商名称</p>
-        <input style="line-height: 45px;" class="dialog-input" v-model="data.name" placeholder="请输入" />
+        <input v-model="data.name" class="dialog-input" placeholder="请输入" style="line-height: 45px;"/>
       </div>
       <div>
         <p>*联系人</p>
-        <input style="line-height: 45px;" class="dialog-input" v-model="data.contactPerson" placeholder="请输入" />
+        <input v-model="data.contactPerson" class="dialog-input" placeholder="请输入" style="line-height: 45px;"/>
       </div>
       <div>
         <p>*联系电话</p>
-        <input style="line-height: 45px;" class="dialog-input" v-model="data.contactPhone" placeholder="请输入" />
+        <input v-model="data.contactPhone" class="dialog-input" placeholder="请输入" style="line-height: 45px;"/>
       </div>
       <div>
         <p>*工作邮箱</p>
-        <input style="line-height: 45px;" class="dialog-input" v-model="data.email" placeholder="请输入" />
+        <input v-model="data.email" class="dialog-input" placeholder="请输入" style="line-height: 45px;"/>
       </div>
       <div>
         <p>*产品类型</p>
-        <input style="line-height: 45px;" class="dialog-input" v-model="data.productType" placeholder="请输入" />
+        <input v-model="data.productType" class="dialog-input" placeholder="请输入" style="line-height: 45px;"/>
       </div>
       <div>
         <p>*办公地址</p>
-        <input style="line-height: 45px;" class="dialog-input" v-model="data.workAddress" placeholder="请输入" />
+        <input v-model="data.workAddress" class="dialog-input" placeholder="请输入" style="line-height: 45px;"/>
       </div>
       <div style="margin-top: 20px;text-align: center;">
-        <el-button type="primary" class="customer" size="mini" @click="postInfo" round>
+        <el-button class="customer" round size="mini" type="primary" @click="postInfo">
           提交申请
         </el-button>
       </div>
@@ -125,34 +125,34 @@
       <div style="padding:0 20px;">
         <div>
           <p>*供应商名称</p>
-          <input class="dialog-input" v-model="data.name" placeholder="请输入" />
+          <input v-model="data.name" class="dialog-input" placeholder="请输入"/>
         </div>
         <div>
           <p>*联系人</p>
-          <input class="dialog-input" v-model="data.contactPerson" placeholder="请输入" />
+          <input v-model="data.contactPerson" class="dialog-input" placeholder="请输入"/>
         </div>
         <div>
           <p>*联系电话</p>
-          <input class="dialog-input" v-model="data.contactPhone" placeholder="请输入" />
+          <input v-model="data.contactPhone" class="dialog-input" placeholder="请输入"/>
         </div>
         <div>
           <p>*工作邮箱</p>
-          <input class="dialog-input" v-model="data.email" placeholder="请输入" />
+          <input v-model="data.email" class="dialog-input" placeholder="请输入"/>
         </div>
         <div>
           <p>*产品类型</p>
-          <input class="dialog-input" v-model="data.productType" placeholder="请输入" />
+          <input v-model="data.productType" class="dialog-input" placeholder="请输入"/>
         </div>
         <div>
           <p>*办公地址</p>
-          <input class="dialog-input" v-model="data.workAddress" placeholder="请输入" />
+          <input v-model="data.workAddress" class="dialog-input" placeholder="请输入"/>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-          class="customer" type="info" @click="comfirmStatus">确认</el-button>
+        <el-button class="customer" size="small"
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="comfirmStatus">确认</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(241, 241, 241);border: none;"
-          @click="dialogStatusOperation = false">取消</el-button>
+                   @click="dialogStatusOperation = false">取消</el-button>
       </span>
     </el-dialog>
   </div>
@@ -179,7 +179,7 @@ export default {
     },
     // 供应商信息修改
     async comfirmStatus() {
-      const { data } = await this.$axios.put('/vendor/update', this.data);
+      const {data} = await this.$axios.put('/vendor/update', this.data);
       this.$notify({
         duration: 1000,
         title: '供应商信息修改',
@@ -193,7 +193,7 @@ export default {
       this.dialogStatusOperation = true;
     },
     async postInfo() {
-      const { data } = await this.$axios.post('/vendor/save', this.data);
+      const {data} = await this.$axios.post('/vendor/save', this.data);
       this.$notify({
         duration: 1000,
         title: '申请操作',
@@ -207,7 +207,7 @@ export default {
       }
     },
     async auth() {
-      const { data } = await this.$axios.post('/vendor/queryUser');
+      const {data} = await this.$axios.post('/vendor/queryUser');
       if (data.code === 200) {
         this.vendors = data.data;
       }
@@ -215,7 +215,7 @@ export default {
   }
 };
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .content-publish {
   line-height: 100px;
   display: flex;

@@ -2,36 +2,36 @@
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
     <el-row style="padding: 10px;margin: 0 5px;">
       <el-row>
-        <el-select @change="fetchFreshData" size="small" v-model="hotelRoomQueryDto.hotelId" placeholder="从属民宿">
+        <el-select v-model="hotelRoomQueryDto.hotelId" placeholder="从属民宿" size="small" @change="fetchFreshData">
           <el-option v-for="item in hotels" :key="item.id" :label="item.name" :value="item.id">
           </el-option>
         </el-select>
-        <el-date-picker size="small" style="width: 220px;margin-left: 5px;" v-model="searchTime" type="daterange"
-          range-separator="至" start-placeholder="创建开始" end-placeholder="创建结束">
+        <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
         </el-date-picker>
-        <el-input size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" v-model="hotelRoomQueryDto.name"
-          placeholder="民宿房间名" clearable @clear="handleFilterClear">
-          <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
+        <el-input v-model="hotelRoomQueryDto.name" clearable placeholder="民宿房间名"
+                  size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+          <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
         <span style="float: right;">
-          <el-button size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-            class="customer" type="info" @click="add()"><i class="el-icon-plus"></i>新增民宿房间</el-button>
+          <el-button class="customer" size="small"
+                     style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="add()"><i class="el-icon-plus"></i>新增民宿房间</el-button>
         </span>
       </el-row>
     </el-row>
     <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="cover" label="房间封面" width="120px">
+        <el-table-column label="房间封面" prop="cover" width="120px">
           <template slot-scope="scope">
-            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;" />
+            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;"/>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="房间名"></el-table-column>
-        <el-table-column prop="hotelId" sortable label="民宿ID" width="120px"></el-table-column>
-        <el-table-column prop="hotelName" sortable label="民宿名称" width="120px"></el-table-column>
-        <el-table-column prop="price" sortable label="价格" width="80px"></el-table-column>
-        <el-table-column prop="discount" sortable label="折扣" width="120px"></el-table-column>
-        <el-table-column prop="createTime" sortable width="168" label="创建时间"></el-table-column>
+        <el-table-column label="房间名" prop="name"></el-table-column>
+        <el-table-column label="民宿ID" prop="hotelId" sortable width="120px"></el-table-column>
+        <el-table-column label="民宿名称" prop="hotelName" sortable width="120px"></el-table-column>
+        <el-table-column label="价格" prop="price" sortable width="80px"></el-table-column>
+        <el-table-column label="折扣" prop="discount" sortable width="120px"></el-table-column>
+        <el-table-column label="创建时间" prop="createTime" sortable width="168"></el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
             <span class="text-button" @click="roomManage(scope.row)">床位管理</span>
@@ -40,9 +40,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination style="margin:10px 0;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="currentPage" :page-sizes="[10, 20]" :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper" :total="totalItems"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
+                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 操作面板 -->
     <el-dialog :show-close="false" :visible.sync="dialogOperation" width="28%">
@@ -52,20 +52,20 @@
       <div style="padding:0 20px;">
         <span class="dialog-hover">民宿房间封面</span>
         <el-row>
-          <el-upload class="avatar-uploader" action="/api/Homestay-sys/v1.0/file/upload" :show-file-list="false"
-            :on-success="handleCoverSuccess">
+          <el-upload :on-success="handleCoverSuccess" :show-file-list="false" action="/api/Homestay-sys/v1.0/file/upload"
+                     class="avatar-uploader">
             <img v-if="cover" :src="cover" style="width: 200px;height: 120px;">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-row>
         <el-row style="margin-bottom: 20px;">
           <span class="dialog-hover">民宿房间名称</span>
-          <input class="dialog-input" v-model="data.name" placeholder="请输入" />
+          <input v-model="data.name" class="dialog-input" placeholder="请输入"/>
           <div>
             <div>
               <span class="dialog-hover">介绍</span>
             </div>
-            <el-input style="width: 100%;" type="textarea" :rows="2" placeholder="请输入" v-model="data.detail">
+            <el-input v-model="data.detail" :rows="2" placeholder="请输入" style="width: 100%;" type="textarea">
             </el-input>
           </div>
           <div>
@@ -94,25 +94,26 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button v-if="!isOperation" class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="addOperation()">新增</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="addOperation()">新增</el-button>
         <el-button v-else class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="updateOperation()">修改</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="updateOperation()">修改</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-          @click="cannel()">取消</el-button>
+                   @click="cannel()">取消</el-button>
       </span>
     </el-dialog>
-    <el-drawer :append-to-body="true" title="房间管理" width="35%" :visible.sync="drawer" :direction="direction">
-      <BedManage :roomId="roomId" />
+    <el-drawer :append-to-body="true" :direction="direction" :visible.sync="drawer" title="房间管理" width="35%">
+      <BedManage :roomId="roomId"/>
     </el-drawer>
   </el-row>
 </template>
 
 <script>
 import BedManage from '@/views/admin/HotelRoomBedManage'
+
 export default {
-  components: { BedManage },
+  components: {BedManage},
   data() {
     return {
       cover: '',
@@ -273,7 +274,7 @@ export default {
           ...this.hotelRoomQueryDto
         };
         const response = await this.$axios.post('/hotelRoom/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -304,7 +305,7 @@ export default {
       this.cover = row.cover;
       this.dialogOperation = true;
       this.isOperation = true;
-      this.data = { ...row }
+      this.data = {...row}
     },
     handleDelete(row) {
       this.selectedRows.push(row);

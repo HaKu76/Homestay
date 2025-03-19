@@ -7,15 +7,16 @@
           <el-avatar :src="userData.userAvatar"></el-avatar>
         </el-col>
         <el-col :span="22">
-          <div class="parent-comment"
-            :style="{ backgroundColor: bgColor, height: isFocused ? '120px' : '70px', borderColor: isFocused ? '#007bff' : 'transparent' }">
-            <textarea class="comment-parent-input" v-model="content" placeholder="请友好交流" @focus="onFocus"
-              @blur="onBlur"></textarea>
+          <div :style="{ backgroundColor: bgColor, height: isFocused ? '120px' : '70px', borderColor: isFocused ? '#007bff' : 'transparent' }"
+               class="parent-comment">
+            <textarea v-model="content" class="comment-parent-input" placeholder="请友好交流" @blur="onBlur"
+                      @focus="onFocus"></textarea>
             <div>
               <span class="comment-input-number">{{ content.length }} / 300</span>
               <el-button
-                :style="{ backgroundColor: isFocused ? '#007bff' : '#666', borderColor: isFocused ? '#007bff' : '#666' }"
-                @click="commentClick" class="comment-clike" size="mini" type="primary">评论</el-button>
+                  :style="{ backgroundColor: isFocused ? '#007bff' : '#666', borderColor: isFocused ? '#007bff' : '#666' }"
+                  class="comment-clike" size="mini" type="primary" @click="commentClick">评论
+              </el-button>
             </div>
           </div>
         </el-col>
@@ -25,113 +26,121 @@
       <el-row v-for="(comment, index) in commentList" :key="index" style="padding: 10px 0;">
         <el-row>
           <el-col :span="2">
-            <el-avatar size="large" :src="comment.userAvatar"></el-avatar>
+            <el-avatar :src="comment.userAvatar" size="large"></el-avatar>
           </el-col>
           <el-col :span="22">
             <span style="height: 40px;line-height: 40px;font-size: 16px;color: #515767;">{{
-              comment.userName }}</span>
+                comment.userName
+              }}</span>
             <span v-if="comment.userId == userId" class="my-body-tag">我自己</span>
           </el-col>
         </el-row>
         <el-row style="padding: 8px 0;">
-          <el-col :span="22" :offset="2">
+          <el-col :offset="2" :span="22">
             <span style="font-size: 16px;color: #252933;">{{ comment.content }}</span>
           </el-col>
         </el-row>
         <el-row style="padding: 8px 0;">
-          <el-col :span="22" :offset="2">
+          <el-col :offset="2" :span="22">
             <span style="font-size: 14px;color: #8A919F;">{{ comment.time }}</span>
-            <el-popconfirm confirm-button-text='好的' cancel-button-text='不删了' icon="el-icon-info" icon-color="red"
-              title="删除该条评论？" v-if="comment.userId == userId" @confirm="deleteComment(comment)">
+            <el-popconfirm v-if="comment.userId == userId" cancel-button-text='不删了' confirm-button-text='好的' icon="el-icon-info"
+                           icon-color="red" title="删除该条评论？" @confirm="deleteComment(comment)">
               <span slot="reference"
-                style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;">
+                    style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;">
                 <i class="el-icon-delete"></i>
                 删除
               </span>
             </el-popconfirm>
-            <span @click="toggleReplyInput(comment)"
-              style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;">
+            <span style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;"
+                  @click="toggleReplyInput(comment)">
               <i class="el-icon-chat-dot-round"></i>
               回复<span v-if="comment.childTotal != 0">({{ comment.childTotal }})</span>
             </span>
-            <span @click="upvote(comment)"
-              style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;">
-              <i class="el-icon-discount" v-if="!comment.upvoteFlag">点赞</i>
-              <i class="el-icon-discount" v-else style="color: #1E80FF;">&nbsp;{{ comment.upvoteCount
-              }}</i>
+            <span style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;"
+                  @click="upvote(comment)">
+              <i v-if="!comment.upvoteFlag" class="el-icon-discount">点赞</i>
+              <i v-else class="el-icon-discount" style="color: #1E80FF;">&nbsp;{{
+                  comment.upvoteCount
+                }}</i>
             </span>
           </el-col>
         </el-row>
         <!-- 父级评论的回复按钮和输入框 -->
         <el-row v-if="comment.showReplyInput" style="padding: 10px 0;">
-          <el-col :span="22" :offset="2">
-            <div class="parent-comment" :style="{ backgroundColor: bgColor, height: '110px', borderColor: '#007bff' }">
-              <textarea class="comment-parent-input" v-model="replyContent" :placeholder="replyText"></textarea>
+          <el-col :offset="2" :span="22">
+            <div :style="{ backgroundColor: bgColor, height: '110px', borderColor: '#007bff' }" class="parent-comment">
+              <textarea v-model="replyContent" :placeholder="replyText" class="comment-parent-input"></textarea>
               <div>
                 <span class="comment-input-number">{{ replyContent.length }} / 300</span>
-                <el-button style="background-color: #007bff;user-select: none;" @click="submitReply(comment)"
-                  class="comment-clike" size="mini" type="primary">评论</el-button>
+                <el-button class="comment-clike" size="mini"
+                           style="background-color: #007bff;user-select: none;" type="primary" @click="submitReply(comment)">评论
+                </el-button>
               </div>
             </div>
           </el-col>
         </el-row>
         <!-- 子级评论 -->
         <el-row v-for="(commentChild, index) in comment.commentChildVOS" :key="index"
-          style="padding: 10px 15px;font-size: 16px;">
+                style="padding: 10px 15px;font-size: 16px;">
           <el-row>
-            <el-col :span="22" :offset="2">
+            <el-col :offset="2" :span="22">
               <el-row style="display: flex; align-items: center; flex-wrap: wrap;">
-                <el-avatar size="small" :src="commentChild.userAvatar" style="margin-right: 5px;"></el-avatar>
+                <el-avatar :src="commentChild.userAvatar" size="small" style="margin-right: 5px;"></el-avatar>
                 <span style="color: #515767; padding: 0 5px;">{{ commentChild.userName }}</span>
                 <span v-if="commentChild.userId == userId" class="my-body-tag">我自己</span>
                 <span v-if="commentChild.replierName != null"
-                  style="margin:0 15px;color: #1c1c1c;user-select: none;font-size: 12px;">
+                      style="margin:0 15px;color: #1c1c1c;user-select: none;font-size: 12px;">
                   回复
                 </span>
-                <el-avatar v-if="commentChild.replierName != null" size="small" :src="commentChild.replierAvatar"
-                  style="margin-right: 5px;"></el-avatar>
+                <el-avatar v-if="commentChild.replierName != null" :src="commentChild.replierAvatar" size="small"
+                           style="margin-right: 5px;"></el-avatar>
                 <span v-if="commentChild.replierName != null" style="color: #515767;padding: 0 5px;">{{
-                  commentChild.replierName }}</span>
+                    commentChild.replierName
+                  }}</span>
                 <span v-if="commentChild.replierId == userId" class="my-body-tag">我自己</span>
                 <span
-                  style="letter-spacing: 1px;font-size: 16px; color: #252933; white-space: normal; margin-left: 5px;padding: 6px 0;">
+                    style="letter-spacing: 1px;font-size: 16px; color: #252933; white-space: normal; margin-left: 5px;padding: 6px 0;">
                   : {{ commentChild.content }}
                 </span>
               </el-row>
               <el-row style="padding: 10px 0;">
                 <span style="font-size: 14px;color: #8A919F;">{{ commentChild.time }}</span>
-                <el-popconfirm confirm-button-text='好的' cancel-button-text='不删了' icon="el-icon-info" icon-color="red"
-                  title="删除该条评论？" v-if="commentChild.userId == userId" @confirm="deleteComment(commentChild)">
+                <el-popconfirm v-if="commentChild.userId == userId" cancel-button-text='不删了' confirm-button-text='好的'
+                               icon="el-icon-info"
+                               icon-color="red" title="删除该条评论？"
+                               @confirm="deleteComment(commentChild)">
                   <span slot="reference"
-                    style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;">
+                        style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;">
                     <i class="el-icon-delete"></i>
                     删除
                   </span>
                 </el-popconfirm>
-                <span @click="toggleReplyInput1(commentChild)"
-                  style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;">
+                <span style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;"
+                      @click="toggleReplyInput1(commentChild)">
                   <i class="el-icon-chat-dot-round"></i>
                   回复
                 </span>
-                <span @click="upvote(commentChild)"
-                  style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;">
-                  <i class="el-icon-discount" v-if="!commentChild.upvoteFlag">点赞</i>
-                  <i class="el-icon-discount" v-else style="color: #1E80FF;">&nbsp;{{
-                    commentChild.upvoteCount }}</i>
+                <span style="cursor: pointer;margin-left: 15px;font-size: 14px;color: #8A919F;user-select: none;"
+                      @click="upvote(commentChild)">
+                  <i v-if="!commentChild.upvoteFlag" class="el-icon-discount">点赞</i>
+                  <i v-else class="el-icon-discount" style="color: #1E80FF;">&nbsp;{{
+                      commentChild.upvoteCount
+                    }}</i>
                 </span>
               </el-row>
               <!-- 子级评论的回复按钮和输入框 -->
               <el-row v-if="commentChild.replyInputStatus" style="padding: 10px 0;">
                 <el-col :span="24">
-                  <div class="parent-comment"
-                    :style="{ backgroundColor: bgColor, height: '110px', borderColor: '#007bff' }">
-                    <textarea class="comment-parent-input" v-model="replyChildContent"
-                      :placeholder="replyText"></textarea>
+                  <div :style="{ backgroundColor: bgColor, height: '110px', borderColor: '#007bff' }"
+                       class="parent-comment">
+                    <textarea v-model="replyChildContent" :placeholder="replyText"
+                              class="comment-parent-input"></textarea>
                     <div>
                       <span class="comment-input-number">{{ replyChildContent.length }} /
                         300</span>
-                      <el-button style="background-color: #007bff;" @click="submitReply1(commentChild)"
-                        class="comment-clike" size="mini" type="primary">评论</el-button>
+                      <el-button class="comment-clike" size="mini"
+                                 style="background-color: #007bff;" type="primary" @click="submitReply1(commentChild)">评论
+                      </el-button>
                     </div>
                   </div>
                 </el-col>
@@ -142,14 +151,14 @@
       </el-row>
     </el-row>
     <!-- 举报反馈对话框 -->
-    <el-dialog style="user-select: none;border-radius: 5px;" title="我要举报" :visible.sync="dialogVisibleReport"
-      width="30%">
+    <el-dialog :visible.sync="dialogVisibleReport" style="user-select: none;border-radius: 5px;" title="我要举报"
+               width="30%">
       <el-row v-for="(item, index) in reports" :key="index" style="margin-top: 10px;">
         <el-row style="padding-bottom: 10px;user-select: none;">*{{ item.name }}</el-row>
         <el-row>
           <span v-for="(itemChild, indexChild) in item.list" :key="indexChild" @click="reportItemClick(itemChild)">
             <button :style="{ border: itemChild.isSelected ? '1px solid #4b87bc' : '1px solid #f4f4f4' }"
-              class="reportItem">
+                    class="reportItem">
               {{ itemChild.name }}
             </button>
           </span>
@@ -164,7 +173,8 @@
 </template>
 
 <script>
-import { timeAgo } from '@/utils/data'
+import {timeAgo} from '@/utils/data'
+
 export default {
   props: {
     contentId: {
@@ -207,7 +217,7 @@ export default {
     content() {
       if (this.content === '') {
         this.isFocused = false;
-        return;
+
       }
     },
   },
@@ -303,7 +313,7 @@ export default {
         if (res.data.code == 200) {
           this.reports = [];
           res.data.data.forEach(entity => {
-            let report = { name: entity.name };
+            let report = {name: entity.name};
             let resportList = [];
             entity.list.forEach(listItem => {
               let reportChild = {};
@@ -506,7 +516,7 @@ export default {
       })
     },
   }
-};  
+};
 </script>
 <style lang="scss">
 .cannel-btn,
