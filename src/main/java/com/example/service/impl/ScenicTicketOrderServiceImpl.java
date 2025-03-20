@@ -9,15 +9,19 @@ import com.example.pojo.api.ApiResult;
 import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.base.QueryDto;
 import com.example.pojo.dto.query.extend.*;
+import com.example.pojo.entity.ScenicTicket;
 import com.example.pojo.entity.ScenicTicketOrder;
 import com.example.pojo.vo.*;
 import com.example.service.ScenicTicketOrderService;
 import com.example.utils.DateUtil;
+import com.example.utils.DecimalUtils;
 import com.example.utils.MoneyUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,12 +49,46 @@ public class ScenicTicketOrderServiceImpl implements ScenicTicketOrderService {
      */
     @Override
     public Result<Void> save(ScenicTicketOrder scenicTicketOrder) {
-        //设置创建时间
+        if (!StringUtils.hasText(scenicTicketOrder.getContactPerson()) ||
+                !StringUtils.hasText(scenicTicketOrder.getContactPhone())) {
+            return ApiResult.error("联系人或联系电话不为空");
+        }
+        ScenicTicketQueryDto scenicTicketQueryDto = new ScenicTicketQueryDto();
+        scenicTicketQueryDto.setId(scenicTicketOrder.getTicketId());
+        List<ScenicTicketVO> scenicTicketVOS = scenicTicketMapper.query(scenicTicketQueryDto);
+        if (scenicTicketVOS.isEmpty()) {
+            return ApiResult.error("暂无门票信息");
+        }
+        ScenicTicketVO scenicTicketVO = scenicTicketVOS.get(0);
+        // 门票是否可用
+        if (!scenicTicketVO.getUseStatus()) {
+            return ApiResult.error("门票暂不可用");
+        }
+        // 看门票是否充足
+        if (scenicTicketOrder.getBuyNumber() > scenicTicketVO.getNumber()) {
+            return ApiResult.error("门票库存不足");
+        }
+        BigDecimal amount = DecimalUtils.calculateTotal(
+                scenicTicketOrder.getBuyNumber(),
+                scenicTicketVO.getPrice(),
+                scenicTicketVO.getDiscount() == null ? 1 : (scenicTicketVO.getDiscount() / 10)
+        );
+        // 设置金额
+        scenicTicketOrder.setAmount(amount);
+        // 将购买者的用户ID设置上
+        scenicTicketOrder.setUserId(LocalThreadHolder.getUserId());
+        // 设置初始时间
         scenicTicketOrder.setCreateTime(LocalDateTime.now());
-        // 设置默认支付状态为未支付
+        scenicTicketOrder.setTicketId(scenicTicketVO.getId());
+        // 开始的时候，订单的状态是未支付的
         scenicTicketOrder.setPayStatus(false);
         scenicTicketOrderMapper.save(scenicTicketOrder);
-        return ApiResult.success();
+        // 改门票数量
+        ScenicTicket scenicTicket = new ScenicTicket();
+        scenicTicket.setId(scenicTicketVO.getId());
+        scenicTicket.setNumber(scenicTicketVO.getNumber() - scenicTicketOrder.getBuyNumber());
+        scenicTicketMapper.update(scenicTicket);
+        return ApiResult.success("下单成功");
     }
 
     /**
