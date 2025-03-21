@@ -186,6 +186,51 @@ public class ScenicTicketOrderServiceImpl implements ScenicTicketOrderService {
     }
 
     /**
+     * 查询用户自己的门票消费金额数据
+     *
+     * @param day 往前查多少天
+     * @return Result<List < ChartVO>>
+     */
+    @Override
+    public Result<List<ChartVO>> daysQueryUser(Integer day) {
+        // 获取时间范围
+        QueryDto queryDto = DateUtil.startAndEndTime(day);
+        ScenicTicketOrderQueryDto dto = new ScenicTicketOrderQueryDto();
+        dto.setStartTime(queryDto.getStartTime());
+        dto.setEndTime(queryDto.getEndTime());
+        // 设置上用户的ID
+        dto.setUserId(LocalThreadHolder.getUserId());
+        List<ScenicTicketOrderVO> scenicTicketOrderVOS = scenicTicketOrderMapper.query(dto);
+        List<MoneyDto> moneyDtoList = scenicTicketOrderVOS.stream()
+                .map(scenicTicketOrderVO -> new MoneyDto(
+                        scenicTicketOrderVO.getAmount(),
+                        scenicTicketOrderVO.getPayTime())).collect(Collectors.toList());
+        List<ChartVO> chartVOS = MoneyUtils.countMoney(day, moneyDtoList);
+        return ApiResult.success(chartVOS);
+    }
+
+    /**
+     * 统计全站指定日期里面的成交门票金额
+     *
+     * @return Result<List < ChartVO>> 响应结果
+     */
+    @Override
+    public Result<List<ChartVO>> daysQueryMoney(Integer day) {
+        // 获取时间范围
+        QueryDto queryDto = DateUtil.startAndEndTime(day);
+        ScenicTicketOrderQueryDto dto = new ScenicTicketOrderQueryDto();
+        dto.setStartTime(queryDto.getStartTime());
+        dto.setEndTime(queryDto.getEndTime());
+        List<ScenicTicketOrderVO> scenicTicketOrderVOS = scenicTicketOrderMapper.query(dto);
+        List<MoneyDto> moneyDtoList = scenicTicketOrderVOS.stream()
+                .map(scenicTicketOrderVO -> new MoneyDto(
+                        scenicTicketOrderVO.getAmount(),
+                        scenicTicketOrderVO.getPayTime())).collect(Collectors.toList());
+        List<ChartVO> chartVOS = MoneyUtils.countMoney(day, moneyDtoList);
+        return ApiResult.success(chartVOS);
+    }
+
+    /**
      * 取得供应商ID
      *
      * @return Integer
@@ -202,4 +247,19 @@ public class ScenicTicketOrderServiceImpl implements ScenicTicketOrderService {
         return vendorVOS.get(0).getId();
     }
 
+    /**
+     * 门票订单支付
+     *
+     * @param scenicTicketOrder 门票订单数据
+     * @return Result<Void>
+     */
+    @Override
+    public Result<Void> pay(ScenicTicketOrder scenicTicketOrder) {
+        // 支付状态
+        scenicTicketOrder.setPayStatus(true);
+        // 支付事件
+        scenicTicketOrder.setPayTime(LocalDateTime.now());
+        scenicTicketOrderMapper.update(scenicTicketOrder);
+        return ApiResult.success();
+    }
 }

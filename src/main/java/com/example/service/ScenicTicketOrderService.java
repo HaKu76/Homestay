@@ -20,4 +20,10 @@ public interface ScenicTicketOrderService {
     Result<List<ScenicTicketOrderVO>> queryScenicTicketOrder(ScenicTicketOrderQueryDto dto);
 
     Result<List<ChartVO>> daysQuery(Integer day);
+
+    Result<Void> pay(ScenicTicketOrder scenicTicketOrder);
+
+    Result<List<ChartVO>> daysQueryUser(Integer day);
+
+    Result<List<ChartVO>> daysQueryMoney(Integer day);
 }

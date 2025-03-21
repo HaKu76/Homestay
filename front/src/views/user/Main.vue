@@ -9,6 +9,7 @@
           <li @click="route('/scenic')">景点</li>
           <li @click="route('/strategy')">攻略区</li>
           <li @click="route('/hotel')">民宿</li>
+          <li @click="route('/order')">我的订单</li>
           <li>
             <el-dropdown :hide-on-click="false" size="mini" type="success">
               <span class="el-dropdown-link">

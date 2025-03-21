@@ -12,11 +12,11 @@
     <update id="update" parameterType="com.example.pojo.entity.ScenicTicketOrder">
         UPDATE scenic_ticket_order
         <set>
-            <if test="concatPerson != null and concatPerson != ''">
-                concat_person = #{concatPerson},
+            <if test="contactPerson != null and contactPerson != ''">
+                contact_person = #{contactPerson},
             </if>
-            <if test="concatPhone != null and concatPhone != ''">
-                concat_phone = #{concatPhone},
+            <if test="contactPhone != null and contactPhone != ''">
+                contact_phone = #{contactPhone},
             </if>
             <if test="payStatus != null">
                 pay_status = #{payStatus},
