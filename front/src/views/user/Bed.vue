@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="bedOperaion" style="padding: 20px;">
+    <div v-if="bedOperation" style="padding: 20px;">
       <div>
         <span class="dialog-hover">床位号</span>
         <input v-model="data.number" class="dialog-input" placeholder="输入"/>
@@ -77,7 +77,7 @@ export default {
     return {
       data: {},
       beds: [],
-      bedOperaion: false, // 控制床位新增/编辑的开关变量
+      bedOperation: false, // 控制床位新增/编辑的开关变量
       isOperation: false, // false: 新增；true： 修改
     }
   },
@@ -96,11 +96,11 @@ export default {
     },
     createBed() {
       this.data = {};
-      this.bedOperaion = true;
+      this.bedOperation = true;
     },
     updateBedInfo(bed) {
       this.data = bed;
-      this.bedOperaion = true;
+      this.bedOperation = true;
       this.isOperation = true;
     },
     // 床位新增
@@ -112,7 +112,7 @@ export default {
       this.$axios.post('/hotelRoomBed/save', hotelRoomBed).then(res => {
         if (res.data.code === 200) {
           // 关闭操作区域
-          this.bedOperaion = false;
+          this.bedOperation = false;
           this.$message.success('床位新增成功');
           this.fetchBeds();
         }
@@ -126,7 +126,7 @@ export default {
       this.$axios.put('/hotelRoomBed/update', this.data).then(res => {
         if (res.data.code === 200) {
           // 关闭操作区域
-          this.bedOperaion = false;
+          this.bedOperation = false;
           this.isOperation = false;
           this.$message.success('床位修改成功');
           this.fetchBeds();
@@ -139,7 +139,7 @@ export default {
     // 取消事件
     cannel() {
       this.data = {};
-      this.bedOperaion = false;
+      this.bedOperation = false;
       this.isOperation = false;
     },
     // 加载对应的床位信息

@@ -101,7 +101,7 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <el-dialog :show-close="false" :visible.sync="dialogTicketOperaion" width="25%">
+    <el-dialog :show-close="false" :visible.sync="dialogTicketOperation" width="25%">
       <div slot="title">
         <p class="dialog-title">在线购票</p>
       </div>
@@ -170,7 +170,7 @@ export default {
       myScore: 0,
       scenicRatingList: [],
       scenicTicketList: [],
-      dialogTicketOperaion: false,
+      dialogTicketOperation: false,
       activeName: 'first',
       ratingFlag: false,
       saveBtnFlag: false,
@@ -186,7 +186,7 @@ export default {
       this.$axios.post('/scenicTicketOrder/save', this.data).then(res => {
         if (res.data.code === 200) { // 下单成功
           this.$message.success(res.data.msg);
-          this.dialogTicketOperaion = false;
+          this.dialogTicketOperation = false;
           // 跳到对应的门票订单页
           console.log("下单了。跳转订单页");
         } else {
@@ -205,12 +205,12 @@ export default {
     // 取消购票
     cannel() {
       // 关闭购票弹窗
-      this.dialogTicketOperaion = false;
+      this.dialogTicketOperation = false;
       this.data = {};
     },
     buyTicketDialog(ticket) {
       this.ticket = ticket;
-      this.dialogTicketOperaion = true;
+      this.dialogTicketOperation = true;
     },
     // 收藏操作
     saveOperation() {
