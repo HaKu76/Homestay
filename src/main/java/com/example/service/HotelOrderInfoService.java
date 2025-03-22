@@ -21,7 +21,7 @@ public interface HotelOrderInfoService {
 
     Result<List<ChartVO>> daysQuery(Integer day);
 
-    // Result<Void> pay(HotelOrderInfo hotelOrderInfo);
+    Result<Void> pay(HotelOrderInfo hotelOrderInfo);
 
-    // Result<List<ChartVO>> daysQueryMoney(Integer day);
+    Result<List<ChartVO>> daysQueryMoney(Integer day);
 }

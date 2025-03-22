@@ -1,10 +1,10 @@
 <template>
     <el-row style="background-color: #FFFFFF;padding: 5px 30px;border-radius: 5px;">
         <el-row>
-            <h1 style="margin-inline: 20px;">门票订单详情</h1>
+            <h1 style="margin-inline: 20px;">民宿订单详情</h1>
             <el-row style="padding: 10px;margin: 0 5px;">
                 <el-row>
-                    <el-select @change="handleFilter" size="small" v-model="scenicTicketOrderQueryDto.payStatus"
+                    <el-select @change="fetchFreshData" size="small" v-model="scenicTicketOrderQueryDto.payStatus"
                         style="margin-left: 5px;" placeholder="支付状态">
                         <el-option v-for="item in statusList" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
@@ -16,11 +16,10 @@
             </el-row>
             <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
                 <el-table :data="tableData" style="width: 100%">
-                    <el-table-column prop="scenicId" sortable width="120" label="景点ID"></el-table-column>
-                    <el-table-column prop="scenicName" label="景点名称"></el-table-column>
+                    <el-table-column prop="hotelName" label="民宿"></el-table-column>
+                    <el-table-column prop="roomName" label="房型"></el-table-column>
                     <el-table-column prop="contactPerson" width="120" label="联系人"></el-table-column>
                     <el-table-column prop="contactPhone" width="120" label="联系电话"></el-table-column>
-                    <el-table-column prop="buyNumber" sortable width="120" label="门票数"></el-table-column>
                     <el-table-column prop="amount" sortable width="120" label="金额"></el-table-column>
                     <el-table-column prop="payTime" sortable width="168" label="支付时间"></el-table-column>
                     <el-table-column prop="createTime" sortable width="168" label="创建时间"></el-table-column>
@@ -48,21 +47,14 @@
                     :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
                     :total="totalItems"></el-pagination>
             </el-row>
-            <el-row>
-                <LineChart height="420px" tag="消费记录（元）" @on-selected="selected" :values="values" :date="dates" />
-            </el-row>
-            <el-row>
-                <HotelOrderInfo />
-            </el-row>
         </el-row>
     </el-row>
 </template>
 
 <script>
 import LineChart from "@/components/LineChart"
-import HotelOrderInfo from "@/views/user/HotelOrderInfo"
 export default {
-    components: { LineChart,HotelOrderInfo },
+    components: { LineChart },
     data() {
         return {
             filterText: '',
@@ -87,7 +79,7 @@ export default {
     methods: {
         // 请求后端的金额成交数据
         selected(time) {
-            this.$axios.get(`/scenicTicketOrder/daysQueryUser/${time}`).then(response => {
+            this.$axios.get(`/hotelOrderInfo/daysQuery/${time}`).then(response => {
                 const { data } = response;
                 if (data.code === 200) {
                     this.values = data.data.map(entity => entity.count);
@@ -108,14 +100,14 @@ export default {
                 return;
             }
             const confirmed = await this.$swalConfirm({
-                title: '删除门票订单数据',
+                title: '删除民宿订单数据',
                 text: `删除后不可恢复，是否继续？`,
                 icon: 'warning',
             });
             if (confirmed) {
                 try {
                     let ids = this.selectedRows.map(entity => entity.id);
-                    const response = await this.$axios.post(`/scenicTicketOrder/batchDelete`, ids);
+                    const response = await this.$axios.post(`/hotelOrderInfo/batchDelete`, ids);
                     if (response.data.code === 200) {
                         this.$swal.fire({
                             title: '删除提示',
@@ -135,47 +127,9 @@ export default {
                         showConfirmButton: false,
                         timer: 2000,
                     });
-                    console.error(`门票订单信息删除异常：`, e);
+                    console.error(`民宿订单信息删除异常：`, e);
                 }
             }
-        },
-        // 修改信息
-        async updateOperation() {
-            try {
-                const response = await this.$axios.put('/scenicTicketOrder/update', this.data);
-                this.clearFormData();
-                this.$swal.fire({
-                    title: '门票订单信息修改',
-                    text: response.data.msg,
-                    icon: response.data.code === 200 ? 'success' : 'error',
-                    showConfirmButton: false,
-                    timer: 1000,
-                });
-                if (response.data.code === 200) {
-                    this.cannel();
-                    this.fetchFreshData();
-                }
-            } catch (error) {
-                console.error('提交表单时出错:', error);
-                this.$message.error('提交失败，请稍后再试！');
-            }
-        },
-        // 信息新增
-        async addOperation() {
-            try {
-                const response = await this.$axios.post('/scenicTicketOrder/save', this.data);
-                this.$message[response.data.code === 200 ? 'success' : 'error'](response.data.msg);
-                if (response.data.code === 200) {
-                    this.cannel();
-                    this.fetchFreshData();
-                }
-            } catch (error) {
-                console.error('提交表单时出错:', error);
-                this.$message.error('提交失败，请稍后再试！');
-            }
-        },
-        clearFormData() {
-            this.data = {};
         },
         async fetchFreshData() {
             try {
@@ -196,12 +150,12 @@ export default {
                     endTime: endTime,
                     ...this.scenicTicketOrderQueryDto
                 };
-                const response = await this.$axios.post('/scenicTicketOrder/queryUser', params);
+                const response = await this.$axios.post('/hotelOrderInfo/queryUser', params);
                 const { data } = response;
                 this.tableData = data.data;
                 this.totalItems = data.total;
             } catch (error) {
-                console.error('查询门票订单信息异常:', error);
+                console.error('查询民宿订单信息异常:', error);
             }
         },
         add() {
@@ -226,8 +180,8 @@ export default {
         },
         // 处理支付的方法
         handlePay(row) {
-            const sceniTicketOrder = { id: row.id }
-            this.$axios.post('/scenicTicketOrder/pay', sceniTicketOrder).then(res => {
+            const hotelOrderInfo = { id: row.id }
+            this.$axios.post('/hotelOrderInfo/pay', hotelOrderInfo).then(res => {
                 if (res.data.code === 200) {
                     this.$message.success('支付成功');
                     this.fetchFreshData();

@@ -185,4 +185,38 @@ public class HotelOrderInfoServiceImpl implements HotelOrderInfoService {
         return ApiResult.success(chartVOS);
     }
 
+    /**
+     * 统计全站指定日期里面的成交门票金额
+     *
+     * @return Result<List < ChartVO>> 响应结果
+     */
+    @Override
+    public Result<List<ChartVO>> daysQueryMoney(Integer day) {
+        // 获取时间范围
+        QueryDto queryDto = DateUtil.startAndEndTime(day);
+        HotelOrderInfoQueryDto dto = new HotelOrderInfoQueryDto();
+        dto.setStartTime(queryDto.getStartTime());
+        dto.setEndTime(queryDto.getEndTime());
+        List<HotelOrderInfoVO> orderInfoVOS = hotelOrderInfoMapper.query(dto);
+        List<MoneyDto> moneyDtoList = orderInfoVOS.stream().map(hotelOrderInfoVO -> new MoneyDto(
+                hotelOrderInfoVO.getAmount(),
+                hotelOrderInfoVO.getPayTime()
+        )).collect(Collectors.toList());
+        List<ChartVO> chartVOS = MoneyUtils.countMoney(day, moneyDtoList);
+        return ApiResult.success(chartVOS);
+    }
+
+    /**
+     * 民宿订单支付
+     *
+     * @param hotelOrderInfo 参数
+     * @return Result<Void>
+     */
+    @Override
+    public Result<Void> pay(HotelOrderInfo hotelOrderInfo) {
+        hotelOrderInfo.setPayStatus(true);
+        hotelOrderInfo.setPayTime(LocalDateTime.now());
+        hotelOrderInfoMapper.update(hotelOrderInfo);
+        return ApiResult.success();
+    }
 }

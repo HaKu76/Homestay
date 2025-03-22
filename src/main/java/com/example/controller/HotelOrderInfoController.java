@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.aop.Pager;
+import com.example.context.LocalThreadHolder;
 import com.example.pojo.api.Result;
 import com.example.pojo.dto.query.extend.HotelOrderInfoQueryDto;
 import com.example.pojo.entity.HotelOrderInfo;
@@ -84,6 +85,42 @@ public class HotelOrderInfoController {
         return hotelOrderInfoService.queryVendorHotelOrder(dto);
     }
 
+    /**
+     * 民宿订单支付
+     *
+     * @return Result<Void>
+     */
+    @Pager
+    @PostMapping(value = "/pay")
+    @ResponseBody
+    public Result<Void> pay(@RequestBody HotelOrderInfo hotelOrderInfo) {
+        return hotelOrderInfoService.pay(hotelOrderInfo);
+    }
+
+    /**
+     * 查询用户的民宿订单
+     *
+     * @return Result<Void>
+     */
+    @Pager
+    @PostMapping(value = "/queryUser")
+    @ResponseBody
+    public Result<List<HotelOrderInfoVO>> queryUser(@RequestBody HotelOrderInfoQueryDto dto) {
+        // 设置上用户ID
+        dto.setUserId(LocalThreadHolder.getUserId());
+        return hotelOrderInfoService.query(dto);
+    }
+
+    /**
+     * 统计全站指定日期里面的成交门票金额
+     *
+     * @return Result<List < ChartVO>> 响应结果
+     */
+    @GetMapping(value = "/daysQueryMoney/{day}")
+    @ResponseBody
+    public Result<List<ChartVO>> daysQueryMoney(@PathVariable Integer day) {
+        return hotelOrderInfoService.daysQueryMoney(day);
+    }
     /**
      * 统计成交金额
      *
