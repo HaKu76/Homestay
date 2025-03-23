@@ -36,6 +36,12 @@ const routes = [
         meta: { requireAuth: true },
     },
     {
+        path:"/seeStrategyDetail",
+        name: '查看攻略详情',//管理员查看
+        component: () => import(`@/views/admin/StrategyDetail.vue`),
+        meta: { requireAuth: true },
+    },
+    {
         path: "/admin",
         component: () => import(`@/views/admin/Home.vue`),
         meta: {
