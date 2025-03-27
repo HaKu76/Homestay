@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         if (user.getIsLogin()) {
             return ApiResult.error("登录状态异常");
         }
-        String token = JwtUtil.toToken(user.getId(), user.getUserRole());
+        String token = JwtUtil.generateToken(user.getId(), user.getUserRole());
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
         map.put("role", user.getUserRole());

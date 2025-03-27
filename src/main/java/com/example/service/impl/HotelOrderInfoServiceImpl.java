@@ -181,7 +181,7 @@ public class HotelOrderInfoServiceImpl implements HotelOrderInfoService {
                 hotelOrderInfoVO.getAmount(),
                 hotelOrderInfoVO.getPayTime()
         )).collect(Collectors.toList());
-        List<ChartVO> chartVOS = MoneyUtils.countMoney(day, moneyDtoList);
+        List<ChartVO> chartVOS = MoneyUtils.generateDailySalesReport(day, moneyDtoList);
         return ApiResult.success(chartVOS);
     }
 
@@ -202,7 +202,7 @@ public class HotelOrderInfoServiceImpl implements HotelOrderInfoService {
                 hotelOrderInfoVO.getAmount(),
                 hotelOrderInfoVO.getPayTime()
         )).collect(Collectors.toList());
-        List<ChartVO> chartVOS = MoneyUtils.countMoney(day, moneyDtoList);
+        List<ChartVO> chartVOS = MoneyUtils.generateDailySalesReport(day, moneyDtoList);
         return ApiResult.success(chartVOS);
     }
 

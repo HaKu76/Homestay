@@ -181,7 +181,7 @@ public class ScenicTicketOrderServiceImpl implements ScenicTicketOrderService {
                 scenicTicketOrderVO.getAmount(),
                 scenicTicketOrderVO.getPayTime()
         )).collect(Collectors.toList());
-        List<ChartVO> chartVOS = MoneyUtils.countMoney(day, moneyDtoList);
+        List<ChartVO> chartVOS = MoneyUtils.generateDailySalesReport(day, moneyDtoList);
         return ApiResult.success(chartVOS);
     }
 
@@ -205,7 +205,7 @@ public class ScenicTicketOrderServiceImpl implements ScenicTicketOrderService {
                 .map(scenicTicketOrderVO -> new MoneyDto(
                         scenicTicketOrderVO.getAmount(),
                         scenicTicketOrderVO.getPayTime())).collect(Collectors.toList());
-        List<ChartVO> chartVOS = MoneyUtils.countMoney(day, moneyDtoList);
+        List<ChartVO> chartVOS = MoneyUtils.generateDailySalesReport(day, moneyDtoList);
         return ApiResult.success(chartVOS);
     }
 
@@ -226,7 +226,7 @@ public class ScenicTicketOrderServiceImpl implements ScenicTicketOrderService {
                 .map(scenicTicketOrderVO -> new MoneyDto(
                         scenicTicketOrderVO.getAmount(),
                         scenicTicketOrderVO.getPayTime())).collect(Collectors.toList());
-        List<ChartVO> chartVOS = MoneyUtils.countMoney(day, moneyDtoList);
+        List<ChartVO> chartVOS = MoneyUtils.generateDailySalesReport(day, moneyDtoList);
         return ApiResult.success(chartVOS);
     }
 

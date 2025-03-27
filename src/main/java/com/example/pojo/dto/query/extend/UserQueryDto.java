@@ -25,7 +25,7 @@ public class UserQueryDto extends QueryDto {
     /**
      * 用户的角色
      */
-    private Boolean role;
+    private Integer role;
     /**
      * 是否可以登录
      */
