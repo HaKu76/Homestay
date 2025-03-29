@@ -1,8 +1,6 @@
 package com.example.utils;
 
-import org.apache.logging.log4j.util.Strings;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -164,7 +164,7 @@ export default {
     },
     // 获取民宿信息
     fetchUsers() {
-      this.$axios.post('/hotel/queryVendorHotel', {}).then(res => {
+      this.$axios.post('/hotel/queryVendorRoom', {}).then(res => {
         if (res.data.code === 200) {
           this.hotels = res.data.data;
         }

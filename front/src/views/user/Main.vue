@@ -2,27 +2,34 @@
   <div>
     <div class="top">
       <div class="top-left">
-        <Logo sysName="趣旅"/>
+        <Logo sysName="旅游民宿" />
       </div>
       <div class="top-right">
         <ul>
-          <li @click="route('/scenic')">景点</li>
-          <li @click="route('/strategy')">攻略区</li>
-          <li @click="route('/hotel')">民宿</li>
-          <li @click="route('/order')">我的订单</li>
-          <li>
-            <el-dropdown :hide-on-click="false" size="mini" type="success">
-              <span class="el-dropdown-link">
-                订单详情<i class="el-icon-arrow-down el-icon--right"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="route('/hotelOrder')">民宿订单</el-dropdown-item>
-                <el-dropdown-item @click.native="route('/ticketOrder')">门票预约</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </li>
           <li @click="route('/notice')">公告通知</li>
+          <li @click="route('/scenic')">景点信息</li>
+          <li @click="route('/hotel')">民宿信息</li>
+          <li @click="route('/strategy')">攻略区</li>
         </ul>
+        <el-dropdown :hide-on-click="false" size="mini" type="success">
+          <span class="el-dropdown-link" style="cursor: pointer;">
+            我的订单<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item @click.native="route('/myScenicOrder')">景点订单</el-dropdown-item>
+            <el-dropdown-item @click.native="route('/myHotelOrder')">民宿订单</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <el-dropdown v-if="vendors.length !== 0 && vendors[0].isAudit && vendors[0].status" :hide-on-click="false"
+          size="mini" type="success">
+          <span class="el-dropdown-link" style="cursor: pointer;">
+            供应商订单<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item @click.native="route('/ticketOrder')">门票订单</el-dropdown-item>
+            <el-dropdown-item @click.native="route('/hotelOrder')">民宿订单</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
         <el-dropdown :hide-on-click="false" size="mini" type="success">
           <span class="el-dropdown-link" style="cursor: pointer;">
             内容中心<i class="el-icon-arrow-down el-icon--right"></i>
@@ -57,19 +64,21 @@
 </template>
 <script>
 import Logo from "@/components/Logo"
-
 export default {
-  components: {Logo},
+  components: { Logo },
   name: "User",
   data() {
     return {
       key: '',
       defaultPath: '/scenic',
-      userInfo: {}
+      userInfo: {},
+      // 供应商信息
+      vendors: [],
     }
   },
   created() {
     this.auth();
+    console.log(this.data);
     // 仅在特定条件下默认跳转到默认路径 /scenic
     if (this.$route.path === '/') {
       this.route(this.defaultPath);
@@ -96,12 +105,18 @@ export default {
     },
     // Token 检验
     async auth() {
-      const {data} = await this.$axios.get('/user/auth');
+      const { data } = await this.$axios.get('/user/auth');
       if (data.code !== 200) { // Token校验异常
         this.$router.push('/');
+        console.log('Token校验异常');
       } else {
         sessionStorage.setItem('userInfo', JSON.stringify(data.data));
         this.userInfo = data.data;
+        // 获取供应商信息
+        const { data: vendorData } = await this.$axios.post('/vendor/queryUser');
+        if (vendorData.code === 200) {
+          this.vendors = vendorData.data;
+        }
       }
     },
   }

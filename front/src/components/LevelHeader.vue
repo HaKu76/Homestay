@@ -1,30 +1,29 @@
 <template>
   <div class="main">
-        <span>
-            <span class="operation-span" @click="operation">
-                <i v-if="!showFlag" class="el-icon-s-fold i-folder"></i>
-                <i v-else class="el-icon-s-unfold i-folder"></i>
-            </span>
-        </span>
     <span>
-            <span class="operation-span-tag">
-                后台&nbsp;&nbsp;/&nbsp;&nbsp;{{ tag == '' ? '元数据' : tag }}
-            </span>
-        </span>
+      <span class="operation-span" @click="operation">
+        <i v-if="!showFlag" class="el-icon-s-fold i-folder"></i>
+        <i v-else class="el-icon-s-unfold i-folder"></i>
+      </span>
+    </span>
+    <span>
+      <span class="operation-span-tag">
+        后台&nbsp;&nbsp;/&nbsp;&nbsp;{{ tag == '' ? '元数据' : tag }}
+      </span>
+    </span>
     <span class="user-block">
-            <el-dropdown class="user-dropdown">
-                <span class="el-dropdown-link" style="display: flex; align-items: center;">
-                    <el-avatar :size="35" :src="userInfo.url" style="margin-top: 0;"></el-avatar>
-                    <span class="userName" style="margin-left: 5px;font-size: 16px;">{{ userInfo.name }}</span>
-                    <i class="el-icon-arrow-down el-icon--right" style="margin-left: 5px;"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item icon="el-icon-user-solid"
-                                      @click.native="userCenterPanel">个人资料</el-dropdown-item>
-                    <el-dropdown-item icon="el-icon-s-fold" @click.native="loginOut">退出登录</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
+      <el-dropdown class="user-dropdown">
+        <span class="el-dropdown-link" style="display: flex; align-items: center;">
+          <el-avatar :size="35" :src="userInfo.url" style="margin-top: 0;"></el-avatar>
+          <span class="userName" style="margin-left: 5px;font-size: 16px;">{{ userInfo.name }}</span>
+          <i class="el-icon-arrow-down el-icon--right" style="margin-left: 5px;"></i>
         </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item icon="el-icon-user-solid" @click.native="userCenterPanel">个人资料</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-s-fold" @click.native="loginOut">退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </span>
   </div>
 </template>
 <script>

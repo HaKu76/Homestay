@@ -3,30 +3,29 @@
     <div v-if="bedOperation" style="padding: 20px;">
       <div>
         <span class="dialog-hover">床位号</span>
-        <input v-model="data.number" class="dialog-input" placeholder="输入"/>
+        <input v-model="data.number" class="dialog-input" placeholder="输入" />
         <el-row style="margin: 20px 0;">
           <div>
             <span class="dialog-hover">床位状态</span>
           </div>
           <el-switch v-model="data.status" active-color="#13ce66" active-text="可用" inactive-color="#ff4949"
-                     inactive-text="不可用">
+            inactive-text="不可用">
           </el-switch>
         </el-row>
       </div>
       <div style="display: flex;justify-content: center;align-items: center;">
-        <el-button v-if="!isOperation" class="customer"
-                   size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                   type="info" @click="addOperation">新增
+        <el-button v-if="!isOperation" class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="addOperation">新增
         </el-button>
-        <el-button v-else class="customer"
-                   size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                   type="info" @click="updateOperation()">修改
+        <el-button v-else class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="updateOperation()">修改
         </el-button>
       </div>
     </div>
     <div style="display: flex;justify-content: center;align-items: center;margin: 10px;">
-      <el-button v-if="beds.length !== 0" size="mini" style="width: 100%;" type="info"
-                 @click="createBed">创建床位信息
+      <el-button v-if="beds.length !== 0" size="mini" style="width: 100%;" type="info" @click="createBed">创建床位信息
       </el-button>
     </div>
 
@@ -38,18 +37,18 @@
     <div v-else style="padding: 10px;">
       <div v-for="(bed, index) in beds" :key="index" class="bed-item">
         <div style="font-size: 18px;">
-                    <span style="margin-right: 5px;">
-                        <i class="el-icon-table-lamp"></i>
-                        床位号：{{ bed.number }}
-                    </span>
+          <span style="margin-right: 5px;">
+            <i class="el-icon-table-lamp"></i>
+            床位号：{{ bed.number }}
+          </span>
           <span>{{ bed.status ? '状态可用' : '状态不可用' }}</span>
         </div>
         <div style="margin: 8px 6px;font-size: 12px;">
           创建时间：{{ bed.createTime }}
         </div>
         <div>
-          <el-button circle icon="el-icon-edit" size="mini" style="margin-right: 10px;"
-                     type="primary" @click="updateBedInfo(bed)"></el-button>
+          <el-button circle icon="el-icon-edit" size="mini" style="margin-right: 10px;" type="primary"
+            @click="updateBedInfo(bed)"></el-button>
           <el-popconfirm title="确定删除床位信息？" @confirm="deleteBed(bed)">
             <el-button slot="reference" circle icon="el-icon-delete" size="mini" type="danger"></el-button>
           </el-popconfirm>
@@ -70,7 +69,8 @@ export default {
   watch: {
     roomId: {
       handler(v1, v2) {
-        this.fetchBeds(v1);
+        this.roomId = v1;
+        this.fetchBeds();
       },
       // 深度监听
       deep: true,
@@ -113,7 +113,6 @@ export default {
       const hotelRoomBed = {
         roomId: this.roomId,
         ...this.data,
-        status: this.data.status ? 1 : 0, // 将布尔值转换为1或0
       }
       this.$axios.post('/hotelRoomBed/save', hotelRoomBed).then(res => {
         if (res.data.code === 200) {

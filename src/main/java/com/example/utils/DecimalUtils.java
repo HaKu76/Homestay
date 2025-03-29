@@ -10,7 +10,7 @@ public class DecimalUtils {
 
     /**
      * 计算商品购买总金额（数量 × 单价 × 折扣），并保留两位小数向上取整
-     *
+     * 
      * 计算逻辑：
      * 1. 将购买数量转换为BigDecimal类型
      * 2. 计算原始总金额（数量 × 单价）
@@ -25,8 +25,7 @@ public class DecimalUtils {
     public static BigDecimal calculateTotal(
             Integer buyNumber,
             BigDecimal price,
-            Double discount)
-    {
+            Double discount) {
         // 1. 将购买数量转换为BigDecimal
         BigDecimal quantity = BigDecimal.valueOf(buyNumber);
 

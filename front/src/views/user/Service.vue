@@ -200,9 +200,7 @@ export default {
         message: data.code === 200 ? '申请成功，请耐心等待' : data.msg,
         type: data.code === 200 ? 'success' : 'error'
       });
-      console.log(data.data);
       if (data.code === 200) {
-
         await this.auth(); // 重新获取数据
       }
     },

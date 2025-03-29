@@ -15,14 +15,13 @@ public class MoneyUtils {
     /**
      * 生成指定天数内的每日成交额统计报表
      *
-     * @param dayRange     统计天数（必须为非负整数）
-     * @param moneyDtos    成交记录列表（必须包含有效的支付时间和金额）
+     * @param dayRange  统计天数（必须为非负整数）
+     * @param moneyDtos 成交记录列表（必须包含有效的支付时间和金额）
      * @return 每日成交额统计结果（格式：MM-dd → 金额）
      */
     public static List<ChartVO> generateDailySalesReport(
             int dayRange,
-            List<MoneyDto> moneyDtos)
-    {
+            List<MoneyDto> moneyDtos) {
         // 1. 计算起始日期（当前日期 - dayRange天）
         LocalDate startDay = LocalDate.now().minusDays(dayRange);
 

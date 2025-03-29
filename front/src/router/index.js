@@ -185,9 +185,15 @@ const routes = [
                 meta: { requireAuth: true },
             },
             {
-                path: "/order",
-                name: '我的订单',
-                component: () => import(`@/views/user/Order.vue`),
+                path: "/myScenicOrder",
+                name: '我的景点订单',
+                component: () => import(`@/views/user/MyScenicOrder.vue`),
+                meta: { requireAuth: true },
+            },
+            {
+                path: "/myHotelOrder",
+                name: '我的民宿订单',
+                component: () => import(`@/views/user/MyHotelOrder.vue`),
                 meta: { requireAuth: true },
             },
             {

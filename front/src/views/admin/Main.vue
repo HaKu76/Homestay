@@ -19,7 +19,7 @@
                 :date="ticketMoneyDates" />
             </div>
             <div style="padding: 20px 60px;box-sizing: border-box;">
-              <LineChart height="280px" tag="酒店销售额" @on-selected="hotelOrderSelected" :values="hotelRoomMoneyValues"
+              <LineChart height="280px" tag="民宿销售额" @on-selected="hotelOrderSelected" :values="hotelRoomMoneyValues"
                 :date="hotelRoomMoneyDates" />
             </div>
           </div>

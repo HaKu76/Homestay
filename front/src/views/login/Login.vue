@@ -2,13 +2,13 @@
   <div class="login-container">
     <div class="login-panel">
       <div class="logo">
-        <Logo :bag="colorLogo" sysName="旅友请上车"/>
+        <Logo :bag="colorLogo" sysName="旅友请上车" />
       </div>
       <div class="text">
-        <input v-model="act" class="act" placeholder="账号"/>
+        <input v-model="act" class="act" placeholder="账号" @keyup.enter="login" />
       </div>
       <div class="text">
-        <input v-model="pwd" class="pwd" placeholder="密码" type="password"/>
+        <input v-model="pwd" class="pwd" placeholder="密码" type="password" @keyup.enter="login" />
       </div>
       <div>
         <span class="login-btn" @click="login">立即登录</span>
@@ -25,13 +25,13 @@ const ADMIN_ROLE = 1;
 const USER_ROLE = 2;
 const DELAY_TIME = 1300;
 import request from "@/utils/request.js";
-import {setToken} from "@/utils/storage.js";
+import { setToken } from "@/utils/storage.js";
 import md5 from 'js-md5';
 import Logo from '@/components/Logo.vue';
 
 export default {
   name: "Login",
-  components: {Logo},
+  components: { Logo },
   data() {
     return {
       act: '',
@@ -56,9 +56,9 @@ export default {
         return;
       }
       const hashedPwd = md5(md5(this.pwd));
-      const paramDTO = {userAccount: this.act, userPwd: hashedPwd};
+      const paramDTO = { userAccount: this.act, userPwd: hashedPwd };
       try {
-        const {data} = await request.post(`user/login`, paramDTO);
+        const { data } = await request.post(`user/login`, paramDTO);
         if (data.code !== 200) {
           this.$swal.fire({
             title: '登录失败',
@@ -80,7 +80,7 @@ export default {
         });
         // 根据角色延迟跳转
         setTimeout(() => {
-          const {role} = data.data;
+          const { role } = data.data;
           this.navigateToRole(role);
         }, DELAY_TIME);
       } catch (error) {
@@ -91,10 +91,12 @@ export default {
     navigateToRole(role) {
       switch (role) {
         case ADMIN_ROLE:
+          // 管理员跳转首页
           this.$router.push('/admin');
           break;
         case USER_ROLE:
-          this.$router.push('/user');
+          // 用户跳转公告
+          this.$router.push('/notice');
           break;
         default:
           console.warn('未知的角色类型:', role);

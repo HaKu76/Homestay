@@ -20,6 +20,10 @@ public interface HotelRoomMapper {
 
     void batchDelete(@Param(value = "ids") List<Integer> ids);
 
+    List<HotelRoomVO> queryVendorRoom(HotelRoomQueryDto dto);
+
+    Integer queryVendorRoomCount(HotelRoomQueryDto dto);
+
     List<HotelRoomVO> query(HotelRoomQueryDto dto);
 
     // 分页页数

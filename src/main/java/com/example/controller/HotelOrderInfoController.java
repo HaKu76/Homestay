@@ -121,6 +121,7 @@ public class HotelOrderInfoController {
     public Result<List<ChartVO>> daysQueryMoney(@PathVariable Integer day) {
         return hotelOrderInfoService.daysQueryMoney(day);
     }
+
     /**
      * 统计成交金额
      *

@@ -69,13 +69,17 @@
             <if test="id != null">
                 AND sl.id = #{id}
             </if>
+            <if test="scenicId != null">
+                AND sl.scenic_id = #{scenicId}
+            </if>
             <if test="name != null and name != ''">
-                AND s.name LIKE concat('%',#{name},'%')
+                AND sl.name LIKE concat('%',#{name},'%')
             </if>
             <if test="startTime != null and endTime != null">
                 AND sl.create_time BETWEEN #{startTime} AND #{endTime}
             </if>
         </where>
+
     </select>
 
     <!-- 通用查询映射结果 -->

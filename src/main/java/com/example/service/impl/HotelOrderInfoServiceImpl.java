@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,6 +52,23 @@ public class HotelOrderInfoServiceImpl implements HotelOrderInfoService {
         List<HotelRoomVO> hotelRoomVOS = hotelRoomMapper.query(hotelRoomQueryDto);
         if (hotelRoomVOS.isEmpty()) {
             return ApiResult.error("房间信息未找到");
+        }
+        // 解决重复下单问题
+        HotelOrderInfoQueryDto queryDto = new HotelOrderInfoQueryDto();
+        queryDto.setRoomId(hotelOrderInfo.getRoomId());
+        queryDto.setCurrent(1);
+        queryDto.setSize(1);
+        List<HotelOrderInfoVO> orderInfoVOS = hotelOrderInfoMapper.query(queryDto);
+        if (!orderInfoVOS.isEmpty()) {
+            HotelOrderInfoVO hotelOrderInfoVO = orderInfoVOS.get(0);
+            LocalDateTime createTime = hotelOrderInfoVO.getCreateTime();
+            LocalDateTime dateTime = LocalDateTime.now();
+            // 天数差值
+            long days = ChronoUnit.DAYS.between(createTime, dateTime);
+            // 因为设计买一晚
+            if (days < 1) {
+                return ApiResult.error("房间已被预定");
+            }
         }
         HotelRoomVO hotelRoomVO = hotelRoomVOS.get(0);
         Double discount = hotelRoomVO.getDiscount();

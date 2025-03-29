@@ -23,6 +23,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -137,6 +138,9 @@ public class ScenicTicketOrderServiceImpl implements ScenicTicketOrderService {
     public Result<List<ScenicTicketOrderVO>> queryScenicTicketOrder(ScenicTicketOrderQueryDto dto) {
         // 取出供应商信息
         Integer vendorId = getVendorId();
+        if (vendorId == null) {
+            return ApiResult.success(new ArrayList<>());
+        }
         // 查供应商管理的全部的景点信息
         ScenicQueryDto queryDto = new ScenicQueryDto();
         queryDto.setVendorId(vendorId);

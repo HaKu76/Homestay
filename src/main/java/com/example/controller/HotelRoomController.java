@@ -71,4 +71,15 @@ public class HotelRoomController {
         return hotelRoomService.query(dto);
     }
 
+    /**
+     * 查询酒店房间 -- 做了权限隔离的
+     *
+     * @return Result<Void>
+     */
+    @Pager
+    @PostMapping(value = "/queryVendorRoom")
+    @ResponseBody
+    public Result<List<HotelRoomVO>> queryVendorRoom(@RequestBody HotelRoomQueryDto dto) {
+        return hotelRoomService.queryVendorRoom(dto);
+    }
 }

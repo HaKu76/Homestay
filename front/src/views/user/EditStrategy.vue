@@ -16,7 +16,7 @@
       <div style="margin-block: 10px;">
         <p>*攻略封面</p>
         <el-upload :on-success="handleCoverSuccess" :show-file-list="false"
-                   action="/api/online-travel-sys/v1.0/file/upload" class="avatar-uploader">
+                   action="/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
           <img v-if="cover" :src="cover" style="width: 200px;height: 140px;">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
