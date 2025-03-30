@@ -1,37 +1,37 @@
 <template>
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+    <h1 style="margin-inline: 20px;">供应商景点信息发布管理</h1>
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
-        <el-select v-model="scenicQueryDto.categoryId" placeholder="所属类别" size="small"
-                   style="margin-left: 5px;" @change="fetchFreshData">
-          <el-option v-for="item in categories" :key="item.id" :label="item.name" :value="item.id">
+        <el-select v-model="scenicQueryDto.categoryId" placeholder="所属类别" size="small" style="margin-left: 5px;"
+          @change="handleFilter">
+          <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id">
           </el-option>
         </el-select>
-        <el-select v-model="scenicQueryDto.status" placeholder="景点状态" size="small"
-                   style="margin-left: 5px;" @change="fetchFreshData">
+        <el-select v-model="scenicQueryDto.status" placeholder="景点状态" size="small" style="margin-left: 5px;"
+          @change="handleFilter">
           <el-option v-for="item in statusList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至"
-                        size="small" start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
+        <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
+          start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
         </el-date-picker>
-        <el-input v-model="scenicQueryDto.name" clearable
-                  placeholder="景点名" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+        <el-input v-model="scenicQueryDto.name" clearable placeholder="景点名" size="small"
+          style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
         <span style="float: right;">
-                    <el-button class="customer"
-                               size="small"
-                               style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="add()"><i
-                        class="el-icon-plus"></i>新增景点</el-button>
-                </span>
+          <el-button class="customer" size="small"
+            style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+            @click="add()"><i class="el-icon-plus"></i>新增景点</el-button>
+        </span>
       </el-row>
     </el-row>
     <el-row style="margin: 0 15px;border-top: 1px solid rgb(245,245,245);">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="景点封面" prop="cover" width="120px">
           <template slot-scope="scope">
-            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;"/>
+            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;" />
           </template>
         </el-table-column>
         <el-table-column label="景点名" prop="name"></el-table-column>
@@ -49,7 +49,7 @@
             <i v-if="!scope.row.status" class="el-icon-warning" style="margin-right: 5px;"></i>
             <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
             <el-tooltip v-if="scope.row.status" class="item" content="如果是不可用状态，暂停景点服务" effect="dark"
-                        placement="bottom-end">
+              placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">可用</span>
             </el-tooltip>
             <span v-else>不可用</span>
@@ -63,9 +63,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
-                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
-                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
+        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 操作面板 -->
     <el-dialog :show-close="false" :visible.sync="dialogOperation" width="45%">
@@ -76,44 +76,46 @@
         <el-row>
           <span class="dialog-hover">景点封面</span>
           <el-upload :on-success="handleCoverSuccess" :show-file-list="false"
-                     action="/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
+            action="/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
             <img v-if="cover" :src="cover" style="width: 250px;height: 150px;">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-row>
         <el-row style="margin-bottom: 20px;">
           <span class="dialog-hover">景点名称</span>
-          <input v-model="data.name" class="dialog-input" placeholder="请输入"/>
+          <input v-model="data.name" class="dialog-input" placeholder="请输入" />
           <span class="dialog-hover">景点所在地址</span>
-          <input v-model="data.address" class="dialog-input" placeholder="请输入"/>
+          <input v-model="data.address" class="dialog-input" placeholder="请输入" />
+          <div>
+            <span class="dialog-hover">景点状态</span>
+            <el-switch v-model="data.status" active-text="可用" inactive-text="不可用">
+            </el-switch>
+          </div>
           <div>
             <div>
               <span class="dialog-hover">景点详情</span>
             </div>
-            <Editor :receiveContent="data.detail" height="300px" @on-receive="onReceive"/>
+            <Editor :receiveContent="data.detail" height="300px" @on-receive="onReceive" />
           </div>
           <div style="margin: 10px 0;">
             <span class="dialog-hover">景点分类</span>
             <el-select v-model="data.categoryId" placeholder="请选择分类">
-              <el-option v-for="category in categories" :key="category.id" :label="category.name"
-                         :value="category.id">
+              <el-option v-for="category in categoryList" :key="category.id" :label="category.name" :value="category.id">
               </el-option>
             </el-select>
           </div>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-                <el-button v-if="!isOperation" class="customer"
-                           size="small"
-                           style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                           type="info" @click="addOperation()">新增</el-button>
-                <el-button v-else class="customer"
-                           size="small"
-                           style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                           type="info" @click="updateOperation()">修改</el-button>
-                <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                           @click="cannel()">取消</el-button>
-            </span>
+        <el-button v-if="!isOperation" class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="addOperation()">新增</el-button>
+        <el-button v-else class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="updateOperation()">修改</el-button>
+        <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
+          @click="cancel()">取消</el-button>
+      </span>
     </el-dialog>
     <el-dialog :show-close="false" :visible.sync="dialogLineOperation" width="28%">
       <div slot="title">
@@ -123,7 +125,7 @@
         <el-row>
           <span class="dialog-hover">路线封面</span>
           <el-upload :on-success="handleCoverSuccess" :show-file-list="false"
-                     action="/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
+            action="/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
             <img v-if="cover" :src="cover" style="width: 250px;height: 150px;">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
@@ -132,34 +134,31 @@
           <div>
             <span class="dialog-hover">景点简介</span>
           </div>
-          <el-input v-model="scenicLine.detail" :rows="2" placeholder="请输入内容" style="width: 100%;"
-                    type="textarea">
+          <el-input v-model="scenicLine.detail" :rows="2" placeholder="请输入内容" style="width: 100%;" type="textarea">
           </el-input>
           <div>
             <span class="dialog-hover">优先级</span>
           </div>
-          <el-slider v-model="scenicLine.level"></el-slider>
+          <el-slider v-model="scenicLine.level" :max="20" show-input />
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-                <el-button v-if="!isLineOperation" class="customer"
-                           size="small"
-                           style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                           type="info" @click="addLineOperation()">新增路线</el-button>
-                <el-button v-else class="customer"
-                           size="small"
-                           style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                           type="info" @click="updateLineOperation()">修改路线</el-button>
-                <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                           @click="cannelLine()">取消</el-button>
-            </span>
+        <el-button v-if="!isLineOperation" class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="addLineOperation()">新增路线</el-button>
+        <el-button v-else class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="updateLineOperation()">修改路线</el-button>
+        <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
+          @click="cancelLine()">取消</el-button>
+      </span>
     </el-dialog>
     <el-drawer :direction="direction" :visible.sync="drawer" title="景点路线" width="35%">
       <div class="add-line">
-                <span style="cursor: pointer;font-size: 14px" @click="addLine">
-                    <i class="el-icon-plus"></i>
-                    添加路线
-                </span>
+        <span style="cursor: pointer;font-size: 14px" @click="addLine">
+          <i class="el-icon-plus"></i>
+          添加路线
+        </span>
       </div>
       <div v-if="scenicLines.length === 0">
         <el-empty description="暂无路线信息"></el-empty>
@@ -167,25 +166,22 @@
       <div v-else>
         <div>
           <el-timeline>
-            <el-timeline-item v-for="(scenicLine, index) in scenicLines" :key="index"
-                              :timestamp="scenicLine.createTime" placement="top">
+            <el-timeline-item v-for="(scenicLine, index) in scenicLines" :key="index" :timestamp="scenicLine.createTime"
+              placement="top">
               <el-card>
                 <div>
-                  <img :src="scenicLine.cover" alt="路线封面"
-                       style="width: 100%;height: 200px;border-radius: 5px;">
+                  <img :src="scenicLine.cover" alt="路线封面" style="width: 100%;height: 200px;border-radius: 5px;">
                 </div>
                 <p style="margin-bottom: 8px;font-size: 14px;color: rgb(97, 97, 97);">{{
-                    scenicLine.detail
-                  }}
+                  scenicLine.detail
+                }}
                 </p>
                 <div>
                   <el-tooltip class="item" content="修改景点路线" effect="dark" placement="bottom">
-                    <el-button circle icon="el-icon-edit" type="primary"
-                               @click="updateLine(scenicLine)"></el-button>
+                    <el-button circle icon="el-icon-edit" type="primary" @click="updateLine(scenicLine)"></el-button>
                   </el-tooltip>
                   <el-tooltip class="item" content="删除景点路线" effect="dark" placement="bottom">
-                    <el-button circle icon="el-icon-delete" type="danger"
-                               @click="deleteLine(scenicLine)"></el-button>
+                    <el-button circle icon="el-icon-delete" type="danger" @click="deleteLine(scenicLine)"></el-button>
                   </el-tooltip>
                 </div>
               </el-card>
@@ -201,7 +197,7 @@
 import Editor from "@/components/Editor"
 
 export default {
-  components: {Editor},
+  components: { Editor },
   data() {
     return {
       scenicLine: {},
@@ -220,18 +216,18 @@ export default {
       tableData: [],
       selectedRows: [],
       scenicQueryDto: {}, // 搜索条件
-      categories: [],
+      categoryList: [],
       searchTime: [],
       scenicLines: [],
       users: [],
-      isAuditList: [{value: null, label: '全部'}, {value: 0, label: '未审核'}, {value: 1, label: '已审核'}],
-      statusList: [{value: null, label: '全部'}, {value: 0, label: '不可用'}, {value: 1, label: '可用'}],
+      isAuditList: [{ value: null, label: '全部' }, { value: 0, label: '未审核' }, { value: 1, label: '已审核' }],
+      statusList: [{ value: null, label: '全部' }, { value: 0, label: '不可用' }, { value: 1, label: '可用' }],
     };
   },
   created() {
     this.fetchFreshData();
     this.fetchUsers();
-    this.fetchCategories();
+    this.fetchCategoryList();
   },
   methods: {
     onReceive(content) {
@@ -262,7 +258,7 @@ export default {
         console.log("操作取消");
       });
     },
-    cannelLine() {
+    cancelLine() {
       this.scenicLine = {};
       this.dialogLineOperation = false;
       this.isLineOperation = false;
@@ -278,7 +274,7 @@ export default {
     },
     // 请求景点路线信息
     fetchScenicLines(scenicId) {
-      const scenicLineQueryDto = {scenicId: scenicId}
+      const scenicLineQueryDto = { scenicId: scenicId }
       this.$axios.post('/scenicLine/query', scenicLineQueryDto).then(res => {
         if (res.data.code === 200) {
           this.scenicLines = res.data.data;
@@ -303,12 +299,12 @@ export default {
       }
     },
     // 获取景点分类
-    fetchCategories() {
+    fetchCategoryList() {
       this.$axios.post('/scenicCategory/query', {}).then(res => {
         if (res.data.code === 200) {
           // 插入“全部”选项
-          this.categories = [
-            {id: '', name: '全部'}, // id 设置为空字符串，表示不限制分类
+          this.categoryList = [
+            { id: '', name: '全部' }, // id 设置为空字符串，表示不限制分类
             ...res.data.data // 原有的分类数据
           ];
         }
@@ -327,7 +323,7 @@ export default {
       });
     },
     // 置位
-    cannel() {
+    cancel() {
       this.data = {};
       this.cover = '';
       this.dialogOperation = false;
@@ -357,7 +353,6 @@ export default {
               timer: 2000,
             });
             this.fetchFreshData();
-
           }
         } catch (e) {
           this.$swal.fire({
@@ -385,7 +380,7 @@ export default {
         });
         if (response.data.code === 200) {
           this.fetchScenicLines(this.data.id);
-          this.cannelLine();
+          this.cancelLine();
         }
       } catch (error) {
         console.error('提交表单时出错:', error);
@@ -406,8 +401,8 @@ export default {
           timer: 1000,
         });
         if (response.data.code === 200) {
-          this.cannel();
-          this.fetchFreshData(this.data);
+          this.cancel();
+          this.fetchFreshData();
         }
       } catch (error) {
         console.error('提交表单时出错:', error);
@@ -422,7 +417,7 @@ export default {
         const response = await this.$axios.post('/scenicLine/save', this.scenicLine);
         this.$message[response.data.code === 200 ? 'success' : 'error'](response.data.msg);
         if (response.data.code === 200) {
-          this.cannelLine();
+          this.cancelLine();
           this.fetchScenicLines(this.data.id);
         }
       } catch (error) {
@@ -437,7 +432,7 @@ export default {
         const response = await this.$axios.post('/scenic/save', this.data);
         this.$message[response.data.code === 200 ? 'success' : 'error'](response.data.msg);
         if (response.data.code === 200) {
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {
@@ -472,7 +467,7 @@ export default {
           delete params.categoryId; // 清除 categoryId
         }
         const response = await this.$axios.post('/scenic/queryVendorScenic', params);
-        const {data} = response;
+        const { data } = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -503,7 +498,10 @@ export default {
       this.cover = row.cover;
       this.dialogOperation = true;
       this.isOperation = true;
-      this.data = {...row}
+      this.data = {
+        ...row,
+        detail: row.detail || '<p>默认内容</p>' // 确保 detail 有值
+      };
     },
     handleDelete(row) {
       this.selectedRows.push(row);

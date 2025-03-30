@@ -3,10 +3,10 @@
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
-                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
+          start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
         </el-date-picker>
-        <el-input v-model="hotelQueryDto.title" clearable placeholder="民宿标题"
-                  size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+        <el-input v-model="hotelQueryDto.title" clearable placeholder="民宿标题" size="small"
+          style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>
@@ -15,7 +15,7 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="民宿图片" prop="cover" width="120px">
           <template slot-scope="scope">
-            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;"/>
+            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;" />
           </template>
         </el-table-column>
         <el-table-column label="民宿名称" prop="name"></el-table-column>
@@ -30,9 +30,9 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
-                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
-                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
+        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"></el-pagination>
     </el-row>
   </el-row>
 </template>
@@ -115,7 +115,7 @@ export default {
           ...this.hotelQueryDto
         };
         const response = await this.$axios.post('/hotel/query', params);
-        const {data} = response;
+        const { data } = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -143,7 +143,7 @@ export default {
       this.cover = row.cover;
       this.dialogOperation = true;
       this.isOperation = true;
-      this.data = {...row}
+      this.data = { ...row }
     },
     handleDelete(row) {
       this.selectedRows.push(row);

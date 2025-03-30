@@ -89,7 +89,7 @@ export default {
       let ids = [bed.id]
       const response = await this.$axios.post(`/hotelRoomBed/batchDelete`, ids);
       if (response.data.code === 200) {
-        this.cannel();
+        this.cancel();
         this.fetchBeds();
 
       }
@@ -137,7 +137,7 @@ export default {
       })
     },
     // 取消事件
-    cannel() {
+    cancel() {
       this.data = {};
       this.bedOperation = false;
       this.isOperation = false;

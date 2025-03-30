@@ -3,10 +3,10 @@
     <el-row style="padding: 10px;margin: 0 5px;">
       <el-row>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
-                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
+          start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="fetchFreshData">
         </el-date-picker>
-        <el-input v-model="vendorQueryDto.title" clearable placeholder="标题"
-                  size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+        <el-input v-model="vendorQueryDto.title" clearable placeholder="标题" size="small"
+          style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>
@@ -18,9 +18,9 @@
           <div class="time">创建时间：{{ notice.createTime }}</div>
         </div>
       </el-row>
-      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
-                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
-                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
+        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 操作面板 -->
     <el-dialog :show-close="false" :visible.sync="dialogOperation" width="32%">
@@ -30,21 +30,21 @@
       <div style="padding:0 20px;">
         <el-row style="margin-bottom: 20px;">
           <span class="dialog-hover">标题</span>
-          <input v-model="data.title" class="dialog-input" placeholder="请输入"/>
+          <input v-model="data.title" class="dialog-input" placeholder="请输入" />
           <div>
-            <Editor :receiveContent="data.content" height="300px" @on-receive="onReceiveContent"/>
+            <Editor :receiveContent="data.content" height="300px" @on-receive="onReceiveContent" />
           </div>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button v-if="!isOperation" class="customer"
-                   size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
-                   type="info"
-                   @click="addOperation()">新增</el-button>
+        <el-button v-if="!isOperation" class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="addOperation()">新增</el-button>
         <el-button v-else class="customer" size="small"
-                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="updateOperation()">修改</el-button>
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="updateOperation()">修改</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                   @click="cannel()">取消</el-button>
+          @click="cancel()">取消</el-button>
       </span>
     </el-dialog>
   </el-row>
@@ -54,7 +54,7 @@
 import Editor from "@/components/Editor"
 
 export default {
-  components: {Editor},
+  components: { Editor },
   data() {
     return {
       data: {},
@@ -69,8 +69,8 @@ export default {
       vendorQueryDto: {}, // 搜索条件
       users: [],
       searchTime: [],
-      isAuditList: [{value: null, label: '全部'}, {value: 0, label: '未审核'}, {value: 1, label: '已审核'}],
-      statusList: [{value: null, label: '全部'}, {value: 0, label: '不可用'}, {value: 1, label: '可用'}],
+      isAuditList: [{ value: null, label: '全部' }, { value: 0, label: '未审核' }, { value: 1, label: '已审核' }],
+      statusList: [{ value: null, label: '全部' }, { value: 0, label: '不可用' }, { value: 1, label: '可用' }],
     };
   },
   created() {
@@ -87,7 +87,7 @@ export default {
       this.data.content = content;
     },
     // 置位
-    cannel() {
+    cancel() {
       this.data = {};
       this.dialogOperation = false;
       this.isOperation = false;
@@ -143,7 +143,7 @@ export default {
           timer: 1000,
         });
         if (response.data.code === 200) {
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {
@@ -157,7 +157,7 @@ export default {
         const response = await this.$axios.post('/notice/save', this.data);
         this.$message[response.data.code === 200 ? 'success' : 'error'](response.data.msg);
         if (response.data.code === 200) {
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {
@@ -188,7 +188,7 @@ export default {
           ...this.vendorQueryDto
         };
         const response = await this.$axios.post('/notice/query', params);
-        const {data} = response;
+        const { data } = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -219,7 +219,7 @@ export default {
       this.dialogOperation = true;
       this.isOperation = true;
       this.data.content = row.content;
-      this.data = {...row}
+      this.data = { ...row }
     },
     handleDelete(row) {
       this.selectedRows.push(row);

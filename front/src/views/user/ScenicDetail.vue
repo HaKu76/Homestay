@@ -20,12 +20,12 @@
       </div>
       <div style="margin-top: 20px;">
         <span class="save-btn" @click="saveOperation" v-if="!saveBtnFlag"><i class="el-icon-star-off"></i>立即收藏</span>
-        <span class="cannel-save-btn" @click="saveOperation" v-else><i class="el-icon-star-on"></i>取消收藏</span>
+        <span class="cancel-save-btn" @click="saveOperation" v-else><i class="el-icon-star-on"></i>取消收藏</span>
       </div>
     </div>
     <div>
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="景点详情" name="first">
+        <el-tab-pane label="景点介绍详情" name="first">
           <div v-if="scenic.detail === null">
             <el-empty description="该景点暂无介绍"></el-empty>
           </div>
@@ -148,7 +148,7 @@
             <div style="margin-block: 20px;" class="ticket-item">
               <div class="info">
                 <span>共选中{{ data.buyNumber }}张票，金额<span class="price">{{ moneyCount(data)
-                }}元</span></span>
+                    }}元</span></span>
               </div>
             </div>
           </div>
@@ -158,7 +158,7 @@
         <el-button size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
           class="customer" type="info" @click="addOperation()">确认购票</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-          @click="cannel()">取消</el-button>
+          @click="cancel()">取消</el-button>
       </span>
     </el-dialog>
   </div>
@@ -220,7 +220,7 @@ export default {
       return Math.ceil(total * 100) / 100;
     },
     // 取消购票
-    cannel() {
+    cancel() {
       // 关闭购票弹窗
       this.dialogTicketOperation = false;
       this.data = {};
@@ -292,7 +292,8 @@ export default {
     fetchScenicTicket(scenicId) {
       this.$axios.post('/scenicTicket/query', { scenicId: scenicId }).then(res => {
         if (res.data.code === 200) {
-          this.scenicTicketList = res.data.data;
+          // 过滤掉 useStatus 为不可用的门票
+          this.scenicTicketList = res.data.data.filter(ticket => ticket.useStatus == 1);
         }
       })
     },
@@ -330,7 +331,7 @@ export default {
   margin: 0 auto;
 
   .save-btn,
-  .cannel-save-btn {
+  .cancel-save-btn {
     display: inline-block;
     font-size: 12px;
     padding: 6px 10px;
@@ -346,11 +347,11 @@ export default {
     background-color: rgb(31, 31, 31);
   }
 
-  .cannel-save-btn:hover {
+  .cancel-save-btn:hover {
     background-color: rgb(235, 138, 138);
   }
 
-  .cannel-save-btn {
+  .cancel-save-btn {
     background-color: rgb(237, 157, 157);
     color: rgb(250, 250, 250);
   }

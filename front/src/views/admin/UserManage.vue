@@ -5,22 +5,22 @@
         <span class="edit-button" @click="add()">
           新增用户
         </span>
-        <el-select style="width: 100px;" @change="fetchFreshData" size="small" v-model="userQueryDto.isLogin"
+        <el-select style="width: 120px;" @change="handleFilter" size="small" v-model="userQueryDto.isLogin"
           placeholder="登录状态">
           <el-option v-for="item in loginStatuList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-select style="width: 100px;" @change="fetchFreshData" size="small" v-model="userQueryDto.isWord"
+        <el-select style="width: 120px;" @change="handleFilter" size="small" v-model="userQueryDto.isWord"
           placeholder="禁言状态">
           <el-option v-for="item in wordStatuList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-select style="width: 100px;" @change="fetchFreshData" size="small" v-model="userQueryDto.role"
+        <el-select style="width: 120px;" @change="handleFilter" size="small" v-model="userQueryDto.role"
           placeholder="用户角色">
           <el-option v-for="item in rolesList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-date-picker style="width: 216px;" @change="fetchFreshData" size="small" v-model="searchTime"
+        <el-date-picker style="width: 216px;" @change="handleFilter" size="small" v-model="searchTime"
           type="daterange" range-separator="至" start-placeholder="注册开始" end-placeholder="注册结束">
         </el-date-picker>
         <el-input size="small" style="width: 166px;" v-model="userQueryDto.userName" placeholder="用户名" clearable
@@ -106,7 +106,7 @@
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer" style="margin-top: 10px;">
-        <span class="channel-button" @click="cannel()">
+        <span class="channel-button" @click="cancel()">
           取消操作
         </span>
         <span v-if="!isOperation" class="edit-button" @click="addOperation()">
@@ -145,7 +145,7 @@
         <el-button size="small" style="background-color: rgb(34, 165, 241);color: rgb(247,248,249);border: none;"
           class="customer" type="info" @click="comfirmStatus">确认</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(246,246,246);border: none;"
-          @click="cannel">取消</el-button>
+          @click="cancel">取消</el-button>
       </span>
     </el-dialog>
   </el-row>
@@ -205,7 +205,7 @@ export default {
         console.error('无法复制账号: ', err);
       }
     },
-    cannel() {
+    cancel() {
       this.data = {};
       this.userAvatar = '';
       this.userPwd = '';
@@ -228,7 +228,7 @@ export default {
             message: '修改成功',
             type: 'success'
           });
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       }).catch(error => {
@@ -304,7 +304,7 @@ export default {
             message: '修改成功',
             type: 'success'
           });
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {
@@ -329,7 +329,7 @@ export default {
             message: '新增成功',
             type: 'success'
           });
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {

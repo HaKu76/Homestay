@@ -87,7 +87,7 @@ public class HotelRoomServiceImpl implements HotelRoomService {
     }
 
     /**
-     * 酒店房间查询 -- 做了权限隔离的
+     * 民宿房间查询 -- 做了权限隔离的
      *
      * @param dto 查询实体
      * @return Result<HotelRoomVO>
@@ -109,15 +109,15 @@ public class HotelRoomServiceImpl implements HotelRoomService {
             return ApiResult.success();
         }
         Integer vendorId = vendorVO.getId(); // 供应商ID
-        // 2. 通过供应商ID查询所管辖的酒店
+        // 2. 通过供应商ID查询所管辖的民宿
         HotelQueryDto hotelQueryDto = new HotelQueryDto();
         hotelQueryDto.setVendorId(vendorId);
         List<HotelVO> hotelVOS = hotelMapper.query(hotelQueryDto);
-        // 如果发现供应商账户下并没有管理有酒店，直接退出
+        // 如果发现供应商账户下并没有管理有民宿，直接退出
         if (hotelVOS.isEmpty()) {
             return ApiResult.success();
         }
-        // 通过stream流，取出酒店ID集合
+        // 通过stream流，取出民宿ID集合
         List<Integer> hotelIds = hotelVOS.stream()
                 .map(Hotel::getId)
                 .collect(Collectors.toList());

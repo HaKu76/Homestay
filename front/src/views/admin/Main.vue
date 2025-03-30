@@ -15,11 +15,11 @@
           </div>
           <div>
             <div style="padding: 20px 60px;box-sizing: border-box;">
-              <LineChart height="280px" tag="门票销售额" @on-selected="ticketSelected" :values="ticketMoneyValues"
+              <LineChart height="280px" tag="全站景点门票销售额" @on-selected="ticketSelected" :values="ticketMoneyValues"
                 :date="ticketMoneyDates" />
             </div>
             <div style="padding: 20px 60px;box-sizing: border-box;">
-              <LineChart height="280px" tag="民宿销售额" @on-selected="hotelOrderSelected" :values="hotelRoomMoneyValues"
+              <LineChart height="280px" tag="全站民宿销售额" @on-selected="hotelOrderSelected" :values="hotelRoomMoneyValues"
                 :date="hotelRoomMoneyDates" />
             </div>
           </div>

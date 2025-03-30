@@ -36,7 +36,7 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="route('/publishStrategy')">发布攻略</el-dropdown-item>
-            <el-dropdown-item @click.native="route('/contentCenter')">内容中心</el-dropdown-item>
+            <el-dropdown-item @click.native="route('/contentCenter')">攻略详情</el-dropdown-item>
             <el-dropdown-item @click.native="route('/save')">我的收藏</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -108,7 +108,6 @@ export default {
       const { data } = await this.$axios.get('/user/auth');
       if (data.code !== 200) { // Token校验异常
         this.$router.push('/');
-        console.log('Token校验异常');
       } else {
         sessionStorage.setItem('userInfo', JSON.stringify(data.data));
         this.userInfo = data.data;

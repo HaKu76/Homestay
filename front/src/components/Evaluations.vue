@@ -164,7 +164,7 @@
         </el-row>
       </el-row>
       <span slot="footer" class="dialog-footer">
-        <button class="cannel-btn" @click="dialogVisibleReport = false">取消</button>
+        <button class="cancel-btn" @click="dialogVisibleReport = false">取消</button>
         <button class="yes-btn" @click="operationReport">确定举报</button>
       </span>
     </el-dialog>
@@ -519,7 +519,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.cannel-btn,
+.cancel-btn,
 .yes-btn {
   padding: 0px 15px 5px 15px;
   font-size: 14px !important;
@@ -528,7 +528,7 @@ export default {
   border: none;
 }
 
-.cannel-btn {
+.cancel-btn {
   color: #1c1c1c;
 }
 
@@ -537,7 +537,7 @@ export default {
   color: #EAF2FF;
 }
 
-.cannel-btn:hover {
+.cancel-btn:hover {
   background-color: #f5f5f5;
 }
 

@@ -2,17 +2,17 @@
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
     <el-row style="padding: 10px;margin: 0 5px;">
       <el-row>
-        <el-select v-model="vendorQueryDto.isAudit" placeholder="审核状态" size="small" @change="fetchFreshData">
+        <el-select v-model="vendorQueryDto.isAudit" placeholder="审核状态" size="small" @change="handleFilter">
           <el-option v-for="item in isAuditList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
         <el-select v-model="vendorQueryDto.status" placeholder="可用状态" size="small" style="margin-left: 5px;"
-                   @change="fetchFreshData">
+                   @change="handleFilter">
           <el-option v-for="item in statusList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
         <el-date-picker v-model="searchTime" end-placeholder="申请结束" range-separator="至" size="small"
-                        start-placeholder="申请开始" style="width: 220px;margin-left: 5px;" type="daterange">
+                        start-placeholder="申请开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
         </el-date-picker>
         <el-input v-model="vendorQueryDto.name" clearable placeholder="供应商名"
                   size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
@@ -99,8 +99,8 @@
             </el-switch>
           </div>
           <div style="margin: 10px 0;">
-            <span class="dialog-hover">法人用户</span>
-            <el-select v-model="data.userId" placeholder="请选择法人用户">
+            <span class="dialog-hover">负责人</span>
+            <el-select v-model="data.userId" placeholder="请选择负责人">
               <el-option v-for="user in users" :key="user.id" :label="user.userName" :value="user.id">
               </el-option>
             </el-select>
@@ -115,7 +115,7 @@
                    style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
                    @click="updateOperation()">修改</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                   @click="cannel()">取消</el-button>
+                   @click="cancel()">取消</el-button>
       </span>
     </el-dialog>
   </el-row>
@@ -158,7 +158,7 @@ export default {
       });
     },
     // 置位
-    cannel() {
+    cancel() {
       this.data = {};
       this.dialogOperation = false;
       this.isOperation = false;
@@ -214,7 +214,7 @@ export default {
           timer: 1000,
         });
         if (response.data.code === 200) {
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {
@@ -228,7 +228,7 @@ export default {
         const response = await this.$axios.post('/vendor/save', this.data);
         this.$message[response.data.code === 200 ? 'success' : 'error'](response.data.msg);
         if (response.data.code === 200) {
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {

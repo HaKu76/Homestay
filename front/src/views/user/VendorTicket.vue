@@ -1,5 +1,6 @@
 <template>
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+    <h1 style="margin-inline: 20px;">供应商景点门票订单管理</h1>
     <el-row style="padding: 10px;margin: 0 5px;">
       <el-row>
                 <span>
@@ -88,7 +89,7 @@
                            style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
                            type="info" @click="updateOperation()">修改</el-button>
                 <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                           @click="cannel()">取消</el-button>
+                           @click="cancel()">取消</el-button>
             </span>
     </el-dialog>
   </el-row>
@@ -127,7 +128,7 @@ export default {
       });
     },
     // 置位
-    cannel() {
+    cancel() {
       this.data = {};
       this.dialogOperation = false;
       this.isOperation = false;
@@ -183,7 +184,7 @@ export default {
           timer: 1000,
         });
         if (response.data.code === 200) {
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {
@@ -197,7 +198,7 @@ export default {
         const response = await this.$axios.post('/scenicTicket/save', this.data);
         this.$message[response.data.code === 200 ? 'success' : 'error'](response.data.msg);
         if (response.data.code === 200) {
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {

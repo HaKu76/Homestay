@@ -1,17 +1,17 @@
 <template>
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
-    <el-row style="padding: 10px;margin: 0 5px;">
+    <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
         <el-select v-model="scenicTicketOrderQueryDto.payStatus" placeholder="支付状态" size="small"
-                   style="margin-left: 5px;" @change="fetchFreshData">
+          style="margin-left: 5px;" @change="handleFilter">
           <el-option v-for="item in statusList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至"
-                        size="small" start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
+        <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
+          start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
         </el-date-picker>
-        <el-input v-model="scenicTicketOrderQueryDto.userId" clearable
-                  placeholder="用户ID" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+        <el-input v-model="scenicTicketOrderQueryDto.userId" clearable placeholder="用户ID" size="small"
+          style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>
@@ -32,21 +32,21 @@
             <i v-if="!scope.row.payStatus" class="el-icon-warning" style="margin-right: 5px;"></i>
             <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
             <el-tooltip v-if="!scope.row.payStatus" class="item" content="未支付，不能重新下单" effect="dark"
-                        placement="bottom-end">
+              placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">未支付</span>
             </el-tooltip>
             <span v-else>已支付</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="110">
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <span class="text-button" @click="handleDelete(scope.row)">删除</span>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
-                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
-                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
+        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"></el-pagination>
     </el-row>
   </el-row>
 </template>
@@ -63,7 +63,7 @@ export default {
       selectedRows: [],
       scenicTicketOrderQueryDto: {}, // 搜索条件
       searchTime: [],
-      statusList: [{value: null, label: '全部'}, {value: 0, label: '未支付'}, {value: 1, label: '已支付'}],
+      statusList: [{ value: null, label: '全部' }, { value: 0, label: '未支付' }, { value: 1, label: '已支付' }],
     };
   },
   created() {
@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     // 置位
-    cannel() {
+    cancel() {
       this.data = {};
       this.dialogOperation = false;
       this.isOperation = false;
@@ -127,7 +127,7 @@ export default {
           timer: 1000,
         });
         if (response.data.code === 200) {
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {
@@ -141,7 +141,7 @@ export default {
         const response = await this.$axios.post('/scenicTicketOrder/save', this.data);
         this.$message[response.data.code === 200 ? 'success' : 'error'](response.data.msg);
         if (response.data.code === 200) {
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {
@@ -173,7 +173,7 @@ export default {
         };
         console.log(params);
         const response = await this.$axios.post('/scenicTicketOrder/query', params);
-        const {data} = response;
+        const { data } = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -203,7 +203,7 @@ export default {
     handleEdit(row) {
       this.dialogOperation = true;
       this.isOperation = true;
-      this.data = {...row}
+      this.data = { ...row }
     },
     handleDelete(row) {
       this.selectedRows.push(row);

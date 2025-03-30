@@ -20,7 +20,7 @@
         <el-empty description="暂无民宿信息"></el-empty>
       </el-row>
       <el-row v-else class="scenic-item">
-        <el-col :span="4" @click.native="hotelClick(hotel)" v-for="(hotel, index) in tableData" :key="index">
+        <el-col :span="6" @click.native="hotelClick(hotel)" v-for="(hotel, index) in tableData" :key="index">
           <div class="item">
             <img :src="hotel.cover" alt="" srcset="">
             <div class="name">{{ hotel.name }}</div>
@@ -41,7 +41,7 @@
         </el-col>
       </el-row>
       <el-pagination style="margin:10px 0;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="currentPage" :page-sizes="[10, 20]" :page-size="pageSize"
+        :current-page="currentPage" :page-sizes="[8, 16]" :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper" :total="totalItems"></el-pagination>
     </el-row>
   </el-row>
@@ -55,7 +55,7 @@ export default {
       data: {},
       filterText: '',
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 8,
       totalItems: 0,
       tableData: [],
       scenicQueryDto: {}, // 搜索条件
@@ -152,7 +152,7 @@ export default {
     img {
       width: 100%;
       min-height: 120px;
-      max-height: 140px;
+      max-height: 190px;
       border-radius: 5px;
     }
 

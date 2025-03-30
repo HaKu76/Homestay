@@ -1,9 +1,10 @@
 <template>
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+    <h1 style="margin-inline: 20px;">供应商民宿信息发布管理</h1>
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至"
-                        size="small" start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
+                        size="small" start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
         </el-date-picker>
         <el-input v-model="hotelQueryDto.name" clearable
                   placeholder="民宿名称" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
@@ -77,7 +78,7 @@
                            style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
                            type="info" @click="updateOperation()">修改</el-button>
                 <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                           @click="cannel()">取消</el-button>
+                           @click="cancel()">取消</el-button>
             </span>
     </el-dialog>
   </el-row>
@@ -130,11 +131,11 @@ export default {
           message: '新增成功',
           type: 'success'
         });
-        this.cannel();
+        this.cancel();
         this.fetchFreshData();
       }
     },
-    cannel() {
+    cancel() {
       this.dialogOperation = false;
       this.isOperation = false;
       this.data = {};
@@ -152,7 +153,7 @@ export default {
           message: '修改成功',
           type: 'success'
         });
-        this.cannel();
+        this.cancel();
         this.fetchFreshData();
       }
     },

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 style="margin-inline: 10px;">我的收藏</h1>
     <el-row v-if="scenicList.length === 0">
       <el-empty description="暂无景点信息"></el-empty>
     </el-row>

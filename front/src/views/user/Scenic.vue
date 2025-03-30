@@ -10,7 +10,7 @@
             </el-option>
           </el-select>
           <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
-            start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
+            start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="fetchFreshData">
           </el-date-picker>
           <el-input v-model="scenicQueryDto.name" clearable placeholder="景点名" size="small"
             style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">

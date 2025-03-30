@@ -1,14 +1,15 @@
 <template>
   <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+    <h1 style="margin-inline: 20px;">景点攻略管理</h1>
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
         <el-select v-model="scenicStrategyQueryDto.isAudit" placeholder="审核状态" size="small"
-                   style="margin-left: 5px;" @change="fetchFreshData">
+                   style="margin-left: 5px;" @change="handleFilter">
           <el-option v-for="item in isAuditList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
-                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
         </el-date-picker>
         <el-input v-model="scenicStrategyQueryDto.title" clearable
                   placeholder="攻略标题" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
@@ -23,8 +24,8 @@
             <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;"/>
           </template>
         </el-table-column>
-        <el-table-column label="攻略标题" prop="title"></el-table-column>
-        <el-table-column label="景点ID" prop="scenicId" sortable width="90px"></el-table-column>
+        <el-table-column label="攻略标题" prop="title" width="250px"></el-table-column>
+        <el-table-column label="景点ID" prop="scenicId" sortable width="100px"></el-table-column>
         <el-table-column label="关联景点" prop="scenicName" width="120px"></el-table-column>
         <el-table-column label="创建时间" prop="createTime" sortable width="168"></el-table-column>
         <el-table-column label="审核状态" prop="isWord" width="108">
@@ -38,7 +39,7 @@
             <span v-else>已审核</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="180">
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <span class="text-button" @click="handleEdit(scope.row)">修改</span>
             <span class="text-button" @click="viewStrategyContent(scope.row)">查看攻略</span>

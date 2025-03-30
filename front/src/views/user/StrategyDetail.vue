@@ -7,12 +7,13 @@
         <span>{{ strategy.userName }}</span>
       </div>
       <div class="info">
+        <img :src="strategy.cover" alt="" srcset="">
         <span>{{ strategy.scenicName }}</span>
         <span>{{ strategy.createTime }}</span>
       </div>
       <div style="font-size: 14px;" v-html="strategy.content"></div>
       <div>
-        <Evaluations :contentId="strategyId" contentType="STRATEGY"/>
+        <Evaluations :contentId="strategyId" contentType="STRATEGY" />
       </div>
     </div>
   </div>
@@ -21,7 +22,7 @@
 import Evaluations from "@/components/Evaluations"
 
 export default {
-  components: {Evaluations},
+  components: { Evaluations },
   name: "StrategyDetail",
   data() {
     return {
@@ -37,7 +38,7 @@ export default {
   methods: {
     // 通过攻略ID查询攻略信息
     fetchStrategy(strategyId) {
-      this.$axios.post('/scenicStrategy/query', {id: strategyId}).then(res => {
+      this.$axios.post('/scenicStrategy/query', { id: strategyId }).then(res => {
         if (res.data.code === 200) {
           this.strategy = res.data.data[0];
         }
@@ -68,11 +69,27 @@ export default {
 .info {
   font-size: 12px;
   display: flex;
-  justify-content: left;
+  flex-direction: column;
+  /* 改为垂直布局 */
+  align-items: center;
+  /* 图片和文字居中 */
   margin-block: 20px;
   gap: 10px;
 
-  span:first-child {
+  img {
+    width: 100%;
+    /* 图片宽度占满父容器 */
+    max-width: 600px;
+    /* 限制图片最大宽度 */
+    height: auto;
+    /* 高度自适应 */
+    border-radius: 8px;
+    /* 添加圆角 */
+    margin-bottom: 10px;
+    /* 图片与文字之间的间距 */
+  }
+
+  span:nth-child(2) {
     display: inline-block;
     padding: 1px 3px;
     border-radius: 2px;

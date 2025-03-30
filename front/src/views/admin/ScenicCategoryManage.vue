@@ -47,7 +47,7 @@
                    style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
                    @click="updateOperation()">修改</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                   @click="cannel()">取消</el-button>
+                   @click="cancel()">取消</el-button>
       </span>
     </el-dialog>
   </el-row>
@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     // 置位
-    cannel() {
+    cancel() {
       this.data = {};
       this.dialogOperation = false;
       this.isOperation = false;
@@ -130,7 +130,7 @@ export default {
           timer: 1000,
         });
         if (response.data.code === 200) {
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {
@@ -144,7 +144,7 @@ export default {
         const response = await this.$axios.post('/scenicCategory/save', this.data);
         this.$message[response.data.code === 200 ? 'success' : 'error'](response.data.msg);
         if (response.data.code === 200) {
-          this.cannel();
+          this.cancel();
           this.fetchFreshData();
         }
       } catch (error) {

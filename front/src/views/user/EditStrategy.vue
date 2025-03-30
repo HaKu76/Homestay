@@ -27,6 +27,7 @@
       </div>
       <div style="margin-top: 20px;text-align: center;">
         <el-button class="customer" round size="mini" type="primary" @click="updateInfo">确认修改</el-button>
+        <el-button class="customer" round size="mini" @click="cancelEdit">取消修改</el-button>
       </div>
     </div>
 
@@ -69,6 +70,10 @@ export default {
       } catch (error) {
         this.$message.error(error);
       }
+    },
+    // 取消修改
+    cancelEdit() {
+      this.$router.go(-1); // 返回上一级路由
     },
     // 富文本编辑器内容回调函数
     onReceive(content) {

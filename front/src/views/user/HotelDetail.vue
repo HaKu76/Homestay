@@ -82,7 +82,7 @@
                 <el-button size="small" style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
                     class="customer" type="info" @click="addOperation()">确定下单</el-button>
                 <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                    @click="cannel()">取消</el-button>
+                    @click="cancel()">取消</el-button>
             </span>
         </el-dialog>
     </div>
@@ -130,7 +130,7 @@ export default {
             })
         },
         // 取消预定
-        cannel() {
+        cancel() {
             // 关闭弹窗
             this.dialogRoomOperation = false;
             this.data = {};

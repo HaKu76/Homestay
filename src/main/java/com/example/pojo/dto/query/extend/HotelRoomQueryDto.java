@@ -17,11 +17,11 @@ public class HotelRoomQueryDto extends QueryDto {
      */
     private String name;
     /**
-     * 酒店ID
+     * 民宿ID
      */
     private Integer hotelId;
     /**
-     * 酒店ID集合
+     * 民宿ID集合
      */
     private List<Integer> hotelIds;
 

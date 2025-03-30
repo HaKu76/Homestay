@@ -45,6 +45,10 @@ public class ScenicTicketServiceImpl implements ScenicTicketService {
     public Result<Void> save(ScenicTicket scenicTicket) {
         //设置创建时间
         scenicTicket.setCreateTime(LocalDateTime.now());
+        // 若景点门票状态为不可用设置为false,防止空值
+        if (scenicTicket.getUseStatus() == null) {
+            scenicTicket.setUseStatus(false);
+        }
         scenicTicketMapper.save(scenicTicket);
         return ApiResult.success();
     }

@@ -57,7 +57,7 @@
         </el-descriptions-item>
       </el-descriptions>
       <div v-if="vendors[0].isAudit && vendors[0].status" style="margin: 20px 0;">
-        <h3>信息发布</h3>
+        <h4>信息发布</h4>
         <div class="content-publish">
           <div class="left" @click="route('/vendorScenic')">
             <span>

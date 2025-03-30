@@ -72,7 +72,7 @@ public class HotelRoomController {
     }
 
     /**
-     * 查询酒店房间 -- 做了权限隔离的
+     * 查询民宿房间 -- 做了权限隔离的
      *
      * @return Result<Void>
      */

@@ -92,6 +92,7 @@
             </if>
         </where>
     </select>
+
     <select id="queryByScenicIds" resultMap="BaseResultMap">
         SELECT st.*, s.name AS scenic_name
         FROM scenic_ticket st
