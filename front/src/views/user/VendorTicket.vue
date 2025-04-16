@@ -1,12 +1,13 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
-    <h1 style="margin-inline: 20px;">供应商景点门票订单管理</h1>
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
+    <h1 style="margin-inline: 20px;">供应商景点门票信息发布管理</h1>
     <el-row style="padding: 10px;margin: 0 5px;">
       <el-row>
                 <span>
                     <el-button class="customer"
                                size="small"
-                               style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="add()"><i
+                               style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
+                               type="info" @click="add()"><i
                         class="el-icon-plus"></i>新增景点门票</el-button>
                 </span>
       </el-row>

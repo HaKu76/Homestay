@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div>
       <div style="font-size: 32px;margin-block: 10px;font-weight: 800;">{{ strategy.title }}</div>
       <div class="user">
@@ -13,7 +13,7 @@
       </div>
       <div style="font-size: 14px;" v-html="strategy.content"></div>
       <div>
-        <Evaluations :contentId="strategyId" contentType="STRATEGY" />
+        <Evaluations :contentId="strategyId" contentType="STRATEGY"/>
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@
 import Evaluations from "@/components/Evaluations"
 
 export default {
-  components: { Evaluations },
+  components: {Evaluations},
   name: "StrategyDetail",
   data() {
     return {
@@ -38,7 +38,7 @@ export default {
   methods: {
     // 通过攻略ID查询攻略信息
     fetchStrategy(strategyId) {
-      this.$axios.post('/scenicStrategy/query', { id: strategyId }).then(res => {
+      this.$axios.post('/scenicStrategy/query', {id: strategyId}).then(res => {
         if (res.data.code === 200) {
           this.strategy = res.data.data[0];
         }
@@ -48,6 +48,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+}
 .user {
   display: flex;
   justify-content: left;

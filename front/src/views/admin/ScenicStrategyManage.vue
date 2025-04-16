@@ -1,17 +1,19 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
-        <el-select v-model="scenicStrategyQueryDto.isAudit" placeholder="审核状态" size="small" style="margin-left: 5px;"
-          @change="handleFilter">
+        <el-select v-model="scenicStrategyQueryDto.isAudit" placeholder="审核状态" size="small"
+                   style="margin-left: 5px;"
+                   @change="handleFilter">
           <el-option v-for="item in isAuditList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
-          start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange"
+                        @change="handleFilter">
         </el-date-picker>
         <el-input v-model="scenicStrategyQueryDto.title" clearable placeholder="攻略标题" size="small"
-          style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+                  style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>
@@ -20,7 +22,7 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="攻略图" prop="cover" width="120px">
           <template slot-scope="scope">
-            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;" />
+            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 10px;"/>
           </template>
         </el-table-column>
         <el-table-column label="攻略标题" prop="title"></el-table-column>
@@ -34,7 +36,7 @@
             <i v-if="!scope.row.isAudit" class="el-icon-warning" style="margin-right: 5px;"></i>
             <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
             <el-tooltip v-if="!scope.row.isAudit" class="item" content="如果未审核，不显示于用户端" effect="dark"
-              placement="bottom-end">
+                        placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">未审核</span>
             </el-tooltip>
             <span v-else>已审核</span>
@@ -49,8 +51,9 @@
         </el-table-column>
       </el-table>
       <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
-        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"></el-pagination>
+                     layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <el-drawer :direction="direction" :visible.sync="drawer" title="查看内容" width="35%">
       <div style="margin: 20px;" v-html="data.content"></div>
@@ -74,7 +77,7 @@ export default {
       selectedRows: [],
       scenicStrategyQueryDto: {}, // 搜索条件
       searchTime: [],
-      isAuditList: [{ value: null, label: '全部' }, { value: 0, label: '未审核' }, { value: 1, label: '已审核' }],
+      isAuditList: [{value: null, label: '全部'}, {value: 0, label: '未审核'}, {value: 1, label: '已审核'}],
     };
   },
   created() {
@@ -194,7 +197,7 @@ export default {
           ...this.scenicStrategyQueryDto
         };
         const response = await this.$axios.post('/scenicStrategy/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -222,7 +225,7 @@ export default {
       this.cover = row.cover;
       this.dialogOperation = true;
       this.isOperation = true;
-      this.data = { ...row }
+      this.data = {...row}
     },
     handleDelete(row) {
       this.selectedRows.push(row);

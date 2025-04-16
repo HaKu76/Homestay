@@ -1,5 +1,5 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 30px;border-radius: 10px;">
     <h1 style="margin-inline: 20px;">供应商景点门票订单管理</h1>
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
@@ -9,10 +9,11 @@
           </el-option>
         </el-select>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
-                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange"
+                        @change="handleFilter">
         </el-date-picker>
-        <el-input v-model="scenicTicketOrderQueryDto.userId" clearable
-                  placeholder="用户ID" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+        <el-input v-model="scenicTicketOrderQueryDto.userId" clearable placeholder="用户ID" size="small"
+                  style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>
@@ -21,9 +22,9 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="景点ID" prop="scenicId" sortable width="100"></el-table-column>
         <el-table-column label="景点名称" prop="scenicName" width="120"></el-table-column>
-        <el-table-column label="用户ID" prop="userId" width="100"></el-table-column>
-        <el-table-column label="用户名" prop="userName" width="120"></el-table-column>
-        <el-table-column label="联系人" prop="contactPerson" width="120"></el-table-column>
+        <el-table-column label="用户ID" prop="userId" width="80"></el-table-column>
+        <el-table-column label="用户名" prop="userName" width="100"></el-table-column>
+        <el-table-column label="联系人" prop="contactPerson" width="100"></el-table-column>
         <el-table-column label="联系电话" prop="contactPhone" width="120"></el-table-column>
         <el-table-column label="金额" prop="amount" sortable width="120"></el-table-column>
         <el-table-column label="支付时间" prop="payTime" sortable width="168"></el-table-column>
@@ -45,9 +46,10 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
-                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
-                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
+                     layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <el-row>
       <LineChart :date="dates" :values="values" height="480px" tag="门票销售额（元）" @on-selected="selected"/>

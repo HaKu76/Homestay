@@ -58,5 +58,9 @@ export default {
 .container {
   width: 500px;
   margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  /* 内边距*/
+  padding: 20px;
 }
 </style>

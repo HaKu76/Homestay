@@ -1,5 +1,5 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
         <el-select v-model="hotelOrderInfoQueryDto.payStatus" placeholder="支付状态" size="small"
@@ -8,10 +8,12 @@
           </el-option>
         </el-select>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至"
-                        size="small" start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
+                        size="small" start-placeholder="创建开始" style="width: 220px;margin-left: 5px;"
+                        type="daterange" @change="handleFilter">
         </el-date-picker>
         <el-input v-model="hotelOrderInfoQueryDto.userId" clearable
-                  placeholder="用户ID" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+                  placeholder="用户ID" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;"
+                  @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>

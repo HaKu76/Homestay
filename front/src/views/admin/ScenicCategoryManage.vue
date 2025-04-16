@@ -1,5 +1,5 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <el-row style="padding: 10px;margin-left: 10px;">
       <el-row>
         <el-input v-model="scenicCategoryQueryDto.name" clearable placeholder="景点分类名" size="small"

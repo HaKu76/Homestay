@@ -163,7 +163,7 @@ export default {
 .bed-item {
   background-color: rgb(248, 248, 248);
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-bottom: 4px;
 }
 </style>

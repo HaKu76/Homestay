@@ -5,22 +5,24 @@
         <div>
           <div>
             <el-row style="margin-block: 20px;">
-              <el-col :span="4" v-for="(staticItem, index) in staticData" :key="index">
+              <el-col v-for="(staticItem, index) in staticData" :key="index" :span="4">
                 <div class="static-item">
-                  <el-statistic group-separator="," :precision="0" :value="staticItem.count"
-                    :title="staticItem.name"></el-statistic>
+                  <el-statistic :precision="0" :title="staticItem.name" :value="staticItem.count"
+                                group-separator=","></el-statistic>
                 </div>
               </el-col>
             </el-row>
           </div>
           <div>
-            <div style="padding: 20px 60px;box-sizing: border-box;">
-              <LineChart height="280px" tag="全站景点门票销售额" @on-selected="ticketSelected" :values="ticketMoneyValues"
-                :date="ticketMoneyDates" />
+            <div class="line">
+              <LineChart :date="ticketMoneyDates" :values="ticketMoneyValues" height="280px"
+                         tag="全站景点门票销售额"
+                         @on-selected="ticketSelected"/>
             </div>
-            <div style="padding: 20px 60px;box-sizing: border-box;">
-              <LineChart height="280px" tag="全站民宿销售额" @on-selected="hotelOrderSelected" :values="hotelRoomMoneyValues"
-                :date="hotelRoomMoneyDates" />
+            <div class="line">
+              <LineChart :date="hotelRoomMoneyDates" :values="hotelRoomMoneyValues" height="280px"
+                         tag="全站民宿销售额"
+                         @on-selected="hotelOrderSelected"/>
             </div>
           </div>
         </div>
@@ -28,9 +30,10 @@
       <el-col :span="8">
         <div class="buttom">
           <p>最新攻略</p>
-          <div class="strategy-item" v-for="(strategy, index) in scenicStrategies" :key="index" @click="readStrategy(strategy)">
+          <div v-for="(strategy, index) in scenicStrategies" :key="index" class="strategy-item"
+               @click="readStrategy(strategy)">
             <div class="left">
-              <img :src="strategy.cover" :alt="strategy.title" srcset="">
+              <img :alt="strategy.title" :src="strategy.cover" srcset="">
             </div>
             <div class="right">
               <div class="user">
@@ -51,9 +54,10 @@
 </template>
 <script>
 import LineChart from "@/components/LineChart"
-import { timeAgo } from "@/utils/data"
+import {timeAgo} from "@/utils/data"
+
 export default {
-  components: { LineChart },
+  components: {LineChart},
   data() {
     return {
       staticData: [],
@@ -124,8 +128,18 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+// 折线图
+.line {
+  padding: 20px 60px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+}
+
 .buttom {
+  border-radius: 10px;
   padding: 5px 20px;
   box-sizing: border-box;
 
@@ -142,7 +156,7 @@ export default {
       img {
         width: 138px;
         height: 80px;
-        border-radius: 5px;
+        border-radius: 10px;
       }
     }
 

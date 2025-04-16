@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 800px;margin: 0 auto;">
+  <div class="main">
     <div v-if="vendors.length !== 0">
       <el-descriptions :column="3" border class="margin-top" title="申请信息">
         <template slot="extra">
@@ -150,7 +150,8 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button class="customer" size="small"
-                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="comfirmStatus">确认</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="comfirmStatus">确认</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(241, 241, 241);border: none;"
                    @click="dialogStatusOperation = false">取消</el-button>
       </span>
@@ -214,6 +215,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.main {
+  width: 800px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  /* 内边距*/
+  padding: 20px;
+}
+
 .content-publish {
   line-height: 100px;
   display: flex;
@@ -238,7 +248,7 @@ export default {
     background-color: rgb(240, 240, 240);
     color: rgb(51, 51, 51);
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
   }
 }
 </style>

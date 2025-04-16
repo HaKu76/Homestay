@@ -2,13 +2,13 @@
   <div class="login-container">
     <div class="login-panel">
       <div class="logo">
-        <Logo :bag="colorLogo" sysName="旅友请上车" />
+        <Logo :bag="colorLogo" sysName="旅友请上车"/>
       </div>
       <div class="text">
-        <input v-model="act" class="act" placeholder="账号" @keyup.enter="login" />
+        <input v-model="act" class="act" placeholder="账号" @keyup.enter="login"/>
       </div>
       <div class="text">
-        <input v-model="pwd" class="pwd" placeholder="密码" type="password" @keyup.enter="login" />
+        <input v-model="pwd" class="pwd" placeholder="密码" type="password" @keyup.enter="login"/>
       </div>
       <div>
         <span class="login-btn" @click="login">立即登录</span>
@@ -25,13 +25,13 @@ const ADMIN_ROLE = 1;
 const USER_ROLE = 2;
 const DELAY_TIME = 1300;
 import request from "@/utils/request.js";
-import { setToken } from "@/utils/storage.js";
+import {setToken} from "@/utils/storage.js";
 import md5 from 'js-md5';
 import Logo from '@/components/Logo.vue';
 
 export default {
   name: "Login",
-  components: { Logo },
+  components: {Logo},
   data() {
     return {
       act: '',
@@ -56,9 +56,9 @@ export default {
         return;
       }
       const hashedPwd = md5(md5(this.pwd));
-      const paramDTO = { userAccount: this.act, userPwd: hashedPwd };
+      const paramDTO = {userAccount: this.act, userPwd: hashedPwd};
       try {
-        const { data } = await request.post(`user/login`, paramDTO);
+        const {data} = await request.post(`user/login`, paramDTO);
         if (data.code !== 200) {
           this.$swal.fire({
             title: '登录失败',
@@ -80,7 +80,7 @@ export default {
         });
         // 根据角色延迟跳转
         setTimeout(() => {
-          const { role } = data.data;
+          const {role} = data.data;
           this.navigateToRole(role);
         }, DELAY_TIME);
       } catch (error) {
@@ -115,7 +115,9 @@ export default {
 .login-container {
   width: 100%;
   min-height: 100vh;
-  background-color: rgb(255, 255, 255);
+  background-image: url("/background.jpg");
+  background-size: cover;
+  /* 自适应填充 */
   display: flex;
   /* 启用Flexbox布局 */
   justify-content: center;
@@ -128,9 +130,11 @@ export default {
   .login-panel {
     width: 313px;
     height: auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    /* 背景透明度80% */
     padding: 40px 30px 16px 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(36, 36, 36, 0.1), 0 1px 3px rgba(40, 40, 40, 0.06);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
 
     .logo {
       margin: 10px 0 30px 0;

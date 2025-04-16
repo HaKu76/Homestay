@@ -111,6 +111,9 @@ export default {
 .register-containel {
   width: 100%;
   height: 100vh;
+  background-image: url("/background.jpg");
+  background-size: cover;
+  /* 自适应填充 */
   display: flex;
   /* 启用Flexbox布局 */
   justify-content: center;
@@ -124,8 +127,10 @@ export default {
     margin: 0 auto;
     width: 333px;
     height: auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    /* 背景透明度80% */
     padding: 40px 30px 16px 30px;
-    border-radius: 3px;
+    border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
 
     .logo {

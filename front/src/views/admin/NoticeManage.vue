@@ -1,9 +1,10 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
-                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange"
+                        @change="handleFilter">
         </el-date-picker>
         <el-input v-model="noticeQueryDto.title" clearable placeholder="标题"
                   size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
@@ -11,7 +12,8 @@
         </el-input>
         <span style="float: right;">
           <el-button class="customer" size="small"
-                     style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="add()"><i class="el-icon-plus"></i>新增公告</el-button>
+                     style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                     @click="add()"><i class="el-icon-plus"></i>新增公告</el-button>
         </span>
       </el-row>
     </el-row>
@@ -50,7 +52,8 @@
                    type="info"
                    @click="addOperation()">新增</el-button>
         <el-button v-else class="customer" size="small"
-                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="updateOperation()">修改</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="updateOperation()">修改</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
                    @click="cancel()">取消</el-button>
       </span>

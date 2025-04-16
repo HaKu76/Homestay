@@ -1,18 +1,20 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 30px;border-radius: 10px;">
+    <h1 style="margin-inline: 20px;">供应商民宿订单管理</h1>
     <el-row style="padding: 10px 5px;margin: 0 5px;">
-      <h1 style="margin-inline: 20px;">供应商景点门票信息发布管理</h1>
       <el-row>
         <el-select v-model="hotelOrderInfoQueryDto.payStatus" placeholder="支付状态" size="small"
-                   style="margin-left: 5px;" @change="handleFilter">
+                   style="margin-left: 5px;"
+                   @change="handleFilter">
           <el-option v-for="item in statusList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
-                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange"
+                        @change="handleFilter">
         </el-date-picker>
-        <el-input v-model="hotelOrderInfoQueryDto.userId" clearable
-                  placeholder="用户ID" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+        <el-input v-model="hotelOrderInfoQueryDto.userId" clearable placeholder="用户ID" size="small"
+                  style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>
@@ -44,9 +46,10 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]"
-                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
-                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
+                     layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <el-row>
       <LineChart :date="dates" :values="values" height="480px" tag="订单销售额（元）" @on-selected="selected"/>

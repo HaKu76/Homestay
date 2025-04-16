@@ -1,5 +1,5 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <h1 style="margin-inline: 20px;">景点攻略管理</h1>
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
@@ -9,10 +9,12 @@
           </el-option>
         </el-select>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
-                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange"
+                        @change="handleFilter">
         </el-date-picker>
         <el-input v-model="scenicStrategyQueryDto.title" clearable
-                  placeholder="攻略标题" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+                  placeholder="攻略标题" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;"
+                  @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>
@@ -21,7 +23,7 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="攻略图" prop="cover" width="120px">
           <template slot-scope="scope">
-            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;"/>
+            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 10px;"/>
           </template>
         </el-table-column>
         <el-table-column label="攻略标题" prop="title" width="250px"></el-table-column>

@@ -2,7 +2,7 @@
   <div>
     <div class="top">
       <div class="top-left">
-        <Logo sysName="旅游民宿" />
+        <Logo sysName="旅游民宿"/>
       </div>
       <div class="top-right">
         <ul>
@@ -21,7 +21,7 @@
           </el-dropdown-menu>
         </el-dropdown>
         <el-dropdown v-if="vendors.length !== 0 && vendors[0].isAudit && vendors[0].status" :hide-on-click="false"
-          size="mini" type="success">
+                     size="mini" type="success">
           <span class="el-dropdown-link" style="cursor: pointer;">
             供应商订单<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
@@ -64,8 +64,9 @@
 </template>
 <script>
 import Logo from "@/components/Logo"
+
 export default {
-  components: { Logo },
+  components: {Logo},
   name: "User",
   data() {
     return {
@@ -105,14 +106,14 @@ export default {
     },
     // Token 检验
     async auth() {
-      const { data } = await this.$axios.get('/user/auth');
+      const {data} = await this.$axios.get('/user/auth');
       if (data.code !== 200) { // Token校验异常
         this.$router.push('/');
       } else {
         sessionStorage.setItem('userInfo', JSON.stringify(data.data));
         this.userInfo = data.data;
         // 获取供应商信息
-        const { data: vendorData } = await this.$axios.post('/vendor/queryUser');
+        const {data: vendorData} = await this.$axios.post('/vendor/queryUser');
         if (vendorData.code === 200) {
           this.vendors = vendorData.data;
         }
@@ -123,6 +124,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   height: 65px;
   line-height: 65px;
   padding: 20px 100px;
@@ -130,6 +136,15 @@ export default {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid rgb(231, 231, 231);
+  // background-color: white;
+  transition: all 0.3s;
+  // 毛玻璃效果核心样式
+  background-color: rgba(255, 255, 255, 0.3); // 略微透明背景
+  backdrop-filter: blur(10px); // 毛玻璃模糊
+  -webkit-backdrop-filter: blur(10px); // Safari 兼容性
+
+  // 可选：添加阴影增强层次感
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
   .top-right {
     display: flex;
@@ -145,17 +160,18 @@ export default {
         float: left;
         margin-right: 6px;
         padding: 5px 10px;
-
         min-width: 50px;
         max-width: 100px;
-        color: rgb(111, 53, 71);
+        color: rgb(117, 59, 89);
         font-size: 14px;
         box-sizing: border-box;
         font-weight: 500;
       }
 
       li:hover {
-        color: rgb(128, 144, 100);
+        border-radius: 10px;
+        background-color: #e6e9f0;
+        color: rgb(100, 141, 144);
       }
     }
   }
@@ -169,9 +185,10 @@ export default {
 
 .router-view {
   padding: 60px 30px;
-  box-sizing: border-box;
-  background-color: rgb(253, 253, 253);
+  // box-sizing: border-box;
+  background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
   min-height: calc(100vh - 66px);
+  padding-top: calc(65px + 40px); // 关键：留出顶部空间
 
   .item {
     padding: 0 50px;

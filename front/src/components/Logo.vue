@@ -16,7 +16,7 @@ export default {
     sysName: {
       type: String,
       required: true,
-      default: '一路旅友'
+      default: '旅游民宿'
     },
     flag: {
       type: Boolean,

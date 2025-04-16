@@ -1,5 +1,5 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <el-row style="padding: 10px;margin: 0 5px;">
       <el-row>
         <el-select v-model="vendorQueryDto.isAudit" placeholder="审核状态" size="small" @change="handleFilter">
@@ -12,7 +12,8 @@
           </el-option>
         </el-select>
         <el-date-picker v-model="searchTime" end-placeholder="申请结束" range-separator="至" size="small"
-                        start-placeholder="申请开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
+                        start-placeholder="申请开始" style="width: 220px;margin-left: 5px;" type="daterange"
+                        @change="handleFilter">
         </el-date-picker>
         <el-input v-model="vendorQueryDto.name" clearable placeholder="供应商名"
                   size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">

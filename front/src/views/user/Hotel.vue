@@ -1,15 +1,15 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
         <span style="display: inline-block;font-size: 26px;font-weight: 800;padding-left: 15px;">民宿信息</span>
         <span style="float: right;">
-          <el-date-picker size="small" style="width: 220px;margin-left: 5px;" v-model="searchTime" type="daterange"
-            range-separator="至" start-placeholder="创建开始" end-placeholder="创建结束">
+          <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
+                          start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange">
           </el-date-picker>
-          <el-input size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" v-model="scenicQueryDto.name"
-            placeholder="民宿名" clearable @clear="handleFilterClear">
-            <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
+          <el-input v-model="scenicQueryDto.name" clearable placeholder="民宿名"
+                    size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+            <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
           </el-input>
         </span>
 
@@ -20,7 +20,7 @@
         <el-empty description="暂无民宿信息"></el-empty>
       </el-row>
       <el-row v-else class="scenic-item">
-        <el-col :span="6" @click.native="hotelClick(hotel)" v-for="(hotel, index) in tableData" :key="index">
+        <el-col v-for="(hotel, index) in tableData" :key="index" :span="6" @click.native="hotelClick(hotel)">
           <div class="item">
             <img :src="hotel.cover" alt="" srcset="">
             <div class="name">{{ hotel.name }}</div>
@@ -40,15 +40,16 @@
           </div>
         </el-col>
       </el-row>
-      <el-pagination style="margin:10px 0;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="currentPage" :page-sizes="[8, 16]" :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper" :total="totalItems"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[8, 16]"
+                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
     </el-row>
   </el-row>
 </template>
 
 <script>
-import { timeAgo } from "@/utils/data"
+import {timeAgo} from "@/utils/data"
+
 export default {
   data() {
     return {
@@ -94,7 +95,7 @@ export default {
           ...this.scenicQueryDto
         };
         const response = await this.$axios.post('/hotel/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -121,15 +122,18 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .scenic-item {
   .item:hover {
-    background-color: rgb(248, 248, 248);
+    border-radius: 10px;
+    background-color: rgb(246, 246, 247);
+    border-color: rgb(214, 214, 214);
   }
 
   .item {
-    margin-block: 20px;
-    padding: 30px 10px;
+    border: 1px solid rgba(255, 255, 255, 0);
+    margin-block: 10px;
+    padding: 10px 10px;
     box-sizing: border-box;
     cursor: pointer;
 
@@ -151,9 +155,8 @@ export default {
 
     img {
       width: 100%;
-      min-height: 120px;
-      max-height: 190px;
-      border-radius: 5px;
+      height: 190px;
+      border-radius: 10px;
     }
 
     .address {

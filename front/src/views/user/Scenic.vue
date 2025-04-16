@@ -1,19 +1,20 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <el-row style="padding: 10px 5px;margin: 0 5px;box-sizing: border-box;">
       <el-row>
         <span style="display: inline-block;font-size: 26px;font-weight: 800;padding-left: 15px;">景点信息</span>
         <span style="float: right;">
           <el-select v-model="scenicQueryDto.categoryId" placeholder="所属类别" size="small" style="margin-left: 5px;"
-            @change="fetchFreshData">
+                     @change="fetchFreshData">
             <el-option v-for="item in categories" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
           <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
-            start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="fetchFreshData">
+                          start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange"
+                          @change="fetchFreshData">
           </el-date-picker>
           <el-input v-model="scenicQueryDto.name" clearable placeholder="景点名" size="small"
-            style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+                    style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
             <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
           </el-input>
         </span>
@@ -26,7 +27,7 @@
       <el-row v-else class="scenic-item">
         <el-col v-for="(scenic, index) in tableData" :key="index" :span="6" @click.native="scenicClick(scenic)">
           <div class="item" style="box-sizing: border-box;">
-            <img :src="scenic.cover" style="height: 166px;" alt="" srcset="">
+            <img :src="scenic.cover" alt="" srcset="" style="height: 166px;">
             <div class="name">{{ scenic.name }}</div>
             <div>
               <span class="address">
@@ -47,14 +48,15 @@
         </el-col>
       </el-row>
       <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[8]" :total="totalItems"
-        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"></el-pagination>
+                     layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"></el-pagination>
     </el-row>
   </el-row>
 </template>
 
 <script>
-import { timeAgo } from "@/utils/data"
+import {timeAgo} from "@/utils/data"
 
 export default {
   data() {
@@ -97,7 +99,7 @@ export default {
         if (res.data.code === 200) {
           // 插入“全部”选项
           this.categories = [
-            { id: '', name: '全部' }, // id 设置为空字符串，表示不限制分类
+            {id: null, name: '全部'}, // id 设置为空字符串，表示不限制分类
             ...res.data.data // 原有的分类数据
           ];
         }
@@ -129,7 +131,7 @@ export default {
           delete params.categoryId; // 清除 categoryId
         }
         const response = await this.$axios.post('/scenic/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -158,13 +160,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 .scenic-item {
+  .item {
+    border: 1px solid rgba(255, 255, 255, 0);
+  }
+
   .item:hover {
-    background-color: rgb(248, 248, 248);
+    border-radius: 10px;
+    background-color: rgb(246, 246, 247);
+    border-color: rgb(214, 214, 214);
   }
 
   .item {
-    margin-block: 20px;
-    padding: 20px 10px;
+    margin-block: 10px;
+    padding: 5px 10px;
     border-radius: 6px;
     box-sizing: border-box;
     cursor: pointer;
@@ -189,7 +197,7 @@ export default {
       width: 100%;
       min-height: 120px;
       max-height: 190px;
-      border-radius: 5px;
+      border-radius: 10px;
     }
 
     .address {

@@ -216,7 +216,6 @@ export default {
   height: 100vh;
   width: 100%;
 
-
   .menu-side {
     width: 253px;
     min-width: 115px;
@@ -233,8 +232,10 @@ export default {
   }
 
   .main {
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     flex-grow: 1;
     overflow-x: hidden;
+
 
     .header-section {
       max-width: 100%;
@@ -247,7 +248,5 @@ export default {
       overflow-y: auto;
     }
   }
-
-
 }
 </style>

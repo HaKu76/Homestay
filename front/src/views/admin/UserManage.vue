@@ -1,108 +1,111 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <el-row style="padding: 10px;margin-left: 5px;">
       <el-row style="display: flex;justify-content: left;gap: 6px;">
         <span class="edit-button" @click="add()">
           新增用户
         </span>
-        <el-select style="width: 120px;" @change="handleFilter" size="small" v-model="userQueryDto.isLogin"
-          placeholder="登录状态">
+        <el-select v-model="userQueryDto.isLogin" placeholder="登录状态" size="small" style="width: 120px;"
+                   @change="handleFilter">
           <el-option v-for="item in loginStatuList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-select style="width: 120px;" @change="handleFilter" size="small" v-model="userQueryDto.isWord"
-          placeholder="禁言状态">
+        <el-select v-model="userQueryDto.isWord" placeholder="禁言状态" size="small" style="width: 120px;"
+                   @change="handleFilter">
           <el-option v-for="item in wordStatuList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-select style="width: 120px;" @change="handleFilter" size="small" v-model="userQueryDto.role"
-          placeholder="用户角色">
+        <el-select v-model="userQueryDto.role" placeholder="用户角色" size="small" style="width: 120px;"
+                   @change="handleFilter">
           <el-option v-for="item in rolesList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-date-picker style="width: 216px;" @change="handleFilter" size="small" v-model="searchTime"
-          type="daterange" range-separator="至" start-placeholder="注册开始" end-placeholder="注册结束">
+        <el-date-picker v-model="searchTime" end-placeholder="注册结束" range-separator="至" size="small" start-placeholder="注册开始"
+                        style="width: 216px;" type="daterange" @change="handleFilter">
         </el-date-picker>
-        <el-input size="small" style="width: 166px;" v-model="userQueryDto.userName" placeholder="用户名" clearable
-          @clear="handleFilterClear">
-          <el-button slot="append" @click="handleFilter" icon="el-icon-search"></el-button>
+        <el-input v-model="userQueryDto.userName" clearable placeholder="用户名" size="small" style="width: 166px;"
+                  @clear="handleFilterClear">
+          <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
       </el-row>
     </el-row>
     <el-row style="margin: 0 22px;border-top: 1px solid rgb(245,245,245);">
-      <el-table :stripe="true" :data="tableData" style="width: 100%">
-        <el-table-column label="操作" width="170" fixed="right">
-          <template slot-scope="scope">
-            <span class="text-button" @click="handleStatus(scope.row)">账号状态</span>
-            <span class="text-button" @click="handleEdit(scope.row)">编辑</span>
-            <span class="text-button" @click="handleDelete(scope.row)">删除</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="userAvatar" width="68" label="头像">
+      <el-table :data="tableData" :stripe="true" style="width: 100%">
+        <el-table-column label="头像" prop="userAvatar" width="68">
           <template slot-scope="scope">
             <el-avatar :size="25" :src="scope.row.userAvatar" style="margin-top: 10px;"></el-avatar>
           </template>
         </el-table-column>
-        <el-table-column prop="userName" width="208" label="用户名">
+        <el-table-column label="用户名" prop="userName" width="150">
         </el-table-column>
-        <el-table-column prop="userName" width="208" label="基本信息">
+        <el-table-column label="基本信息" prop="userName" width="208">
           <template slot-scope="scope">
-            <div class="text">账号：{{ scope.row.userAccount }}<i @click="copyAccount(scope.row.userAccount)"
-                style="margin-left: 4px;" class="el-icon-document-copy"></i></div>
+            <div class="text">账号：{{ scope.row.userAccount }}<i class="el-icon-document-copy"
+                                                                 style="margin-left: 4px;"
+                                                                 @click="copyAccount(scope.row.userAccount)"></i></div>
             <div class="text">邮箱：{{ scope.row.userEmail === null ? '用户未设置' : scope.row.userEmail }}</div>
             <div class="text">角色：{{ scope.row.userRole === 1 ? '管理员' : '用户' }}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="账号状态">
+        <el-table-column label="账号状态" prop="status" width="208">
           <template slot-scope="scope">
             <div class="text">
               禁言状态：
-              <i v-if="scope.row.isWord" style="margin-right: 5px;" class="el-icon-warning"></i>
-              <i v-else style="margin-right: 5px;color: rgb(253, 199, 50);" class="el-icon-success"></i>
-              <el-tooltip v-if="scope.row.isWord" class="item" effect="dark" content="账号一经禁言，不可评论互动。经由管理员解禁后，方可评论"
-                placement="bottom-end">
+              <i v-if="scope.row.isWord" class="el-icon-warning" style="margin-right: 5px;"></i>
+              <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
+              <el-tooltip v-if="scope.row.isWord" class="item" content="账号一经禁言，不可评论互动。经由管理员解禁后，方可评论"
+                          effect="dark"
+                          placement="bottom-end">
                 <span style="text-decoration: underline;text-decoration-style: dashed;">已禁言</span>
               </el-tooltip>
               <span v-else>正常</span>
             </div>
             <div class="text">
               禁言状态：
-              <i v-if="scope.row.isLogin" style="margin-right: 5px;" class="el-icon-warning"></i>
-              <i v-else style="margin-right: 5px;color: rgb(253, 199, 50);" class="el-icon-success"></i>
-              <el-tooltip v-if="scope.row.isLogin" class="item" effect="dark" content="账号一经封号，不可登录系统。经由管理员解禁后，方可登录"
-                placement="bottom-end">
+              <i v-if="scope.row.isLogin" class="el-icon-warning" style="margin-right: 5px;"></i>
+              <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
+              <el-tooltip v-if="scope.row.isLogin" class="item" content="账号一经封号，不可登录系统。经由管理员解禁后，方可登录"
+                          effect="dark"
+                          placement="bottom-end">
                 <span style="text-decoration: underline;text-decoration-style: dashed;">已封号</span>
               </el-tooltip>
               <span v-else>正常</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" :sortable="true" prop="createTime" width="168" label="注册于"></el-table-column>
+        <el-table-column :sortable="true" label="注册于" prop="createTime" width="208"></el-table-column>
+        <el-table-column fixed="right" label="操作" width="180">
+          <template slot-scope="scope">
+            <span class="text-button" @click="handleStatus(scope.row)">账号状态</span>
+            <span class="text-button" @click="handleEdit(scope.row)">编辑</span>
+            <span class="text-button" @click="handleDelete(scope.row)">删除</span>
+          </template>
+        </el-table-column>
       </el-table>
-      <el-pagination style="margin:10px 0;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page="currentPage" :page-sizes="[20, 50]" :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper" :total="totalItems"></el-pagination>
+      <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[20, 50]"
+                     :total="totalItems" layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange" @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 操作面板 -->
     <el-dialog :show-close="false" :visible.sync="dialogUserOperation" width="32%">
       <div style="padding:16px 20px;">
         <el-row>
           <p>用户头像</p>
-          <el-upload class="avatar-uploader" action="http://localhost:21090/api/Homestay-sys/v1.0/file/upload"
-            :show-file-list="false" :on-success="handleAvatarSuccess">
+          <el-upload :on-success="handleAvatarSuccess" :show-file-list="false"
+                     action="http://localhost:21090/api/Homestay-sys/v1.0/file/upload" class="avatar-uploader">
             <img v-if="userAvatar" :src="userAvatar" class="dialog-avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-row>
         <el-row>
           <span class="dialog-hover">用户名</span>
-          <input class="dialog-input" v-model="data.userName" placeholder="用户名" />
+          <input v-model="data.userName" class="dialog-input" placeholder="用户名"/>
           <span class="dialog-hover">账号</span>
-          <input class="dialog-input" v-model="data.userAccount" placeholder="账号" />
+          <input v-model="data.userAccount" class="dialog-input" placeholder="账号"/>
           <span class="dialog-hover">邮箱</span>
-          <input class="dialog-input" v-model="data.userEmail" placeholder="邮箱" />
+          <input v-model="data.userEmail" class="dialog-input" placeholder="邮箱"/>
           <span class="dialog-hover">密码</span>
-          <input class="dialog-input" v-model="userPwd" type="password" placeholder="输入新密码" />
+          <input v-model="userPwd" class="dialog-input" placeholder="输入新密码" type="password"/>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer" style="margin-top: 10px;">
@@ -119,7 +122,7 @@
     </el-dialog>
     <el-dialog :show-close="false" :visible.sync="dialogStatusOperation" width="25%">
       <div slot="title"
-        style="background-color: rgba(34, 165, 241);border-top-left-radius: 5px;border-top-right-radius: 5px;">
+           style="background-color: rgba(34, 165, 241);border-top-left-radius: 5px;border-top-right-radius: 5px;">
         <p class="dialog-title" style="color: #FFFFFF;font-size: 14px;font-weight: 800;">
           账号状态
         </p>
@@ -127,25 +130,28 @@
       <div style="padding:10px 20px;">
         <el-row>
           <p>*禁言状态</p>
-          <el-switch inactive-color="rgb(193, 193, 193)" v-model="data.isLogin" active-text="封号" inactive-text="正常状态">
+          <el-switch v-model="data.isLogin" active-text="封号" inactive-color="rgb(193, 193, 193)"
+                     inactive-text="正常状态">
           </el-switch>
         </el-row>
         <el-row style="margin: 20px 0;">
           <p>*禁言状态</p>
-          <el-switch inactive-color="rgb(193, 193, 193)" v-model="data.isWord" active-text="禁言" inactive-text="正常状态">
+          <el-switch v-model="data.isWord" active-text="禁言" inactive-color="rgb(193, 193, 193)"
+                     inactive-text="正常状态">
           </el-switch>
         </el-row>
         <el-row style="margin: 20px 0;">
           <p>*是否设置为管理员</p>
-          <el-switch inactive-color="rgb(193, 193, 193)" v-model="isAdmin" active-text="管理员" inactive-text="普通用户">
+          <el-switch v-model="isAdmin" active-text="管理员" inactive-color="rgb(193, 193, 193)"
+                     inactive-text="普通用户">
           </el-switch>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" style="background-color: rgb(34, 165, 241);color: rgb(247,248,249);border: none;"
-          class="customer" type="info" @click="comfirmStatus">确认</el-button>
+        <el-button class="customer" size="small"
+                   style="background-color: rgb(34, 165, 241);color: rgb(247,248,249);border: none;" type="info" @click="comfirmStatus">确认</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(246,246,246);border: none;"
-          @click="cancel">取消</el-button>
+                   @click="cancel">取消</el-button>
       </span>
     </el-dialog>
   </el-row>
@@ -171,9 +177,9 @@ export default {
       selectedRows: [],
       status: null,
       userQueryDto: {}, // 搜索条件
-      loginStatuList: [{ value: null, label: '全部' }, { value: 0, label: '正常' }, { value: 1, label: '封号' }],
-      wordStatuList: [{ value: null, label: '全部' }, { value: 0, label: '正常' }, { value: 1, label: '禁言' }],
-      rolesList: [{ value: null, label: '全部' }, { value: 2, label: '用户' }, { value: 1, label: '管理员' }]
+      loginStatuList: [{value: null, label: '全部'}, {value: 0, label: '正常'}, {value: 1, label: '封号'}],
+      wordStatuList: [{value: null, label: '全部'}, {value: 0, label: '正常'}, {value: 1, label: '禁言'}],
+      rolesList: [{value: null, label: '全部'}, {value: 2, label: '用户'}, {value: 1, label: '管理员'}]
     };
   },
   created() {
@@ -357,7 +363,7 @@ export default {
           ...this.userQueryDto
         };
         const response = await this.$axios.post('/user/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -390,7 +396,7 @@ export default {
       this.isOperation = true;
       row.userPwd = null;
       this.userAvatar = row.userAvatar;
-      this.data = { ...row }
+      this.data = {...row}
     },
     handleDelete(row) {
       this.selectedRows.push(row);
@@ -399,7 +405,7 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .text {
   font-size: 12px;
   text-align: left;

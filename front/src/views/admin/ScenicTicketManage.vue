@@ -1,23 +1,25 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
-        <el-select v-model="scenicTicketQueryDto.useStatus" placeholder="可用状态" size="small" style="margin-left: 5px;"
-          @change="handleFilter">
+        <el-select v-model="scenicTicketQueryDto.useStatus" placeholder="可用状态" size="small"
+                   style="margin-left: 5px;"
+                   @change="handleFilter">
           <el-option v-for="item in statusList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
-          start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
+                        start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange"
+                        @change="handleFilter">
         </el-date-picker>
         <el-input v-model="scenicTicketQueryDto.detail" clearable placeholder="门票介绍" size="small"
-          style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+                  style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
         <span style="float: right;">
           <el-button class="customer" size="small"
-            style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-            @click="add()"><i class="el-icon-plus"></i>新增景点门票</el-button>
+                     style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                     @click="add()"><i class="el-icon-plus"></i>新增景点门票</el-button>
         </span>
       </el-row>
     </el-row>
@@ -39,7 +41,7 @@
             <i v-if="!scope.row.useStatus" class="el-icon-warning" style="margin-right: 5px;"></i>
             <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
             <el-tooltip v-if="scope.row.useStatus" class="item" content="门票可用时，用户方可购买" effect="dark"
-              placement="bottom-end">
+                        placement="bottom-end">
               <span style="text-decoration: underline;text-decoration-style: dashed;">可用</span>
             </el-tooltip>
             <span v-else>不可用</span>
@@ -53,8 +55,9 @@
         </el-table-column>
       </el-table>
       <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
-        layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"></el-pagination>
+                     layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;"
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"></el-pagination>
     </el-row>
     <!-- 操作面板 -->
     <el-dialog :show-close="false" :visible.sync="dialogOperation" width="32%">
@@ -64,11 +67,11 @@
       <div style="padding:0 20px;">
         <el-row style="margin-bottom: 20px;">
           <span class="dialog-hover">门票数量</span>
-          <input v-model="data.number" class="dialog-input" placeholder="请输入" />
+          <input v-model="data.number" class="dialog-input" placeholder="请输入"/>
           <span class="dialog-hover">价格</span>
-          <input v-model="data.price" class="dialog-input" placeholder="请输入" />
+          <input v-model="data.price" class="dialog-input" placeholder="请输入"/>
           <span class="dialog-hover">折扣</span>
-          <input v-model="data.discount" class="dialog-input" placeholder="请输入" />
+          <input v-model="data.discount" class="dialog-input" placeholder="请输入"/>
           <div>
             <div>
               <span class="dialog-hover">介绍</span>
@@ -92,13 +95,13 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button v-if="!isOperation" class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="addOperation()">新增</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="addOperation()">新增</el-button>
         <el-button v-else class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="updateOperation()">修改</el-button>
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="updateOperation()">修改</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-          @click="cancel()">取消</el-button>
+                   @click="cancel()">取消</el-button>
       </span>
     </el-dialog>
   </el-row>
@@ -120,7 +123,7 @@ export default {
       scenicTicketQueryDto: {}, // 搜索条件
       scenics: [],
       searchTime: [],
-      statusList: [{ value: null, label: '全部' }, { value: 0, label: '不可用' }, { value: 1, label: '可用' }],
+      statusList: [{value: null, label: '全部'}, {value: 0, label: '不可用'}, {value: 1, label: '可用'}],
     };
   },
   created() {
@@ -240,7 +243,7 @@ export default {
           ...this.scenicTicketQueryDto
         };
         const response = await this.$axios.post('/scenicTicket/query', params);
-        const { data } = response;
+        const {data} = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
@@ -270,7 +273,7 @@ export default {
     handleEdit(row) {
       this.dialogOperation = true;
       this.isOperation = true;
-      this.data = { ...row }
+      this.data = {...row}
     },
     handleDelete(row) {
       this.selectedRows.push(row);

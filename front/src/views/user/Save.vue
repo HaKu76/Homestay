@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color: white;border-radius: 10px;padding: 5px 10px">
     <h1 style="margin-inline: 10px;">我的收藏</h1>
     <el-row v-if="scenicList.length === 0">
       <el-empty description="暂无景点信息"></el-empty>
@@ -75,12 +75,15 @@ export default {
 <style lang="scss" scoped>
 .scenic-item {
   .item:hover {
-    background-color: rgb(248, 248, 248);
+    border-radius: 10px;
+    background-color: rgb(246, 246, 247);
+    border-color: rgb(214, 214, 214);
   }
 
   .item {
-    margin-block: 20px;
-    padding: 30px 10px;
+    border: 1px solid rgba(255, 255, 255, 0);
+    margin-block: 10px;
+    padding: 10px 10px;
     box-sizing: border-box;
     cursor: pointer;
 
@@ -133,6 +136,5 @@ export default {
       }
     }
   }
-
 }
 </style>

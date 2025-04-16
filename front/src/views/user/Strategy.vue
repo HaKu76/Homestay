@@ -1,11 +1,12 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
         <span style="display: inline-block;font-size: 26px;font-weight: 800;padding-left: 15px;">攻略大全</span>
         <span style="float: right;">
           <el-input v-model="scenicStrategyQueryDto.title" clearable
-                    placeholder="攻略标题" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+                    placeholder="攻略标题" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;"
+                    @clear="handleFilterClear">
             <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
           </el-input>
         </span>
@@ -200,7 +201,7 @@ export default {
     img {
       width: 238px;
       height: 160px;
-      border-radius: 5px;
+      border-radius: 10px;
     }
   }
 

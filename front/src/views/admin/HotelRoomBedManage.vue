@@ -3,24 +3,24 @@
     <div v-if="bedOperation" style="padding: 20px;">
       <div>
         <span class="dialog-hover">床位号</span>
-        <input v-model="data.number" class="dialog-input" placeholder="输入" />
+        <input v-model="data.number" class="dialog-input" placeholder="输入"/>
         <el-row style="margin: 20px 0;">
           <div>
             <span class="dialog-hover">床位状态</span>
           </div>
           <el-switch v-model="data.status" active-color="#13ce66" active-text="可用" inactive-color="#ff4949"
-            inactive-text="不可用">
+                     inactive-text="不可用">
           </el-switch>
         </el-row>
       </div>
       <div style="display: flex;justify-content: center;align-items: center;">
         <el-button v-if="!isOperation" class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="addOperation">新增
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="addOperation">新增
         </el-button>
         <el-button v-else class="customer" size="small"
-          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
-          @click="updateOperation()">修改
+                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+                   @click="updateOperation()">修改
         </el-button>
       </div>
     </div>
@@ -48,7 +48,7 @@
         </div>
         <div>
           <el-button circle icon="el-icon-edit" size="mini" style="margin-right: 10px;" type="primary"
-            @click="updateBedInfo(bed)"></el-button>
+                     @click="updateBedInfo(bed)"></el-button>
           <el-popconfirm title="确定删除床位信息？" @confirm="deleteBed(bed)">
             <el-button slot="reference" circle icon="el-icon-delete" size="mini" type="danger"></el-button>
           </el-popconfirm>
@@ -170,7 +170,7 @@ export default {
 .bed-item {
   background-color: rgb(248, 248, 248);
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-bottom: 4px;
 }
 </style>

@@ -1,19 +1,22 @@
 <template>
-  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 5px;">
+  <el-row style="background-color: #FFFFFF;padding: 5px 0;border-radius: 10px;">
     <h1 style="margin-inline: 20px;">供应商民宿信息发布管理</h1>
     <el-row style="padding: 10px 5px;margin: 0 5px;">
       <el-row>
         <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至"
-                        size="small" start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
+                        size="small" start-placeholder="创建开始" style="width: 220px;margin-left: 5px;"
+                        type="daterange" @change="handleFilter">
         </el-date-picker>
         <el-input v-model="hotelQueryDto.name" clearable
-                  placeholder="民宿名称" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;" @clear="handleFilterClear">
+                  placeholder="民宿名称" size="small" style="width: 188px;margin-left: 5px;margin-right: 6px;"
+                  @clear="handleFilterClear">
           <el-button slot="append" icon="el-icon-search" @click="handleFilter"></el-button>
         </el-input>
         <span style="float: right;">
                     <el-button class="customer"
                                size="small"
-                               style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="add()"><i
+                               style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;"
+                               type="info" @click="add()"><i
                         class="el-icon-plus"></i>新增民宿</el-button>
                 </span>
       </el-row>
@@ -22,7 +25,7 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="民宿图" prop="cover" width="120px">
           <template slot-scope="scope">
-            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 5px;"/>
+            <img :src="scope.row.cover" style="width: 88px;height: 55px;border-radius: 10px;"/>
           </template>
         </el-table-column>
         <el-table-column label="民宿名" prop="name"></el-table-column>

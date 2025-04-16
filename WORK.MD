@@ -233,8 +233,6 @@ view:功能页面，要在router/index.js进行对应的路由注册
 
 ## 景点路线管理
 
-
-
 ## 景点评分管理
 
 只有新增和查询
@@ -245,15 +243,14 @@ view:功能页面，要在router/index.js进行对应的路由注册
 
 ## 景点攻略管理
 
-
-
 ## 民宿管理
 
 **所有的时间查询修复**
 
 问题描述：时间查询和数据库的不匹配，假如我查询起始时间为3月5日，那么他会查询到3月4日开始的信息
 
-问题原因：问题出在 `searchTime` 的时间处理逻辑上。当前代码将 `searchTime` 转换为 ISO 字符串时，直接使用了 `toISOString()`，这会返回 UTC 时间，可能与本地时间存在时区差异，导致查询结果不准确。
+问题原因：问题出在 `searchTime` 的时间处理逻辑上。当前代码将 `searchTime` 转换为 ISO 字符串时，直接使用了 `toISOString()`
+，这会返回 UTC 时间，可能与本地时间存在时区差异，导致查询结果不准确。
 
 解决方法：修改 `fetchFreshData` 方法中的时间处理逻辑
 
@@ -310,11 +307,7 @@ roomId: this.roomId,
 
 ## 民宿订单信息管理
 
-
-
 ## 景点门票订单管理
-
-
 
 ## 公告管理
 
@@ -325,8 +318,8 @@ roomId: this.roomId,
 > - 声明`components: { Editor },`然后调用↓
 >
 > - <div>
->   <Editor height="300px" :receiveContent="data.content" @on-receive="onReceiveContent" />
->   </div>
+    >   <Editor height="300px" :receiveContent="data.content" @on-receive="onReceiveContent" />
+    >   </div>
 
 ## 供应商申请及个人信息维护
 
@@ -360,19 +353,13 @@ user/Service.vue要在VendorServiceImpl新增添加代码
 
 ## 供应商维护民宿订单信息功能
 
-
-
 ## 供应商查看民宿订单销售额折线图功能
 
 修复民宿房间新增无效的问题：在HotelRoomBedManage.vue组件中，监听roomId改为深度监听。
 
 ## 供应商查看公告列表及详情功能
 
-
-
 ## 内容中心发布景点攻略功能
-
-
 
 ## 内容中心展示及景点攻略编辑功能
 
@@ -431,11 +418,7 @@ fetchCategories获取景点分类的方法修改代码
 
 ## 我的收藏展示功能
 
-
-
 ## 景点门票购买功能
-
-
 
 ## 我的订单门票详情及支付功能
 
@@ -443,19 +426,24 @@ fetchCategories获取景点分类的方法修改代码
 
 ## 民宿信息列表、详情页展示、评论、房间预定功能
 
-
-
 ## 民宿订单详情功能
 
-
-
 ## 管理员首页可视化功能
-
-
 
 ## 无法修复的问题
 
 供应商新增景点后点新增的景点后的编辑，景点详情无法回显，但是再点一次就能正常显示了
 
 优先级是0最大20最小
+
+## 新增了供应商景点门票信息发布管理的分页和查询功能
+
+有个地雷，不确定会不会触发在mapper.xml，如果在queryScenicTicket下面加上这句，展示的时候就会少一条数据，不知道这是什么原因
+
+```mysql
+        ORDER BY st.id DESC
+        <if test="current != null and size != null">
+            LIMIT #{current},#{size}
+        </if>
+```
 
