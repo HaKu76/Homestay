@@ -27,4 +27,12 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.text{
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 900px;
+  margin: 0 auto;
+}
+</style>

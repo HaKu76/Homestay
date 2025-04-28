@@ -48,9 +48,9 @@
                        style="margin:10px 0;" @size-change="handleSizeChange"
                        @current-change="handleCurrentChange"></el-pagination>
       </el-row>
-      <el-row>
+      <!-- <el-row>
         <LineChart :date="dates" :values="values" height="420px" tag="消费记录（元）" @on-selected="selected"/>
-      </el-row>
+      </el-row> -->
     </el-row>
   </el-row>
 </template>
@@ -83,15 +83,15 @@ export default {
   },
   methods: {
     // 请求后端的金额成交数据
-    selected(time) {
-      this.$axios.get(`/hotelOrderInfo/daysQuery/${time}`).then(response => {
-        const {data} = response;
-        if (data.code === 200) {
-          this.values = data.data.map(entity => entity.count);
-          this.dates = data.data.map(entity => entity.name);
-        }
-      })
-    },
+    // selected(time) {
+    //   this.$axios.get(`/hotelOrderInfo/daysQuery/${time}`).then(response => {
+    //     const {data} = response;
+    //     if (data.code === 200) {
+    //       this.values = data.data.map(entity => entity.count);
+    //       this.dates = data.data.map(entity => entity.name);
+    //     }
+    //   })
+    // },
     // 置位
     cancel() {
       this.data = {};

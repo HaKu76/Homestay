@@ -14,59 +14,58 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
 /**
- * 接口鉴权保护切面
+ * 接口权限校验切面
+ * 1. 校验用户登录状态
+ * 2. 校验接口访问权限
  */
 @Aspect
 @Component
 public class ProtectorAspect {
 
     /**
-     * 环绕通知
-     * 执行前 --- （目标操作） ---执行后
-     * 环绕：两端拦截
-     *
-     * @param proceedingJoinPoint 连接点
-     * @return Object
-     * @author
+     * 拦截带@Protector注解的接口
      */
     @Around("@annotation(com.example.aop.Protector)")
     public Object auth(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
+        // 从请求头获取token
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String token = request.getHeader("token");
+
+        // 未携带token直接返回错误
         if (token == null) {
             return ApiResult.error("身份认证失败，请先登录");
         }
+
+        // 解析token获取用户信息
         Claims claims = JwtUtil.parseToken(token);
         if (claims == null) {
             return ApiResult.error("身份认证失败，请先登录");
         }
         Integer userId = claims.get("id", Integer.class);
         Integer roleId = claims.get("role", Integer.class);
-        // 获取被拦截方法的签名
-        MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
-        // 获取方法上的@Protector注解实例
-        Protector protectorAnnotation = signature.getMethod().getAnnotation(Protector.class);
-        if (protectorAnnotation == null) {
-            return ApiResult.error("身份认证失败，请先登录");
+
+        // 获取方法上的权限配置
+        Protector protectorAnnotation = ((MethodSignature) proceedingJoinPoint.getSignature())
+                .getMethod().getAnnotation(Protector.class);
+        String requiredRole = protectorAnnotation.role();
+
+        // 校验用户角色是否符合要求
+        if (!requiredRole.isEmpty() && !requiredRole.equals(RoleEnum.ROLE(roleId))) {
+            return ApiResult.error("无操作权限");
         }
-        String role = protectorAnnotation.role();
-        // 验证用户角色
-        if (!"".equals(role)) {
-            if (!Objects.equals(RoleEnum.ROLE(Math.toIntExact(roleId)), role)) {
-                return ApiResult.error("无操作权限");
-            }
-        }
-        // 放在 ThreadLocal里面，当前线程都可用
+
+        // 保存用户信息供后续使用
         LocalThreadHolder.setUserId(userId, roleId);
-        Object result = proceedingJoinPoint.proceed();
-        // 请求结束，释放资源
-        LocalThreadHolder.clear();
-        return result;
+
+        try {
+            // 执行原方法
+            return proceedingJoinPoint.proceed();
+        } finally {
+            // 请求完成后清理用户数据
+            LocalThreadHolder.clear();
+        }
     }
-
-
 }
+

@@ -24,7 +24,7 @@ public class HotelRoomController {
     private HotelRoomService hotelRoomService;
 
     /**
-     * 民宿房间新增
+     * 新增民宿房间
      *
      * @param hotelRoom 民宿房间实体
      * @return Result<Void>
@@ -36,7 +36,7 @@ public class HotelRoomController {
     }
 
     /**
-     * 民宿房间修改
+     * 修改民宿房间
      *
      * @param hotelRoom 民宿房间实体
      * @return Result<Void>
@@ -48,7 +48,7 @@ public class HotelRoomController {
     }
 
     /**
-     * 民宿房间批量删除
+     * 批量删除民宿房间
      *
      * @param ids 民宿房间ID列表
      * @return Result<Void>
@@ -62,7 +62,8 @@ public class HotelRoomController {
     /**
      * 查询民宿房间
      *
-     * @return Result<Void>
+     * @param dto 查询实体
+     * @return Result<List < HotelRoomVO>>
      */
     @Pager
     @PostMapping(value = "/query")
@@ -72,9 +73,10 @@ public class HotelRoomController {
     }
 
     /**
-     * 查询民宿房间 -- 做了权限隔离的
+     * 查询民宿房间 -- 做了权限隔离
      *
-     * @return Result<Void>
+     * @param dto 查询实体
+     * @return Result<List < HotelRoomVO>>
      */
     @Pager
     @PostMapping(value = "/queryVendorRoom")

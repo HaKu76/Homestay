@@ -23,7 +23,7 @@ public class ScenicCategoryController {
     private ScenicCategoryService scenicCategoryService;
 
     /**
-     * 景点分类新增
+     * 新增景点分类
      *
      * @param scenicCategory 景点分类实体
      * @return Result<Void>
@@ -35,7 +35,7 @@ public class ScenicCategoryController {
     }
 
     /**
-     * 景点分类修改
+     * 修改景点分类
      *
      * @param scenicCategory 景点分类实体
      * @return Result<Void>
@@ -47,7 +47,7 @@ public class ScenicCategoryController {
     }
 
     /**
-     * 景点分类批量删除
+     * 批量删除景点分类
      *
      * @param ids 景点分类ID列表
      * @return Result<Void>
@@ -61,7 +61,8 @@ public class ScenicCategoryController {
     /**
      * 查询景点分类
      *
-     * @return Result<Void>
+     * @param dto 查询条件
+     * @return Result<List < ScenicCategory>>
      */
     @Pager
     @PostMapping(value = "/query")

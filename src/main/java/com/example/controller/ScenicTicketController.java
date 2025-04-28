@@ -24,7 +24,7 @@ public class ScenicTicketController {
     private ScenicTicketService scenicTicketService;
 
     /**
-     * 景点门票新增
+     * 新增景点门票
      *
      * @param scenicTicket 景点门票实体
      * @return Result<Void>
@@ -36,7 +36,7 @@ public class ScenicTicketController {
     }
 
     /**
-     * 景点门票修改
+     * 修改景点门票
      *
      * @param scenicTicket 景点门票实体
      * @return Result<Void>
@@ -48,7 +48,7 @@ public class ScenicTicketController {
     }
 
     /**
-     * 景点门票批量删除
+     * 批量删除景点门票
      *
      * @param ids 景点门票ID列表
      * @return Result<Void>
@@ -62,7 +62,7 @@ public class ScenicTicketController {
     /**
      * 查询供应商管理的景点门票信息
      *
-     * @return Result<Void>
+     * @return Result<List < ScenicTicketVO>>
      */
     @PostMapping(value = "/queryVendorTicket")
     @ResponseBody
@@ -73,7 +73,8 @@ public class ScenicTicketController {
     /**
      * 查询景点门票
      *
-     * @return Result<Void>
+     * @param dto 查询参数
+     * @return Result<List < ScenicTicketVO>>
      */
     @Pager
     @PostMapping(value = "/query")

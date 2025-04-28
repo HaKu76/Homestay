@@ -5,13 +5,12 @@
       <el-row style="padding: 10px 5px;margin: 0 5px;">
         <el-row>
           <el-select v-model="scenicTicketOrderQueryDto.payStatus" placeholder="支付状态" size="small"
-                     style="margin-left: 5px;" @change="handleFilter">
+            style="margin-left: 5px;" @change="handleFilter">
             <el-option v-for="item in statusList" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
-          <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至"
-                          size="small" start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange"
-                          @change="handleFilter">
+          <el-date-picker v-model="searchTime" end-placeholder="创建结束" range-separator="至" size="small"
+            start-placeholder="创建开始" style="width: 220px;margin-left: 5px;" type="daterange" @change="handleFilter">
           </el-date-picker>
         </el-row>
       </el-row>
@@ -29,7 +28,7 @@
               <i v-if="!scope.row.payStatus" class="el-icon-warning" style="margin-right: 5px;"></i>
               <i v-else class="el-icon-success" style="margin-right: 5px;color: rgb(253, 199, 50);"></i>
               <el-tooltip v-if="!scope.row.payStatus" class="item" content="未支付，不能重新下单" effect="dark"
-                          placement="bottom-end">
+                placement="bottom-end">
                 <span style="text-decoration: underline;text-decoration-style: dashed;">未支付</span>
               </el-tooltip>
               <span v-else>已支付</span>
@@ -37,19 +36,17 @@
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-                            <span v-if="!scope.row.payStatus" class="text-button"
-                                  @click="handlePay(scope.row)">支付</span>
+              <span v-if="!scope.row.payStatus" class="text-button" @click="handlePay(scope.row)">支付</span>
               <span class="text-button" @click="handleDelete(scope.row)">删除</span>
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination :current-page="currentPage" :page-size="pageSize"
-                       :page-sizes="[10, 20]" :total="totalItems" layout="total, sizes, prev, pager, next, jumper"
-                       style="margin:10px 0;" @size-change="handleSizeChange"
-                       @current-change="handleCurrentChange"></el-pagination>
+        <el-pagination :current-page="currentPage" :page-size="pageSize" :page-sizes="[10, 20]" :total="totalItems"
+          layout="total, sizes, prev, pager, next, jumper" style="margin:10px 0;" @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"></el-pagination>
       </el-row>
       <el-row>
-        <LineChart :date="dates" :values="values" height="420px" tag="消费记录（元）" @on-selected="selected"/>
+        <LineChart :date="dates" :values="values" height="420px" tag="消费记录（元）" @on-selected="selected" />
       </el-row>
     </el-row>
   </el-row>
@@ -59,7 +56,7 @@
 import LineChart from "@/components/LineChart"
 
 export default {
-  components: {LineChart},
+  components: { LineChart },
   data() {
     return {
       filterText: '',
@@ -73,7 +70,7 @@ export default {
       searchTime: [],
       values: [],
       dates: [],
-      statusList: [{value: null, label: '全部'}, {value: 0, label: '未支付'}, {value: 1, label: '已支付'}],
+      statusList: [{ value: null, label: '全部' }, { value: 0, label: '未支付' }, { value: 1, label: '已支付' }],
     };
   },
   created() {
@@ -85,7 +82,7 @@ export default {
     // 请求后端的金额成交数据
     selected(time) {
       this.$axios.get(`/scenicTicketOrder/daysQueryUser/${time}`).then(response => {
-        const {data} = response;
+        const { data } = response;
         if (data.code === 200) {
           this.values = data.data.map(entity => entity.count);
           this.dates = data.data.map(entity => entity.name);
@@ -136,44 +133,6 @@ export default {
         }
       }
     },
-    // 修改信息
-    async updateOperation() {
-      try {
-        const response = await this.$axios.put('/scenicTicketOrder/update', this.data);
-        this.clearFormData();
-        this.$swal.fire({
-          title: '门票订单信息修改',
-          text: response.data.msg,
-          icon: response.data.code === 200 ? 'success' : 'error',
-          showConfirmButton: false,
-          timer: 1000,
-        });
-        if (response.data.code === 200) {
-          this.cancel();
-          this.fetchFreshData();
-        }
-      } catch (error) {
-        console.error('提交表单时出错:', error);
-        this.$message.error('提交失败，请稍后再试！');
-      }
-    },
-    // 信息新增
-    async addOperation() {
-      try {
-        const response = await this.$axios.post('/scenicTicketOrder/save', this.data);
-        this.$message[response.data.code === 200 ? 'success' : 'error'](response.data.msg);
-        if (response.data.code === 200) {
-          this.cancel();
-          this.fetchFreshData();
-        }
-      } catch (error) {
-        console.error('提交表单时出错:', error);
-        this.$message.error('提交失败，请稍后再试！');
-      }
-    },
-    clearFormData() {
-      this.data = {};
-    },
     async fetchFreshData() {
       try {
         let startTime = null;
@@ -194,15 +153,12 @@ export default {
           ...this.scenicTicketOrderQueryDto
         };
         const response = await this.$axios.post('/scenicTicketOrder/queryUser', params);
-        const {data} = response;
+        const { data } = response;
         this.tableData = data.data;
         this.totalItems = data.total;
       } catch (error) {
         console.error('查询门票订单信息异常:', error);
       }
-    },
-    add() {
-      this.dialogOperation = true;
     },
     handleFilter() {
       this.currentPage = 1;
@@ -223,7 +179,7 @@ export default {
     },
     // 处理支付的方法
     handlePay(row) {
-      const sceniTicketOrder = {id: row.id}
+      const sceniTicketOrder = { id: row.id }
       this.$axios.post('/scenicTicketOrder/pay', sceniTicketOrder).then(res => {
         if (res.data.code === 200) {
           this.$message.success('支付成功');

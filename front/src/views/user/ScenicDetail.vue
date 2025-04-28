@@ -19,8 +19,7 @@
         <span>{{ scenic.categoryName }}</span>
       </div>
       <div style="margin-top: 20px;">
-        <span v-if="!saveBtnFlag" class="save-btn" @click="saveOperation"><i
-            class="el-icon-star-off"></i>立即收藏</span>
+        <span v-if="!saveBtnFlag" class="save-btn" @click="saveOperation"><i class="el-icon-star-off"></i>立即收藏</span>
         <span v-else class="cancel-save-btn" @click="saveOperation"><i class="el-icon-star-on"></i>取消收藏</span>
       </div>
     </div>
@@ -33,7 +32,7 @@
           <div v-else v-html="scenic.detail"></div>
         </el-tab-pane>
         <el-tab-pane label="评论" name="second">
-          <Evaluations :contentId="scenic.id" contentType="SCENIC"/>
+          <Evaluations :contentId="scenic.id" contentType="SCENIC" />
         </el-tab-pane>
         <el-tab-pane label="景点路线" name="five">
           <div v-if="scenicLineList.length === 0">
@@ -68,7 +67,7 @@
               </div>
               <div class="total-value">
                 <el-rate v-model="scenic.ratingScore" disabled score-template="平均{value}分" show-score
-                         text-color="#ff9900">
+                  text-color="#ff9900">
                 </el-rate>
               </div>
             </div>
@@ -102,8 +101,8 @@
                 <span class="price">￥{{ ticket.price }}</span>
                 <span>数量{{ ticket.number }}张</span>
                 <span class="discount">{{
-                    ticket.discount === null ? '无折扣' : ticket.discount + '折'
-                  }}</span>
+                  ticket.discount === null ? '无折扣' : ticket.discount + '折'
+                }}</span>
               </div>
               <div class="operation">
                 <span>出票于{{ timeAgo(ticket) }}</span>
@@ -137,22 +136,21 @@
           <div>
             <div>
               <span class="dialog-hover">联系人</span>
-              <input v-model="data.contactPerson" class="dialog-input" placeholder="输入"/>
+              <input v-model="data.contactPerson" class="dialog-input" placeholder="输入" />
             </div>
             <div>
               <span class="dialog-hover">联系电话</span>
-              <input v-model="data.contactPhone" class="dialog-input" placeholder="输入"/>
+              <input v-model="data.contactPhone" class="dialog-input" placeholder="输入" />
             </div>
             <div>
               <p>*购票数量</p>
-              <el-input-number v-model="data.buyNumber" :max="ticket.number" :min="1"
-                               label="描述文字"></el-input-number>
+              <el-input-number v-model="data.buyNumber" :max="ticket.number" :min="1" label="描述文字"></el-input-number>
             </div>
             <div class="ticket-item" style="margin-block: 20px;">
               <div class="info">
                 <span>共选中{{ data.buyNumber }}张票，金额<span class="price">{{
-                    moneyCount(data)
-                  }}元</span></span>
+                  moneyCount(data)
+                }}元</span></span>
               </div>
             </div>
           </div>
@@ -160,23 +158,24 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button class="customer" size="small"
-                   style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="addOperation()">确认购票</el-button>
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="addOperation()">确认购票</el-button>
         <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                   @click="cancel()">取消</el-button>
+          @click="cancel()">取消</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
-import {timeAgo} from "@/utils/data"
+import { timeAgo } from "@/utils/data"
 import Evaluations from "@/components/Evaluations"
 
 export default {
-  components: {Evaluations},
+  components: { Evaluations },
   name: "ScenicDetail",
   data() {
     return {
-      data: {buyNumber: 1}, // 存储购票相关的信息
+      data: { buyNumber: 1 }, // 存储购票相关的信息
       scenic: {},
       ticket: {},
       scenicRating: {},
@@ -196,7 +195,7 @@ export default {
   methods: {
     // 查询景点路线
     queryLine(id) {
-      this.$axios.post('/scenicLine/query', {scenicId: id}).then(res => {
+      this.$axios.post('/scenicLine/query', { scenicId: id }).then(res => {
         if (res.data.code === 200) {
           this.scenicLineList = res.data.data;
         }
@@ -238,7 +237,11 @@ export default {
     saveOperation() {
       this.$axios.post(`/scenic/saveOperation/${this.scenic.id}`).then(res => {
         if (res.data.code === 200) {
-          this.$message.success(res.data.msg);
+          this.$message.success({
+            message: res.data.msg,
+            duration: 5000,
+            showClose: true
+          });
           this.saveStatus();
         }
       })
@@ -261,7 +264,7 @@ export default {
     },
     // 评分
     ratingChange(score) {
-      this.$axios.post('/scenicRating/save', {scenicId: this.scenic.id, score}).then(res => {
+      this.$axios.post('/scenicRating/save', { scenicId: this.scenic.id, score }).then(res => {
         if (res.data.code === 200) {
           this.$message.success(res.data.msg);
         } else {
@@ -273,7 +276,7 @@ export default {
     },
     // 开始的时候，先查询是否已经评分，如果没有评分，显示评分的组件
     queryRatingStatus() {
-      this.$axios.post('/scenicRating/queryUser', {scenicId: this.scenic.id}).then(res => {
+      this.$axios.post('/scenicRating/queryUser', { scenicId: this.scenic.id }).then(res => {
         if (res.data.code === 200) {
           this.ratingFlag = res.data.data.length !== 0;
           // 如果评过分，存储对应的分数，做显示
@@ -295,7 +298,7 @@ export default {
     },
     // 记载景区下面的门票信息
     fetchScenicTicket(scenicId) {
-      this.$axios.post('/scenicTicket/query', {scenicId: scenicId}).then(res => {
+      this.$axios.post('/scenicTicket/query', { scenicId: scenicId }).then(res => {
         if (res.data.code === 200) {
           // 过滤掉 useStatus 为不可用的门票
           this.scenicTicketList = res.data.data.filter(ticket => ticket.useStatus == 1);
@@ -304,7 +307,7 @@ export default {
     },
     // 查询景点下面的评分信息
     fetchSceniRating(scenicId) {
-      this.$axios.post('/scenicRating/query', {scenicId: scenicId}).then(res => {
+      this.$axios.post('/scenicRating/query', { scenicId: scenicId }).then(res => {
         if (res.data.code === 200) {
           this.scenicRatingList = res.data.data;
         }

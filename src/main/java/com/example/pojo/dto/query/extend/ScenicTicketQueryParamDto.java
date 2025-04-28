@@ -19,7 +19,6 @@ public class ScenicTicketQueryParamDto {
      */
     private ScenicTicketOrderQueryDto scenicTicketOrderQueryDto;
 
-
     public ScenicTicketQueryParamDto(List<Integer> ticketIds, ScenicTicketOrderQueryDto scenicTicketOrderQueryDto) {
         this.ticketIds = ticketIds;
         this.scenicTicketOrderQueryDto = scenicTicketOrderQueryDto;

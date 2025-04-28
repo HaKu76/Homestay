@@ -26,7 +26,7 @@ public class ScenicTicketOrderController {
     private ScenicTicketOrderService scenicTicketOrderService;
 
     /**
-     * 景点门票订单新增
+     * 新增景点门票订单
      *
      * @param scenicTicketOrder 景点门票订单实体
      * @return Result<Void>
@@ -38,7 +38,7 @@ public class ScenicTicketOrderController {
     }
 
     /**
-     * 景点门票订单修改
+     * 修改景点门票订单
      *
      * @param scenicTicketOrder 景点门票订单实体
      * @return Result<Void>
@@ -50,7 +50,7 @@ public class ScenicTicketOrderController {
     }
 
     /**
-     * 景点门票订单批量删除
+     * 批量删除景点门票订单
      *
      * @param ids 景点门票订单ID列表
      * @return Result<Void>
@@ -64,7 +64,8 @@ public class ScenicTicketOrderController {
     /**
      * 查询供应商管理的全部景点门票订单
      *
-     * @return Result<Void>
+     * @param dto 查询条件
+     * @return Result<List < ScenicTicketOrderVO>>
      */
     @Pager
     @PostMapping(value = "/queryScenicTicketOrder")
@@ -76,7 +77,8 @@ public class ScenicTicketOrderController {
     /**
      * 门票订单支付
      *
-     * @return Result<List < ScenicTicketOrderVO>>
+     * @param scenicTicketOrder 门票订单数据
+     * @return Result<Void>
      */
     @PostMapping(value = "/pay")
     @ResponseBody
@@ -85,9 +87,10 @@ public class ScenicTicketOrderController {
     }
 
     /**
-     * 查询用户的景点门票数据
+     * 查询用户的景点门票订单数据
      *
-     * @return Result<Void>
+     * @param dto 查询条件
+     * @return Result<List < ScenicTicketOrderVO>>
      */
     @Pager
     @PostMapping(value = "/queryUser")
@@ -101,7 +104,8 @@ public class ScenicTicketOrderController {
     /**
      * 查询景点门票订单
      *
-     * @return Result<Void>
+     * @param dto 查询条件
+     * @return Result<List < ScenicTicketOrderVO>>
      */
     @Pager
     @PostMapping(value = "/query")
@@ -111,9 +115,10 @@ public class ScenicTicketOrderController {
     }
 
     /**
-     * 统计成交金额
+     * 统计用户成交金额
      *
-     * @return Result<List < ChartVO>> 响应结果
+     * @param day 天数
+     * @return Result<List < ChartVO>>
      */
     @GetMapping(value = "/daysQueryUser/{day}")
     @ResponseBody
@@ -124,7 +129,8 @@ public class ScenicTicketOrderController {
     /**
      * 统计全站指定日期里面的成交门票金额
      *
-     * @return Result<List < ChartVO>> 响应结果
+     * @param day 天数
+     * @return Result<List < ChartVO>>
      */
     @GetMapping(value = "/daysQueryMoney/{day}")
     @ResponseBody
@@ -133,9 +139,10 @@ public class ScenicTicketOrderController {
     }
 
     /**
-     * 统计成交金额
+     * 统计供应商成交金额
      *
-     * @return Result<List < ChartVO>> 响应结果
+     * @param day 天数
+     * @return Result<List < ChartVO>>
      */
     @GetMapping(value = "/daysQuery/{day}")
     @ResponseBody

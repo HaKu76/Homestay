@@ -26,45 +26,49 @@ public class HotelOrderInfoController {
     private HotelOrderInfoService hotelOrderInfoService;
 
     /**
-     * 民宿订单新增
+     * 新增民宿订单
      *
      * @param hotelOrderInfo 民宿订单实体
-     * @return Result<Void>
+     * @return Result<Void> 响应结果
      */
     @PostMapping(value = "/save")
     @ResponseBody
     public Result<Void> save(@RequestBody HotelOrderInfo hotelOrderInfo) {
+        // 调用业务层新增民宿订单
         return hotelOrderInfoService.save(hotelOrderInfo);
     }
 
     /**
-     * 民宿订单修改
+     * 修改民宿订单
      *
      * @param hotelOrderInfo 民宿订单实体
-     * @return Result<Void>
+     * @return Result<Void> 响应结果
      */
     @PutMapping(value = "/update")
     @ResponseBody
     public Result<Void> update(@RequestBody HotelOrderInfo hotelOrderInfo) {
+        // 调用业务层修改民宿订单
         return hotelOrderInfoService.update(hotelOrderInfo);
     }
 
     /**
-     * 民宿订单批量删除
+     * 批量删除民宿订单
      *
      * @param ids 民宿订单ID列表
-     * @return Result<Void>
+     * @return Result<Void> 响应结果
      */
     @PostMapping(value = "/batchDelete")
     @ResponseBody
     public Result<Void> update(@RequestBody List<Integer> ids) {
+        // 调用业务层批量删除民宿订单
         return hotelOrderInfoService.batchDelete(ids);
     }
 
     /**
      * 查询民宿订单
      *
-     * @return Result<Void>
+     * @param dto 查询参数
+     * @return Result<List < HotelOrderInfoVO>> 响应结果
      */
     @Pager
     @PostMapping(value = "/query")
@@ -76,7 +80,8 @@ public class HotelOrderInfoController {
     /**
      * 查询供应商名下的民宿订单
      *
-     * @return Result<HotelOrderInfoVO>
+     * @param dto 查询参数
+     * @return Result<List < HotelOrderInfoVO>> 响应结果
      */
     @Pager
     @PostMapping(value = "/queryVendorHotelOrder")
@@ -88,7 +93,8 @@ public class HotelOrderInfoController {
     /**
      * 民宿订单支付
      *
-     * @return Result<Void>
+     * @param hotelOrderInfo 参数
+     * @return Result<Void> 响应结果
      */
     @Pager
     @PostMapping(value = "/pay")
@@ -98,9 +104,10 @@ public class HotelOrderInfoController {
     }
 
     /**
-     * 查询用户的民宿订单
+     * 查询用户民宿订单
      *
-     * @return Result<Void>
+     * @param dto 查询参数
+     * @return Result<List < HotelOrderInfoVO>> 响应结果
      */
     @Pager
     @PostMapping(value = "/queryUser")
@@ -114,6 +121,7 @@ public class HotelOrderInfoController {
     /**
      * 统计全站指定日期里面的成交门票金额
      *
+     * @param day 天数
      * @return Result<List < ChartVO>> 响应结果
      */
     @GetMapping(value = "/daysQueryMoney/{day}")
@@ -125,6 +133,7 @@ public class HotelOrderInfoController {
     /**
      * 统计成交金额
      *
+     * @param day 天数
      * @return Result<List < ChartVO>> 响应结果
      */
     @GetMapping(value = "/daysQuery/{day}")
@@ -132,6 +141,5 @@ public class HotelOrderInfoController {
     public Result<List<ChartVO>> query(@PathVariable Integer day) {
         return hotelOrderInfoService.daysQuery(day);
     }
-
 
 }

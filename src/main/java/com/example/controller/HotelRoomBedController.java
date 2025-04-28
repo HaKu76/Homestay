@@ -23,10 +23,10 @@ public class HotelRoomBedController {
     private HotelRoomBedService hotelRoomBedService;
 
     /**
-     * 民宿房间床位新增
+     * 新增民宿房间床位
      *
      * @param hotelRoomBed 民宿房间床位实体
-     * @return Result<Void>
+     * @return Result<Void> 响应结果
      */
     @PostMapping(value = "/save")
     @ResponseBody
@@ -35,10 +35,10 @@ public class HotelRoomBedController {
     }
 
     /**
-     * 民宿房间床位修改
+     * 修改民宿房间床位
      *
      * @param hotelRoomBed 民宿房间床位实体
-     * @return Result<Void>
+     * @return Result<Void> 响应结果
      */
     @PutMapping(value = "/update")
     @ResponseBody
@@ -47,10 +47,10 @@ public class HotelRoomBedController {
     }
 
     /**
-     * 民宿房间床位批量删除
+     * 批量删除民宿房间床位
      *
      * @param ids 民宿房间床位ID列表
-     * @return Result<Void>
+     * @return Result<Void> 响应结果
      */
     @PostMapping(value = "/batchDelete")
     @ResponseBody
@@ -61,7 +61,8 @@ public class HotelRoomBedController {
     /**
      * 查询民宿房间床位
      *
-     * @return Result<Void>
+     * @param dto 查询条件
+     * @return Result<List < HotelRoomBed>> 响应结果
      */
     @Pager
     @PostMapping(value = "/query")

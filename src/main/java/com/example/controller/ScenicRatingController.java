@@ -25,7 +25,7 @@ public class ScenicRatingController {
     private ScenicRatingService scenicRatingService;
 
     /**
-     * 景点评分新增
+     * 新增景点评分
      *
      * @param scenicRating 景点评分实体
      * @return Result<Void>
@@ -39,7 +39,8 @@ public class ScenicRatingController {
     /**
      * 查询景点评分
      *
-     * @return Result<Void>
+     * @param dto 查询条件
+     * @return Result<List < ScenicRatingVO>>
      */
     @Pager
     @PostMapping(value = "/query")
@@ -51,7 +52,8 @@ public class ScenicRatingController {
     /**
      * 查询用户对于景点的评分
      *
-     * @return Result<List < ScenicRatingVO>>
+     * @param dto 查询条件
+     * @returnResult<List<ScenicRatingVO>>
      */
     @Pager
     @PostMapping(value = "/queryUser")

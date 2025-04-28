@@ -27,7 +27,7 @@ public class ScenicStrategyController {
     private ScenicStrategyService scenicStrategyService;
 
     /**
-     * 景点攻略新增
+     * 新增景点攻略
      *
      * @param scenicStrategy 景点攻略实体
      * @return Result<Void>
@@ -40,6 +40,9 @@ public class ScenicStrategyController {
 
     /**
      * 景点攻略审核
+     *
+     * @param id 景点攻略ID
+     * @return Result<Void>
      */
     @Protector(role = "管理员")
     @PostMapping(value = "/audit/{id}")
@@ -49,7 +52,7 @@ public class ScenicStrategyController {
     }
 
     /**
-     * 景点攻略修改
+     * 修改景点攻略
      *
      * @param scenicStrategy 景点攻略实体
      * @return Result<Void>
@@ -61,7 +64,7 @@ public class ScenicStrategyController {
     }
 
     /**
-     * 景点攻略批量删除
+     * 批量删除景点攻略
      *
      * @param ids 景点攻略ID列表
      * @return Result<Void>
@@ -75,6 +78,7 @@ public class ScenicStrategyController {
     /**
      * 查询攻略列表
      *
+     * @param dto 查询条件
      * @return Result<List < ScenicStrategyListVO>>
      */
     @Pager
@@ -85,9 +89,10 @@ public class ScenicStrategyController {
     }
 
     /**
-     * 查询用户发表的景点攻略
+     * 查询用户发布的景点攻略
      *
-     * @return Result<Void>
+     * @param dto 查询条件
+     * @return Result<List < ScenicStrategyVO>>
      */
     @Pager
     @PostMapping(value = "/queryUser")
@@ -101,7 +106,8 @@ public class ScenicStrategyController {
     /**
      * 查询景点攻略
      *
-     * @return Result<Void>
+     * @param dto 查询条件
+     * @return Result<List < ScenicStrategyVO>>
      */
     @Pager
     @PostMapping(value = "/query")

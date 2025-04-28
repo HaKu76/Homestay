@@ -24,7 +24,7 @@ public class ScenicLineController {
     private ScenicLineService scenicLineService;
 
     /**
-     * 景点路线新增
+     * 新增景点路线
      *
      * @param scenicLine 景点路线实体
      * @return Result<Void>
@@ -36,7 +36,7 @@ public class ScenicLineController {
     }
 
     /**
-     * 景点路线修改
+     * 修改景点路线
      *
      * @param scenicLine 景点路线实体
      * @return Result<Void>
@@ -48,7 +48,7 @@ public class ScenicLineController {
     }
 
     /**
-     * 景点路线批量删除
+     * 批量删除景点路线
      *
      * @param ids 景点路线ID列表
      * @return Result<Void>
@@ -62,7 +62,8 @@ public class ScenicLineController {
     /**
      * 查询景点路线
      *
-     * @return Result<Void>
+     * @param dto 查询条件
+     * @return Result<List < ScenicLineVO>>
      */
     @Pager
     @PostMapping(value = "/query")

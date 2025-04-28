@@ -23,7 +23,7 @@ public class NoticeController {
     private NoticeService noticeService;
 
     /**
-     * 公告新增
+     * 新增公告
      *
      * @param notice 公告实体
      * @return Result<Void>
@@ -35,7 +35,7 @@ public class NoticeController {
     }
 
     /**
-     * 公告修改
+     * 修改公告
      *
      * @param notice 公告实体
      * @return Result<Void>
@@ -47,7 +47,7 @@ public class NoticeController {
     }
 
     /**
-     * 公告批量删除
+     * 批量删除公告
      *
      * @param ids 公告ID列表
      * @return Result<Void>
@@ -61,7 +61,8 @@ public class NoticeController {
     /**
      * 查询公告
      *
-     * @return Result<Void>
+     * @param dto 查询实体
+     * @return Result<List < Notice>>
      */
     @Pager
     @PostMapping(value = "/query")

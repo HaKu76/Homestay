@@ -25,7 +25,7 @@ public class ScenicController {
     private ScenicService scenicService;
 
     /**
-     * 景点新增
+     * 新增景点
      *
      * @param scenic 景点实体
      * @return Result<Void>
@@ -37,7 +37,7 @@ public class ScenicController {
     }
 
     /**
-     * 景点修改
+     * 修改景点
      *
      * @param scenic 景点实体
      * @return Result<Void>
@@ -49,7 +49,7 @@ public class ScenicController {
     }
 
     /**
-     * 景点批量删除
+     * 批量删除景点
      *
      * @param ids 景点ID列表
      * @return Result<Void>
@@ -63,7 +63,8 @@ public class ScenicController {
     /**
      * 查询供应商景点
      *
-     * @return Result<Void>
+     * @param dto 查询条件
+     * @return Result<List < ScenicVO>>
      */
     @Pager
     @PostMapping(value = "/queryVendorScenic")
@@ -73,7 +74,7 @@ public class ScenicController {
     }
 
     /**
-     * 关联景点下拉选择器
+     * 查询景点下拉选择器
      *
      * @return Result<List < SelectedVO>>
      */
@@ -86,6 +87,7 @@ public class ScenicController {
     /**
      * 浏览操作
      *
+     * @param scenicId 景点ID
      * @return Result<Void>
      */
     @Pager
@@ -98,6 +100,7 @@ public class ScenicController {
     /**
      * 收藏操作
      *
+     * @param scenicId 景点ID
      * @return Result<Void>
      */
     @Pager
@@ -108,9 +111,10 @@ public class ScenicController {
     }
 
     /**
-     * 查询用户的收藏景点状况
+     * 查询用户收藏的景点状况
      *
-     * @return Result<Void>
+     * @param scenicId 景点ID
+     * @return Result<Boolean>
      */
     @Pager
     @PostMapping(value = "/saveStatus/{scenicId}")
@@ -122,7 +126,7 @@ public class ScenicController {
     /**
      * 查询用户收藏的景点信息
      *
-     * @return List<ScenicVO>
+     * @return Result<List < ScenicVO>>
      */
     @Pager
     @GetMapping(value = "/querySave")
@@ -134,7 +138,8 @@ public class ScenicController {
     /**
      * 查询景点
      *
-     * @return Result<Void>
+     * @param dto 查询条件
+     * @return Result<List < ScenicVO>>
      */
     @Pager
     @PostMapping(value = "/query")

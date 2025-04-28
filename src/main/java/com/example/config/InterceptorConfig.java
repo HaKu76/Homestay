@@ -7,20 +7,23 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * API拦截器配置
+ * 全局拦截器配置
+ * 1. 添加JWT验证拦截器
+ * 2. 配置拦截规则
  */
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
 
+    // 从配置application.yml读取接口基础路径
     @Value("${my-server.api-context-path}")
     private String API;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 拦截器注册
+        // 注册JWT拦截器
         registry.addInterceptor(new JwtInterceptor())
-                .addPathPatterns("/**")
-                // 放行登录、注册请求
+                .addPathPatterns("/**") // 拦截所有请求
+                // 排除无需验证的接口（登录/注册/文件接口）
                 .excludePathPatterns(
                         API + "/user/login",
                         API + "/user/register",
@@ -29,3 +32,4 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 );
     }
 }
+

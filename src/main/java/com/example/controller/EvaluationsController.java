@@ -12,7 +12,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 评论 Controller
+ * 评论管理接口
+ * 包含评论的增删改查等操作
  */
 @RestController
 @RequestMapping("/evaluations")
@@ -22,76 +23,74 @@ public class EvaluationsController {
     private EvaluationsService evaluationsService;
 
     /**
-     * 评论
-     *
-     * @return Result<String>
+     * 创建新评论
+     * - 需要登录权限
+     * - 接收JSON格式评论数据
      */
     @Protector
-    @PostMapping(value = "/insert")
-    @ResponseBody
+    @PostMapping("/insert")
     public Result<Object> insert(@RequestBody Evaluations evaluations) {
         return evaluationsService.insert(evaluations);
     }
 
     /**
-     * 评论修改
-     *
-     * @return Result<String>
+     * 修改评论内容
+     * - 需要登录权限
+     * - 根据评论ID更新数据
      */
     @Protector
-    @PutMapping(value = "/update")
-    @ResponseBody
+    @PutMapping("/update")
     public Result<Void> update(@RequestBody Evaluations evaluations) {
         return evaluationsService.update(evaluations);
     }
 
     /**
-     * 查询内容下的全部评论
+     * 获取指定内容的评论列表
+     * - 需要登录权限
      *
-     * @return Result<String>
+     * @param contentId   内容ID（如文章ID）
+     * @param contentType 内容类型（如article）
      */
     @Protector
-    @GetMapping(value = "/list/{contentId}/{contentType}")
-    @ResponseBody
+    @GetMapping("/list/{contentId}/{contentType}")
     public Result<Object> list(@PathVariable Integer contentId,
                                @PathVariable String contentType) {
         return evaluationsService.list(contentId, contentType);
     }
 
     /**
-     * 分页查询评论
+     * 分页搜索评论
+     * - 自动处理分页参数
      *
-     * @return Result<String>
+     * @param evaluationsQueryDto 包含搜索条件和分页参数
      */
     @Pager
-    @PostMapping(value = "/query")
-    @ResponseBody
+    @PostMapping("/query")
     public Result<Object> query(@RequestBody EvaluationsQueryDto evaluationsQueryDto) {
         return evaluationsService.query(evaluationsQueryDto);
     }
 
     /**
-     * 批量删除评论数据
+     * 批量删除评论
      *
-     * @return Result<String>
+     * @param ids 要删除的评论ID集合
      */
-    @PostMapping(value = "/batchDelete")
-    @ResponseBody
+    @PostMapping("/batchDelete")
     public Result<Object> batchDelete(@RequestBody List<Integer> ids) {
         return evaluationsService.batchDelete(ids);
     }
 
     /**
-     * 通过ID删除评论信息
+     * 删除单个评论
+     * - 需要登录权限
      *
-     * @return Result<String>
+     * @param id 评论ID
      */
     @Protector
-    @DeleteMapping(value = "/delete/{id}")
-    @ResponseBody
+    @DeleteMapping("/delete/{id}")
     public Result<String> delete(@PathVariable Integer id) {
         return evaluationsService.delete(id);
     }
-
 }
+
 

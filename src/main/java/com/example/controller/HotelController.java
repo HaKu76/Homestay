@@ -24,14 +24,15 @@ public class HotelController {
     private HotelService hotelService;
 
     /**
-     * 民宿新增
+     * 新增民宿
      *
      * @param hotel 民宿实体
-     * @return Result<Void>
+     * @return
      */
     @PostMapping(value = "/save")
     @ResponseBody
     public Result<Void> save(@RequestBody Hotel hotel) {
+        // 调用业务层新增民宿
         return hotelService.save(hotel);
     }
 
@@ -39,47 +40,53 @@ public class HotelController {
      * 民宿修改
      *
      * @param hotel 民宿实体
-     * @return Result<Void>
+     * @return
      */
     @PutMapping(value = "/update")
     @ResponseBody
     public Result<Void> update(@RequestBody Hotel hotel) {
+        // 调用业务层修改民宿
         return hotelService.update(hotel);
     }
 
     /**
-     * 民宿批量删除
+     * 批量删除民宿
      *
-     * @param ids 民宿ID列表
-     * @return Result<Void>
+     * @param ids 民宿id集合
+     * @return
      */
     @PostMapping(value = "/batchDelete")
     @ResponseBody
     public Result<Void> update(@RequestBody List<Integer> ids) {
+        // 调用业务层批量删除民宿
         return hotelService.batchDelete(ids);
     }
 
     /**
-     * 查询供应商名下维护的民宿信息
+     * 查询供应商名下的民宿信息
      *
-     * @return Result<Void>
+     * @param dto 查询参数
+     * @return
      */
     @Pager
     @PostMapping(value = "/queryVendorHotel")
     @ResponseBody
     public Result<List<HotelVO>> queryVendorHotel(@RequestBody HotelQueryDto dto) {
+        // 调用业务层查询供应商名下的民宿信息
         return hotelService.queryVendorHotel(dto);
     }
 
     /**
-     * 查询民宿
+     * 查询民宿信息
      *
-     * @return Result<Void>
+     * @param dto 查询参数
+     * @return
      */
     @Pager
     @PostMapping(value = "/query")
     @ResponseBody
     public Result<List<HotelVO>> query(@RequestBody HotelQueryDto dto) {
+        // 调用业务层查询民宿信息
         return hotelService.query(dto);
     }
 }

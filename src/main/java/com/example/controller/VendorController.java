@@ -25,7 +25,7 @@ public class VendorController {
     private VendorService vendorService;
 
     /**
-     * 供应商新增
+     * 新增供应商
      *
      * @param vendor 供应商实体
      * @return Result<Void>
@@ -36,7 +36,7 @@ public class VendorController {
     }
 
     /**
-     * 供应商修改
+     * 修改供应商
      *
      * @param vendor 供应商实体
      * @return Result<Void>
@@ -47,7 +47,7 @@ public class VendorController {
     }
 
     /**
-     * 供应商批量删除
+     * 批量删除供应商
      *
      * @param ids 供应商ID列表
      * @return Result<Void>
@@ -60,7 +60,7 @@ public class VendorController {
     /**
      * 查询用户关联的供应商信息
      *
-     * @return Result<Void>
+     * @return Result<List < VendorVO>>
      */
     @Pager
     @PostMapping(value = "/queryUser")
@@ -74,7 +74,7 @@ public class VendorController {
     /**
      * 查询供应商
      *
-     * @return Result<Void>
+     * @return Result<List < VendorVO>>
      */
     @Pager
     @PostMapping(value = "/query")
