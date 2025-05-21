@@ -85,7 +85,7 @@ public class ScenicServiceImpl implements ScenicService {
 
     /**
      * 批量删除指定ID列表对应的景点信息
-     * <p>
+     * 
      * 该方法通过数据访问层执行批量删除操作，删除成功后返回统一封装结果。
      * 若传入空列表或无效ID将不会执行删除操作。
      *
@@ -161,7 +161,7 @@ public class ScenicServiceImpl implements ScenicService {
 
     /**
      * 查询可关联景点下拉选项列表
-     * <p>
+     * 
      * 函数通过构造查询条件获取可用景点数据，并将其转换为下拉选择器需要的精简格式。
      * 查询条件强制限定景点状态为启用状态(status=true)，确保只返回有效景点。
      *
@@ -304,7 +304,7 @@ public class ScenicServiceImpl implements ScenicService {
 
     /**
      * 查询用户收藏的景点信息
-     * <p>
+     * 
      * 实现逻辑：
      * 1. 构建景点查询DTO对象
      * 2. 从线程上下文获取当前用户ID

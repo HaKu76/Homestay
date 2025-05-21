@@ -30,7 +30,7 @@ public class HotelServiceImpl implements HotelService {
 
     /**
      * 新增民宿信息
-     * <p>
+     * 
      * 自动设置创建时间和供应商ID后执行持久化操作
      *
      * @param hotel 民宿实体对象，包含需要新增的民宿详细信息（不可为空）
@@ -121,7 +121,7 @@ public class HotelServiceImpl implements HotelService {
 
     /**
      * 获取当前用户关联的供应商ID
-     * <p>
+     * 
      * 实现逻辑：
      * 1. 根据当前线程持有的用户ID构建供应商查询条件
      * 2. 执行供应商查询

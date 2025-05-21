@@ -52,10 +52,10 @@ public class ViewsServiceImpl implements ViewsService {
         // 4. 收录攻略
         Integer strategyCount = scenicStrategyMapper.queryCount(new ScenicStrategyQueryDto());
         change(strategyCount, "收录攻略", chartVOS);
-        // 4. 门票订单
+        // 5. 门票订单
         Integer scenicTicketOrderCount = scenicTicketOrderMapper.queryCount(new ScenicTicketOrderQueryDto());
         change(scenicTicketOrderCount, "门票订单", chartVOS);
-        // 4. 民宿订单
+        // 6. 民宿订单
         Integer hotelOrderInfoCount = hotelOrderInfoMapper.queryCount(new HotelOrderInfoQueryDto());
         change(hotelOrderInfoCount, "民宿订单", chartVOS);
         return ApiResult.success(chartVOS);

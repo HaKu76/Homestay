@@ -41,7 +41,7 @@ public class HotelOrderInfoServiceImpl implements HotelOrderInfoService {
 
     /**
      * 新增民宿订单
-     * <p>
+     * 
      * 实现逻辑：
      * 1. 校验房间有效性
      * 2. 防止重复预定（24小时内同房间只能预定一次）
@@ -96,7 +96,7 @@ public class HotelOrderInfoServiceImpl implements HotelOrderInfoService {
 
     /**
      * 修改民宿订单信息
-     * <p>
+     * 
      * 根据传入的订单实体对象更新数据库记录，要求订单ID必须已存在。该操作会修改订单的
      * 所有非空字段，调用前需确保参数对象的完整性
      *
@@ -151,7 +151,7 @@ public class HotelOrderInfoServiceImpl implements HotelOrderInfoService {
 
     /**
      * 查询供应商名下的民宿订单
-     * <p>
+     * 
      * 实现逻辑：
      * 1. 获取当前登录用户关联的供应商信息
      * 2. 校验供应商资质和状态
@@ -280,7 +280,7 @@ public class HotelOrderInfoServiceImpl implements HotelOrderInfoService {
 
     /**
      * 民宿订单支付处理
-     * <p>
+     * 
      * 该方法用于完成以下核心操作：
      * 1. 更新订单支付状态为已支付
      * 2. 记录当前系统时间为支付时间

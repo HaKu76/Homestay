@@ -2,7 +2,7 @@
   <div>
     <div class="top">
       <div class="top-left">
-        <Logo sysName="旅游民宿"/>
+        <Logo sysName="旅游民宿" />
       </div>
       <div class="top-right">
         <ul>
@@ -21,7 +21,7 @@
           </el-dropdown-menu>
         </el-dropdown>
         <el-dropdown v-if="vendors.length !== 0 && vendors[0].isAudit && vendors[0].status" :hide-on-click="false"
-                     size="mini" type="success">
+          size="mini" type="success">
           <span class="el-dropdown-link" style="cursor: pointer;">
             供应商订单<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
@@ -66,7 +66,7 @@
 import Logo from "@/components/Logo"
 
 export default {
-  components: {Logo},
+  components: { Logo },
   name: "User",
   data() {
     return {
@@ -106,14 +106,14 @@ export default {
     },
     // Token 检验
     async auth() {
-      const {data} = await this.$axios.get('/user/auth');
+      const { data } = await this.$axios.get('/user/auth');
       if (data.code !== 200) { // Token校验异常
         this.$router.push('/');
       } else {
         sessionStorage.setItem('userInfo', JSON.stringify(data.data));
         this.userInfo = data.data;
         // 获取供应商信息
-        const {data: vendorData} = await this.$axios.post('/vendor/queryUser');
+        const { data: vendorData } = await this.$axios.post('/vendor/queryUser');
         if (vendorData.code === 200) {
           this.vendors = vendorData.data;
         }

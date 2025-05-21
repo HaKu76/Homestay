@@ -68,7 +68,7 @@ public class VendorServiceImpl implements VendorService {
 
     /**
      * 修改供应商信息
-     * <p>
+     * 
      * 调用数据访问层接口更新数据库中的供应商记录，并返回标准化操作结果。
      * 该方法要求传入完整的供应商实体对象，通过主键ID定位需要更新的目标记录。
      *
@@ -84,7 +84,7 @@ public class VendorServiceImpl implements VendorService {
 
     /**
      * 批量删除供应商数据
-     * <p>
+     * 
      * 本方法通过供应商ID列表执行批量删除操作，调用底层mapper执行数据库删除操作，
      * 最终返回标准封装结果对象
      *

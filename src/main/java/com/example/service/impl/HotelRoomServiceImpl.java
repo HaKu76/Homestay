@@ -52,7 +52,7 @@ public class HotelRoomServiceImpl implements HotelRoomService {
 
     /**
      * 修改民宿房间信息
-     * <p>
+     * 
      * 根据传入的民宿房间实体更新数据库记录，要求房间ID必须存在且为有效值
      *
      * @param hotelRoom 包含更新字段的民宿房间实体对象，非空校验由调用方保证
@@ -103,7 +103,7 @@ public class HotelRoomServiceImpl implements HotelRoomService {
 
     /**
      * 查询供应商名下的民宿房间（带权限隔离）
-     * <p>
+     * 
      * 实现逻辑：
      * 1. 基于当前登录用户查询关联的供应商信息
      * 2. 校验供应商资质（未申请/未审核状态直接返回空结果）

@@ -44,7 +44,7 @@ public class ScenicTicketOrderServiceImpl implements ScenicTicketOrderService {
 
     /**
      * 新增景点门票订单
-     * <p>
+     * 
      * 该方法包含以下业务逻辑：
      * 1. 基础参数校验（联系人信息）
      * 2. 门票信息有效性验证（库存、可用状态）
@@ -248,7 +248,7 @@ public class ScenicTicketOrderServiceImpl implements ScenicTicketOrderService {
 
     /**
      * 查询当前用户的指定天数内门票消费金额数据
-     * <p>
+     * 
      * 通过时间范围构建查询参数，获取用户门票订单记录后转换为金额时序数据，
      * 最终生成按日统计的消费金额图表数据
      *
@@ -312,7 +312,7 @@ public class ScenicTicketOrderServiceImpl implements ScenicTicketOrderService {
 
     /**
      * 获取当前用户关联的供应商ID
-     * <p>
+     * 
      * 方法逻辑说明：
      * 1. 构建供应商查询条件，设置当前操作用户ID
      * 2. 执行供应商查询操作

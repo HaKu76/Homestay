@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 用户注册接口
-     * <p>
+     * 
      * 实现用户注册逻辑，包含用户名查重、账号查重、新用户数据组装及持久化操作
      *
      * @param userRegisterDTO 注册请求参数，包含 userName（用户名）、userAccount（用户账号）、
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 用户登录认证处理
-     * <p>
+     * 
      * 执行账号密码验证，生成JWT令牌，并返回登录结果。包含以下业务逻辑：
      * 1. 根据活跃账号查询用户信息
      * 2. 密码匹配验证
@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 令牌检验及用户信息获取 -- 认证成功返回用户详细信息
-     * <p>
+     * 
      * 实现逻辑：
      * 1. 从线程本地存储获取已认证的用户ID
      * 2. 根据用户ID构建查询条件
@@ -269,7 +269,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 通过ID查询用户信息
-     * <p>
+     * 
      * 根据用户ID查询处于激活状态的用户实体，将其转换为视图对象后封装为统一响应结果
      *
      * @param id 用户ID（需对应已存在的用户记录）

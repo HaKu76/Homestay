@@ -209,7 +209,8 @@ export default {
           this.$message.success(res.data.msg);
           this.dialogTicketOperation = false;
           // 跳到对应的门票订单页
-          console.log("下单了。跳转订单页");
+          // console.log("下单了。跳转订单页");
+          this.$router.push('/myScenicOrder');
         } else {
           this.$message.error(res.data.msg);
         }

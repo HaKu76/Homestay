@@ -65,7 +65,7 @@ public class ScenicStrategyServiceImpl implements ScenicStrategyService {
 
     /**
      * 批量删除景点攻略
-     * <p>
+     * 
      * 根据提供的ID列表批量删除对应的景点攻略数据
      *
      * @param ids 需要删除的景点攻略ID列表（不可为null或空列表）
@@ -98,7 +98,7 @@ public class ScenicStrategyServiceImpl implements ScenicStrategyService {
 
     /**
      * 审核景点攻略
-     * <p>
+     * 
      * 将指定ID的景点攻略标记为已审核状态
      *
      * @param id 待审核的景点攻略唯一标识符，不可为空

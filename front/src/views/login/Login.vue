@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-panel">
       <div class="logo">
-        <Logo :bag="colorLogo" sysName="旅友请上车"/>
+        <Logo :bag="colorLogo" sysName="欢迎使用旅友~"/>
       </div>
       <div class="text">
         <input v-model="act" class="act" placeholder="账号" @keyup.enter="login"/>

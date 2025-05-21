@@ -129,7 +129,7 @@
       </div>
       <div style="padding:10px 20px;">
         <el-row>
-          <p>*禁言状态</p>
+          <p>*封号状态</p>
           <el-switch v-model="data.isLogin" active-text="封号" inactive-color="rgb(193, 193, 193)"
                      inactive-text="正常状态">
           </el-switch>

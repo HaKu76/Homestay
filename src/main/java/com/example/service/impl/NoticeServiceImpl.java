@@ -23,7 +23,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     /**
      * 新增系统公告
-     * <p>
+     * 
      * 该方法会自动设置公告创建时间为当前系统时间，并将公告实体持久化到数据库。
      * 注意：公告标题、内容等核心字段应在调用本方法前通过notice参数对象设置完成。
      *
@@ -50,7 +50,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     /**
      * 修改公告
-     * <p>
+     * 
      * 根据提供的公告实体对象更新数据库中对应的公告信息。调用noticeMapper执行更新操作，并返回操作结果
      *
      * @param notice 要更新的公告实体对象，必须包含有效的公告ID和其他需要更新的字段，不可为null

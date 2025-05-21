@@ -8,16 +8,16 @@
       </div>
       <img :src="hotel.cover" alt="" srcset="">
       <div class="extra-info">
-                <span class="address">
-                    <i class="el-icon-location"></i>
-                    {{ hotel.address }}
-                </span>
+        <span class="address">
+          <i class="el-icon-location"></i>
+          {{ hotel.address }}
+        </span>
       </div>
     </div>
     <div>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="评论" name="first">
-          <Evaluations :contentId="hotel.id" contentType="HOTEL"/>
+          <Evaluations :contentId="hotel.id" contentType="HOTEL" />
         </el-tab-pane>
         <el-tab-pane label="房间" name="second">
           <div v-if="rooms.length === 0">
@@ -32,12 +32,12 @@
                 </div>
                 <div>
                   <div style="margin-bottom: 6px;">
-                                        <span class="price">
-                                            ¥{{ room.price }}
-                                        </span>
+                    <span class="price">
+                      ¥{{ room.price }}
+                    </span>
                     <span class="discount">
-                                            {{ room.discount === null ? '无折扣' : room.discount + '折' }}
-                                        </span>
+                      {{ room.discount === null ? '无折扣' : room.discount + '折' }}
+                    </span>
                   </div>
                   <div class="detail">
                     {{ room.detail }}
@@ -70,29 +70,30 @@
         <el-row>
           <div>
             <span class="dialog-hover">联系人</span>
-            <input v-model="data.contactPerson" class="dialog-input" placeholder="输入"/>
+            <input v-model="data.contactPerson" class="dialog-input" placeholder="输入" />
           </div>
           <div>
             <span class="dialog-hover">联系电话</span>
-            <input v-model="data.contactPhone" class="dialog-input" placeholder="输入"/>
+            <input v-model="data.contactPhone" class="dialog-input" placeholder="输入" />
           </div>
         </el-row>
       </div>
       <span slot="footer" class="dialog-footer">
-                <el-button class="customer" size="small"
-                           style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info" @click="addOperation()">确定下单</el-button>
-                <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
-                           @click="cancel()">取消</el-button>
-            </span>
+        <el-button class="customer" size="small"
+          style="background-color: rgb(96, 98, 102);color: rgb(247,248,249);border: none;" type="info"
+          @click="addOperation()">确定下单</el-button>
+        <el-button class="customer" size="small" style="background-color: rgb(211, 241, 241);border: none;"
+          @click="cancel()">取消</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
 <script>
-import {timeAgo} from "@/utils/data"
+import { timeAgo } from "@/utils/data"
 import Evaluations from "@/components/Evaluations"
 
 export default {
-  components: {Evaluations},
+  components: { Evaluations },
   name: "HotelDetail",
   data() {
     return {
@@ -109,7 +110,7 @@ export default {
   },
   methods: {
     orderRoom(room) {
-      this.$axios.post('/hotelRoomBed/query', {roomId: room.id}).then(res => {
+      this.$axios.post('/hotelRoomBed/query', { roomId: room.id }).then(res => {
         if (res.data.code === 200) {
           this.hotelRoomBeds = res.data.data;
           this.data.roomId = room.id;
@@ -125,6 +126,7 @@ export default {
           this.$message.success('房间预定成功');
           this.dialogRoomOperation = false;
           this.data = {};
+          this.$router.push('/myHotelOrder');
         }
       }).catch(error => {
         this.$message.error(error);
@@ -147,7 +149,7 @@ export default {
     },
     // 记载房间的信息
     fetchRoomInfo() {
-      this.$axios.post('/hotelRoom/query', {hotelId: this.hotel.id}).then(res => {
+      this.$axios.post('/hotelRoom/query', { hotelId: this.hotel.id }).then(res => {
         if (res.data.code === 200) {
           this.rooms = res.data.data;
         }

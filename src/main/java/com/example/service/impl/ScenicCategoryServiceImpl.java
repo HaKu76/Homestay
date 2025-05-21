@@ -38,7 +38,7 @@ public class ScenicCategoryServiceImpl implements ScenicCategoryService {
 
     /**
      * 修改景点分类信息
-     * <p>
+     * 
      * 通过持久层更新景点分类数据，要求实体对象必须包含有效ID
      *
      * @param scenicCategory 包含更新数据的景点分类实体对象，其id字段必须有效且对应现存记录

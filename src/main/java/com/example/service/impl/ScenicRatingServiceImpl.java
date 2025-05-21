@@ -60,7 +60,7 @@ public class ScenicRatingServiceImpl implements ScenicRatingService {
 
     /**
      * 查询景点评分信息
-     * <p>
+     * 
      * 根据查询条件获取分页形式的景点评分数据，包含总记录数用于分页计算。查询结果将包含符合条件的所有评分记录，
      * 并返回统一封装的结果对象
      *

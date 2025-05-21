@@ -79,7 +79,7 @@ export default {
     timeOut(time) {
       return timeAgo(time);
     },
-    // 查询指定时间内的门票销售额记录
+    // 查询指定时间内的民宿房间销售额记录
     hotelOrderSelected(day) {
       this.$axios.get(`/hotelOrderInfo/daysQueryMoney/${day}`).then(res => {
         if (res.data.code === 200) {
@@ -90,7 +90,7 @@ export default {
         }
       });
     },
-    // 查询指定时间内的门票销售额记录
+    // 查询指定时间内的景点门票销售额记录
     ticketSelected(day) {
       this.$axios.get(`/scenicTicketOrder/daysQueryMoney/${day}`).then(res => {
         if (res.data.code === 200) {

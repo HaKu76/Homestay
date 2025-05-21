@@ -84,7 +84,7 @@ public class EvaluationsServiceImpl implements EvaluationsService {
 
     /**
      * 设置评论点赞标识及统计点赞数量
-     * <p>
+     * 
      * 遍历父评论列表及子评论列表，进行以下操作：
      * 1. 检查当前用户是否在点赞列表中，设置 upvoteFlag 标识
      * 2. 统计对应评论的总点赞数，更新 upvoteCount
@@ -114,7 +114,7 @@ public class EvaluationsServiceImpl implements EvaluationsService {
 
     /**
      * 判断指定用户是否在点赞用户列表中
-     * <p>
+     * 
      * 该方法通过处理逗号分隔的用户ID字符串，验证目标用户是否已存在于列表中。
      * 完整处理流程：
      * 1. 使用Optional包装可能为null的点赞用户字符串
@@ -136,7 +136,7 @@ public class EvaluationsServiceImpl implements EvaluationsService {
 
     /**
      * 计算点赞数
-     * <p>
+     * 
      * 通过解析逗号分隔的用户ID字符串进行计数，自动处理空值场景。
      * 当输入为null时会返回0，空字符串会视为0个有效点赞（如""返回0）
      *
@@ -177,7 +177,7 @@ public class EvaluationsServiceImpl implements EvaluationsService {
 
     /**
      * 批量删除指定评论数据
-     * <p>
+     * 
      * 根据传入的评论ID列表执行批量删除操作，通过数据访问层调用对应的SQL映射语句实现数据库记录删除。
      * 该方法要求传入有效的非空ID列表，执行后会立即更新数据库记录。
      *

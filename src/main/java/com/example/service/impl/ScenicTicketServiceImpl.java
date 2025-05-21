@@ -59,7 +59,7 @@ public class ScenicTicketServiceImpl implements ScenicTicketService {
 
     /**
      * 修改景点门票
-     * <p>
+     * 
      * 本方法通过持久层组件更新指定景点门票信息，执行成功后返回通用结果对象
      *
      * @param scenicTicket 包含更新信息的景点门票实体对象，需包含有效主键标识
@@ -113,7 +113,7 @@ public class ScenicTicketServiceImpl implements ScenicTicketService {
 
     /**
      * 查询供应商管理的景点门票信息
-     * <p>
+     * 
      * 实现逻辑：
      * 1. 获取当前登录用户关联的供应商ID
      * 2. 根据供应商ID查询名下所有景点信息
@@ -149,7 +149,7 @@ public class ScenicTicketServiceImpl implements ScenicTicketService {
 
     /**
      * 获取当前登录用户关联的供应商ID
-     * <p>
+     * 
      * 实现逻辑：
      * 1. 通过线程上下文获取当前用户ID
      * 2. 构建供应商查询条件对象
